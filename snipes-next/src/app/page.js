@@ -2,6 +2,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
+import BestsellersCarousel from '@/components/BestsellersCarousel';
+import InstagramFeed from '@/components/InstagramFeed';
+import ExitIntentPopup from '@/components/ExitIntentPopup';
+import { getBestsellers } from '@/lib/sanity';
 import { 
   motion, 
   useScroll, 
@@ -105,6 +109,15 @@ function CustomCursor() {
 
 export default function Home() {
   const { scrollY, scrollYProgress } = useScroll();
+  const [bestsellers, setBestsellers] = useState([]);
+
+  useEffect(() => {
+    async function loadData() {
+      const data = await getBestsellers();
+      setBestsellers(data);
+    }
+    loadData();
+  }, []);
   
   // Parallax transforms for Hero
   const heroImageY = useTransform(scrollY, [0, 1000], [0, 250]);
@@ -130,6 +143,7 @@ export default function Home() {
   return (
     <main className="w-full bg-[var(--color-background)]">
       <CustomCursor />
+      <ExitIntentPopup />
       
       {/* Top Scroll Progress Bar */}
       <motion.div
@@ -156,7 +170,7 @@ export default function Home() {
               playsInline
               className="absolute inset-0 w-full h-full object-cover opacity-90"
             >
-              <source src="https://assets.mixkit.co/videos/preview/mixkit-man-in-a-denim-jacket-and-sunglasses-posing-4458-large.mp4" type="video/mp4" />
+              <source src="https://assets.coverr.co/video/720p/coverr-fashion-model-in-the-city-4389-720p.mp4" type="video/mp4" />
             </video>
           </motion.div>
         </motion.div>
@@ -286,6 +300,12 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
+
+      {/* Bestsellers Carousel (Embla + Sanity) */}
+      <BestsellersCarousel products={bestsellers} />
+
+      {/* Instagram Feed Integration */}
+      <InstagramFeed />
 
     </main>
   );

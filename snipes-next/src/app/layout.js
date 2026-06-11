@@ -10,6 +10,7 @@ import CartDrawer from "@/components/CartDrawer";
 import QuickAddModal from "@/components/QuickAddModal";
 import SearchOverlay from "@/components/SearchOverlay";
 import SizeRecommender from "@/components/SizeRecommender";
+import Providers from "@/components/Providers";
 
 const sora = Sora({
   variable: "--font-family-headline-lg",
@@ -38,21 +39,23 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
       </head>
       <body className={`${sora.variable} ${hanken.variable} antialiased`}>
-        <UIProvider>
-          <CartProvider>
-            <div className="bg-[var(--color-background)] min-h-screen text-[var(--color-on-background)] selection:bg-[var(--color-primary)] selection:text-white">
-              <AnnouncementBar />
-              <Navbar />
-              {children}
-              <Footer />
-              <WhatsAppButton />
-              <CartDrawer />
-              <QuickAddModal />
-              <SearchOverlay />
-              <SizeRecommender />
-            </div>
-          </CartProvider>
-        </UIProvider>
+        <Providers>
+          <UIProvider>
+            <CartProvider>
+              <div className="bg-[var(--color-background)] min-h-screen text-[var(--color-on-background)] selection:bg-[var(--color-primary)] selection:text-white">
+                <AnnouncementBar />
+                <Navbar />
+                {children}
+                <Footer />
+                <WhatsAppButton />
+                <CartDrawer />
+                <QuickAddModal />
+                <SearchOverlay />
+                <SizeRecommender />
+              </div>
+            </CartProvider>
+          </UIProvider>
+        </Providers>
       </body>
     </html>
   );

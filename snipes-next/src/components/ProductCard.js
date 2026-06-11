@@ -72,12 +72,15 @@ export default function ProductCard({ product, layout = 'normal' }) {
           </>
         )}
 
-        <button 
-          onClick={handleQuickAdd}
-          className="absolute bottom-4 right-4 bg-white text-[var(--color-primary)] w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-20 hover:scale-105 cursor-pointer"
-        >
-          <span className="material-symbols-outlined text-[20px]">add_shopping_cart</span>
-        </button>
+        {/* Full-width Quick Add Overlay */}
+        <div className="absolute bottom-0 left-0 w-full p-2 md:p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-20">
+          <button 
+            onClick={handleQuickAdd}
+            className="w-full bg-[var(--color-background)] text-[var(--color-primary)] font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest py-3 md:py-4 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] transition-colors duration-300 shadow-lg cursor-pointer"
+          >
+            Quick Add
+          </button>
+        </div>
       </Link>
       
       {!isDense && (
