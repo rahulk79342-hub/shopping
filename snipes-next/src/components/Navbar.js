@@ -99,6 +99,10 @@ export default function Navbar() {
                   </span>
                 )}
               </button>
+
+              <Link href="/account" className="hidden md:flex hover:opacity-80 hover:-translate-y-0.5 transition-all active:scale-95 duration-300 cursor-pointer text-[var(--color-primary)] items-center">
+                <span className="material-symbols-outlined text-[24px]">person</span>
+              </Link>
             </div>
           </div>
         </motion.div>

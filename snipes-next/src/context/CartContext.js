@@ -38,6 +38,10 @@ export function CartProvider({ children }) {
     ));
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
   const cartCount = isMounted ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
   const cartTotal = isMounted ? cartItems.reduce((total, item) => total + (item.price * item.quantity), 0) : 0;
 
@@ -47,6 +51,7 @@ export function CartProvider({ children }) {
       addToCart,
       removeFromCart,
       updateQuantity,
+      clearCart,
       cartCount,
       cartTotal
     }}>
