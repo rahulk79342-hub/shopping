@@ -23,16 +23,16 @@ export default function Navbar() {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 w-full">
         <motion.div
-          initial={{ backgroundColor: "rgba(253, 252, 251, 0)", backdropFilter: "blur(0px)" }}
+          initial={{ backgroundColor: "transparent", backdropFilter: "none" }}
           animate={{
-            backgroundColor: isScrolled ? "rgba(253, 252, 251, 0.9)" : "rgba(253, 252, 251, 0)",
-            backdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
-            borderBottom: isScrolled ? "1px solid rgba(10, 10, 10, 0.08)" : "1px solid rgba(10, 10, 10, 0)"
+            backgroundColor: "transparent",
+            backdropFilter: "none",
+            borderBottom: isScrolled ? "1px solid rgba(10, 10, 10, 0.08)" : "1px solid transparent"
           }}
           transition={{ duration: 0.4 }}
           className="w-full transition-all duration-300"
         >
-          <div className="flex justify-between items-center w-full px-[var(--spacing-margin-mobile)] h-20 md:h-24 max-w-screen-2xl mx-auto relative sticky">
+          <div className="flex justify-between items-center w-full px-[var(--spacing-margin-mobile)] h-15 md:h-15 max-w-screen-2xl mx-auto relative sticky bg-white">
 
             {/* Left: Logo & Name */}
             <div className="flex items-center gap-3 z-10 w-1/4">
@@ -90,8 +90,6 @@ export default function Navbar() {
         </motion.div>
       </header>
 
-      {/* Spacer so content doesn't jump under absolute header */}
-      {!isScrolled && <div className="h-20 md:h-24 invisible"></div>}
     </>
   );
 }
