@@ -63,7 +63,7 @@ export default function SizeRecommender() {
 
             <div className="p-6 flex flex-col gap-6">
               <p className="font-[var(--font-family-body-md)] text-[var(--color-outline)] text-sm">
-                Enter your measurements to get a personalized size and fit recommendation based on this garment's specific cut.
+                Enter your measurements to get a personalized size and fit recommendation based on this garment&apos;s specific cut.
               </p>
 
               <div className="flex flex-col gap-2">
@@ -116,6 +116,49 @@ export default function SizeRecommender() {
                   </motion.div>
                 )}
               </AnimatePresence>
+
+              {/* Garment Measurements Table */}
+              <div className="mt-4 pt-6 border-t border-[var(--color-outline-variant)]">
+                <h3 className="font-[var(--font-family-label-caps)] text-[12px] uppercase tracking-widest text-[var(--color-primary)] mb-4">Garment Measurements (cm)</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm font-[var(--font-family-body-md)]">
+                    <thead>
+                      <tr className="border-b border-[var(--color-outline-variant)] text-[var(--color-outline)]">
+                        <th className="py-2 font-normal">Size</th>
+                        <th className="py-2 font-normal">Chest</th>
+                        <th className="py-2 font-normal">Length</th>
+                        <th className="py-2 font-normal">Shoulder</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-[var(--color-primary)]">
+                      <tr className="border-b border-[var(--color-outline-variant)]/50">
+                        <td className="py-3 font-bold">S</td>
+                        <td className="py-3">108</td>
+                        <td className="py-3">72</td>
+                        <td className="py-3">48</td>
+                      </tr>
+                      <tr className="border-b border-[var(--color-outline-variant)]/50 bg-[var(--color-surface-container-low)]">
+                        <td className="py-3 font-bold">M</td>
+                        <td className="py-3">114</td>
+                        <td className="py-3">74</td>
+                        <td className="py-3">50</td>
+                      </tr>
+                      <tr className="border-b border-[var(--color-outline-variant)]/50">
+                        <td className="py-3 font-bold">L</td>
+                        <td className="py-3">120</td>
+                        <td className="py-3">76</td>
+                        <td className="py-3">52</td>
+                      </tr>
+                      <tr>
+                        <td className="py-3 font-bold">XL</td>
+                        <td className="py-3">126</td>
+                        <td className="py-3">78</td>
+                        <td className="py-3">54</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </motion.div>
         </>

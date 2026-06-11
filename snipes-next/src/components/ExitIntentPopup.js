@@ -102,7 +102,7 @@ export default function ExitIntentPopup() {
                   className="py-12"
                 >
                   <span className="material-symbols-outlined text-[48px] text-[var(--color-secondary)] mb-4">check_circle</span>
-                  <h2 className="font-[var(--font-family-headline-md)] text-[24px] text-[var(--color-primary)] mb-2">You're on the list.</h2>
+                  <h2 className="font-[var(--font-family-headline-md)] text-[24px] text-[var(--color-primary)] mb-2">You&apos;re on the list.</h2>
                   <p className="font-[var(--font-family-body-md)] text-[var(--color-outline)] text-sm">Check your inbox for your welcome code.</p>
                 </motion.div>
               )}

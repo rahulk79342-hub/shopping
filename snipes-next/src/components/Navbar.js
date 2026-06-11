@@ -3,11 +3,15 @@ import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { useUI } from '@/context/UIContext';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useWishlistStore } from '@/store/useWishlistStore';
 
 export default function Navbar() {
   const { cartCount } = useCart();
   const { openCartDrawer, openSearch } = useUI();
+  const { wishlist } = useWishlistStore();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -76,6 +80,16 @@ export default function Navbar() {
               <button onClick={openSearch} className="hover:opacity-80 hover:-translate-y-0.5 transition-all active:scale-95 duration-300 cursor-pointer text-[var(--color-primary)]">
                 <span className="material-symbols-outlined text-[24px]">search</span>
               </button>
+              
+              <Link href="/wishlist" className="relative hover:opacity-80 hover:-translate-y-0.5 transition-all active:scale-95 duration-300 cursor-pointer text-[var(--color-primary)] flex items-center">
+                <span className="material-symbols-outlined text-[24px]">favorite</span>
+                {mounted && wishlist.length > 0 && (
+                  <span className="absolute -top-1 -right-2 bg-[var(--color-sale-red)] text-white text-[10px] w-[18px] h-[18px] flex items-center justify-center rounded-full font-bold shadow-sm">
+                    {wishlist.length}
+                  </span>
+                )}
+              </Link>
+
               <button onClick={openCartDrawer} className="relative hover:opacity-80 hover:-translate-y-0.5 transition-all active:scale-95 duration-300 cursor-pointer text-[var(--color-primary)] flex items-center gap-2">
                 <span className="font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest hidden md:block">Bag</span>
                 <span className="material-symbols-outlined text-[24px]">shopping_bag</span>

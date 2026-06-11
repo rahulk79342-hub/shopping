@@ -1,12 +1,19 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useUI } from '../context/UIContext';
+import { useWishlistStore } from '@/store/useWishlistStore';
 
 export default function ProductCard({ product, layout = 'normal' }) {
   const { openQuickAdd } = useUI();
+  const { wishlist, toggleWishlist } = useWishlistStore();
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const isWishlisted = mounted ? wishlist.some(item => item.id === product.id) : false;
 
   const images = product.images || [product.image, product.image]; 
 
@@ -49,10 +56,10 @@ export default function ProductCard({ product, layout = 'normal' }) {
         )}
 
         <button 
-          onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-          className="absolute top-2 right-2 md:top-4 md:right-4 bg-white/80 backdrop-blur-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hover:bg-white text-[var(--color-primary)] cursor-pointer shadow-sm"
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist({ ...product, image: images[0] }); }}
+          className={`absolute top-2 right-2 md:top-4 md:right-4 backdrop-blur-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full transition-all duration-300 z-10 cursor-pointer shadow-sm ${isWishlisted ? 'bg-white text-[var(--color-sale-red)] opacity-100 scale-110' : 'bg-white/80 text-[var(--color-primary)] opacity-0 group-hover:opacity-100 hover:bg-white hover:scale-110'}`}
         >
-          <span className="material-symbols-outlined text-[18px] md:text-[20px]">favorite</span>
+          <span className="material-symbols-outlined text-[18px] md:text-[20px]" style={{ fontVariationSettings: isWishlisted ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
         </button>
 
         {images.length > 1 && (

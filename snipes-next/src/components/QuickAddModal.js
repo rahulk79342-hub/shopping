@@ -12,7 +12,9 @@ export default function QuickAddModal() {
 
   useEffect(() => {
     if (quickAddProduct) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveSize('M');
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveColor('Default');
     }
   }, [quickAddProduct]);

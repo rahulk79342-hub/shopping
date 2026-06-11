@@ -8,7 +8,10 @@ export function CartProvider({ children }) {
   
   // For hydration safety
   const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => setIsMounted(true), []);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
 
   const addToCart = (product) => {
     setCartItems(prev => {
