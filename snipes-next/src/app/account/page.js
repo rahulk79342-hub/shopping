@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { logout } from '@/app/actions/auth';
-import { useCart } from '@/context/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 import { useUI } from '@/context/UIContext';
 import Image from 'next/image';
 
@@ -17,7 +17,7 @@ const TABS = [
 export default function AccountPage() {
   const [activeTab, setActiveTab] = useState('orders');
   const [mounted, setMounted] = useState(false);
-  const { addToCart } = useCart();
+  const addToCart = useCartStore(state => state.addToCart);
   const { openCartDrawer } = useUI();
 
   useEffect(() => setMounted(true), []);

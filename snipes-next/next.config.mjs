@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'cdn-demo.algolia.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
     ],
   },
 };

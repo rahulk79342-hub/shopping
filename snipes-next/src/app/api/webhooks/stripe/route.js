@@ -1,53 +1,56 @@
-import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { NextResponse } from 'next/server';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock', {
   apiVersion: '2023-10-16',
 });
 
-// Stripe requires the raw body to construct the event
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'whsec_mock';
 
 export async function POST(req) {
-  const payload = await req.text();
-  const sig = req.headers.get('stripe-signature');
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-  let event;
-
   try {
-    // If we have a webhook secret, verify the signature
-    if (endpointSecret) {
-      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+    const body = await req.text();
+    const signature = req.headers.get('stripe-signature');
+
+    let event;
+
+    // Verify Stripe signature securely if we have real keys
+    if (process.env.STRIPE_WEBHOOK_SECRET) {
+      try {
+        event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+      } catch (err) {
+        console.error(`Webhook signature verification failed:`, err.message);
+        return NextResponse.json({ error: 'Webhook signature verification failed' }, { status: 400 });
+      }
     } else {
-      // Mock mode: parse JSON directly
-      event = JSON.parse(payload);
-      console.log("[Mock Stripe Webhook] Processing event without signature verification.");
+      // Mock parsing for local development without live keys
+      event = JSON.parse(body);
+      console.log("[Mock Webhook] Received unverified event:", event.type);
     }
-  } catch (err) {
-    console.error(`Webhook Error: ${err.message}`);
-    return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 });
-  }
 
-  // Handle the event
-  switch (event.type) {
-    case 'payment_intent.succeeded':
-      const paymentIntent = event.data.object;
-      console.log(`[Stripe Webhook] PaymentIntent for ${paymentIntent.amount} was successful!`);
-      
-      // MOCK: Update Supabase order status
-      // const orderId = paymentIntent.metadata.orderId;
-      // await supabase.from('orders').update({ status: 'paid' }).eq('id', orderId);
-      console.log(`[Mock Supabase] Order status updated to PAID.`);
-      break;
-    default:
-      console.log(`Unhandled event type ${event.type}`);
-  }
+    // Handle specific event types
+    switch (event.type) {
+      case 'payment_intent.succeeded':
+        const paymentIntent = event.data.object;
+        console.log(`[Webhook] PaymentIntent for ${paymentIntent.amount} was successful!`);
+        // TODO: Update Supabase order status to PAID
+        // const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+        // await supabase.from('orders').update({ status: 'PAID' }).eq('stripe_pi_id', paymentIntent.id);
+        break;
+        
+      case 'payment_method.attached':
+        const paymentMethod = event.data.object;
+        console.log(`[Webhook] PaymentMethod ${paymentMethod.id} was attached to a customer.`);
+        break;
+        
+      // ... handle other event types
+      default:
+        console.log(`[Webhook] Unhandled event type ${event.type}`);
+    }
 
-  // Return a 200 response to acknowledge receipt of the event
-  return NextResponse.json({ received: true }, { status: 200 });
+    return NextResponse.json({ received: true });
+  } catch (error) {
+    console.error('Webhook error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }

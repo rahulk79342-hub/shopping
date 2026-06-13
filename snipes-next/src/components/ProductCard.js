@@ -2,11 +2,17 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useUI } from '../context/UIContext';
 import { useWishlistStore } from '@/store/useWishlistStore';
+import { useCartStore } from '@/store/useCartStore';
+import { useCurrency } from '@/hooks/useCurrency';
 
 export default function ProductCard({ product, layout = 'normal' }) {
+  const router = useRouter();
   const { openQuickAdd } = useUI();
+  const addToCart = useCartStore(state => state.addToCart);
+  const { formatPrice } = useCurrency();
   const { wishlist, toggleWishlist } = useWishlistStore();
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -29,29 +35,40 @@ export default function ProductCard({ product, layout = 'normal' }) {
     setCurrentImageIdx((prev) => (prev - 1 + images.length) % images.length);
   };
 
-  const handleQuickAdd = (e) => {
+  const handleQuickAddSize = (e, size) => {
     e.preventDefault();
     e.stopPropagation();
-    openQuickAdd({ ...product, image: images[currentImageIdx] });
+    addToCart({ ...product, size, image: images[currentImageIdx] });
+    router.push('/checkout');
   };
 
   const isDense = layout === 'dense';
+  const isSoldOut = product.stock === 0;
 
   return (
-    <div className={`group card-zoom cursor-pointer relative ${product.type === 'tall' && !isDense ? 'masonry-item-tall' : product.type === 'short' && !isDense ? 'masonry-item-short' : isDense ? 'h-[300px]' : 'masonry-item'} mb-[var(--spacing-stack-lg)]`}>
-      <Link href={`/product/${product.id}`} className={`block relative overflow-hidden bg-[var(--color-surface-container)] mb-[var(--spacing-stack-sm)] ${isDense ? 'h-full' : 'aspect-[3/4]'}`}>
+    <div 
+      className={`group card-zoom cursor-pointer relative flex flex-col ${product.type === 'tall' && !isDense ? 'masonry-item-tall' : product.type === 'short' && !isDense ? 'masonry-item-short' : !isDense ? 'masonry-item' : 'h-full'} mb-[var(--spacing-stack-lg)]`}
+      onMouseEnter={() => router.prefetch(`/product/${product.id}`)}
+    >
+      <Link href={`/product/${product.id}`} className={`block relative overflow-hidden bg-[var(--color-surface-container)] mb-[var(--spacing-stack-sm)] aspect-[3/4] shrink-0`}>
         <Image 
           alt={product.name} 
           src={images[currentImageIdx]}
           fill
           sizes="(max-width: 768px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 ease-out" 
+          className={`object-cover transition-transform duration-700 ease-out ${isSoldOut ? 'blur-md opacity-80' : ''}`} 
           priority={product.id < 3}
         />
         
-        {product.sale && (
-          <div className="absolute top-2 left-2 md:top-4 md:left-4 z-10">
-            <span className="bg-[var(--color-sale-red)] text-white font-[var(--font-family-label-caps)] text-[10px] px-2 py-1 uppercase">Sale</span>
+        {product.sale && !isSoldOut && (
+          <div className="absolute top-2 left-2 md:top-3 md:left-3 z-10">
+            <span className="bg-white text-gray-600 font-[var(--font-family-body-md)] text-[11px] px-2.5 py-1 rounded-full shadow-sm">Sale</span>
+          </div>
+        )}
+
+        {isSoldOut && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-full px-4 flex flex-col items-center">
+            <span className="bg-white/90 text-black font-[var(--font-family-label-caps)] text-[12px] px-4 py-2 uppercase tracking-widest shadow-md mb-2">Sold Out</span>
           </div>
         )}
 
@@ -79,32 +96,57 @@ export default function ProductCard({ product, layout = 'normal' }) {
           </>
         )}
 
-        {/* Full-width Quick Add Overlay */}
-        <div className="absolute bottom-0 left-0 w-full p-2 md:p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-20">
+        {/* Mobile Quick Add Bag Icon (Matches Screenshot) */}
+        {!isSoldOut && (
           <button 
-            onClick={handleQuickAdd}
-            className="w-full bg-[var(--color-background)] text-[var(--color-primary)] font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest py-3 md:py-4 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] transition-colors duration-300 shadow-lg cursor-pointer"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); /* Optional: hook up to mobile quick add drawer */ }}
+            className="absolute bottom-2 right-2 md:bottom-3 md:right-3 w-8 h-8 md:hidden bg-white rounded-full flex items-center justify-center shadow-md z-10 text-gray-800 border border-gray-100"
           >
-            Quick Add
+            <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>local_mall</span>
           </button>
+        )}
+
+        {/* Full-width Quick Add Overlay / Size Flyout (Desktop) */}
+        <div className="absolute bottom-0 left-0 w-full p-2 md:p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-20 hidden md:block">
+          {isSoldOut ? (
+            <button 
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+              className="w-full bg-white text-black font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest py-3 md:py-4 transition-colors duration-300 shadow-lg cursor-pointer hover:bg-[var(--color-surface-container)]"
+            >
+              Notify Me
+            </button>
+          ) : (
+            <div className="bg-[var(--color-background)] shadow-2xl p-1 md:p-2 border border-[var(--color-outline-variant)]">
+              <div className="text-center font-[var(--font-family-label-caps)] text-[10px] uppercase tracking-widest text-[var(--color-outline)] mb-2 mt-1">Quick Add</div>
+              <div className="grid grid-cols-4 gap-1">
+                {['S', 'M', 'L', 'XL'].map(size => (
+                  <button 
+                    key={size}
+                    onClick={(e) => handleQuickAddSize(e, size)}
+                    className="bg-[var(--color-surface-container)] text-[var(--color-primary)] font-[var(--font-family-body-md)] text-xs py-2 hover:bg-[var(--color-primary)] hover:text-white transition-colors duration-200 cursor-pointer"
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </Link>
       
-      {!isDense && (
-        <div className="flex flex-col gap-1 px-1">
-          <h3 className="font-[var(--font-family-body-md)] text-[var(--text-body-md)] font-bold text-[var(--color-primary)] leading-snug line-clamp-1">{product.name}</h3>
-          <div className="flex gap-2 items-center mt-1">
-            <span className={`font-[var(--font-family-price-display)] text-[16px] md:text-[var(--text-price-display)] ${product.sale ? 'text-[var(--color-sale-red)]' : 'text-[var(--color-primary)]'}`}>
-              Rs. {product.price}.00
+      <div className="flex flex-col px-1 mt-2.5">
+        <h3 className="font-[var(--font-family-body-md)] text-[12px] md:text-[14px] text-gray-800 leading-[1.4] mb-1 line-clamp-2">{product.name}</h3>
+        <div className="flex gap-1.5 items-baseline">
+          <span className="font-bold text-[13px] md:text-[15px] text-black">
+            {formatPrice(product.price).replace(/(\.00)?$/, '.00')}
+          </span>
+          {product.originalPrice && (
+            <span className="font-[var(--font-family-body-md)] text-[11px] md:text-[13px] text-gray-400 line-through">
+              {formatPrice(product.originalPrice).replace(/(\.00)?$/, '.00')}
             </span>
-            {product.originalPrice && (
-              <span className="font-[var(--font-family-body-md)] text-[12px] md:text-[14px] text-[var(--color-outline)] line-through">
-                Rs. {product.originalPrice}.00
-              </span>
-            )}
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

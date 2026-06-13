@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useUI } from '../context/UIContext';
-import { useCart } from '../context/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 import Image from 'next/image';
 
 export default function QuickAddModal() {
   const { quickAddProduct, closeQuickAdd, openCartDrawer } = useUI();
-  const { addToCart } = useCart();
+  const addToCart = useCartStore(state => state.addToCart);
   const [activeSize, setActiveSize] = useState('M');
   const [activeColor, setActiveColor] = useState('Default');
 

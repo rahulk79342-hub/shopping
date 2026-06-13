@@ -78,7 +78,7 @@ export default function BestsellersCarousel({ products }) {
               >
                 <div className="relative group flex flex-col h-full">
                   <div className="relative aspect-[3/4] overflow-hidden bg-[var(--color-surface-container)] mb-6">
-                    <Link href={`/product/${product.slug?.current || product._id}`} className="block w-full h-full">
+                    <Link href={`/product/${product.slug?.current || product._id}`} className="block w-full h-full relative">
                       <Image 
                         src={product.imageUrl} 
                         alt={product.title}
@@ -103,9 +103,16 @@ export default function BestsellersCarousel({ products }) {
                         {product.title}
                       </h3>
                     </Link>
-                    <p className="font-[var(--font-family-body-md)] text-[14px] text-[var(--color-outline)]">
-                      Rs. {product.price.toLocaleString('en-IN')}
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <p className={`font-[var(--font-family-body-md)] text-[14px] ${product.sale ? 'text-[var(--color-sale-red)]' : 'text-[var(--color-outline)]'}`}>
+                        Rs. {product.price.toLocaleString('en-IN')}
+                      </p>
+                      {product.originalPrice && (
+                        <p className="font-[var(--font-family-body-md)] text-[12px] text-gray-400 line-through">
+                          Rs. {product.originalPrice.toLocaleString('en-IN')}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

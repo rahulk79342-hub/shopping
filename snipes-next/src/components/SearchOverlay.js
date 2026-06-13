@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 // Algolia Integration
 import { liteClient as algoliasearch } from 'algoliasearch/lite';
-import { InstantSearch, SearchBox, Hits, useInstantSearch, useSearchBox } from 'react-instantsearch';
+import { InstantSearch, SearchBox, Hits, useInstantSearch, useSearchBox, useHits } from 'react-instantsearch';
 
 // Using Algolia's public test credentials for immediate functionality
 const searchClient = algoliasearch(
@@ -77,12 +77,55 @@ function Hit({ hit }) {
   );
 }
 
+// Zero-Results AI Fallback Component
+function ZeroResultsAIFallback({ query }) {
+  const [isProcessing, setIsProcessing] = useState(true);
+
+  useEffect(() => {
+    // Simulate AI thinking time
+    const timer = setTimeout(() => setIsProcessing(false), 2000);
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  const mockAlternatives = [
+    { id: 10, name: "AI Suggested: Flowy Red Dress", image: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk", price: 2499 },
+    { id: 11, name: "AI Suggested: Crimson Maxi", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA76zNwvs5gMYBFVZdgoSKJixLptgh8_OB9nQow0L6_sa-MyFkZ_KEm8y6a2HgRpEoWIqeXdoqpUwF94EgjQmd61fahM19_jR7mirZXRODBeuMxABEdij3syuzXzQbdpXRTIDT0jSfZ9w1e8WNpD1AvZU2g9kOq7r6vmwllFI9oFTFs0PUiYBF7TNVegv2eNGwSdmDEnbrnEmdAanvGG7WAdGbHwCKGcgxcHmU228IbrBPWR6kQBJJlX9OMjpPQ4qKvdkkPp-zi-CzN", price: 1899 }
+  ];
+
+  if (isProcessing) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20">
+        <span className="material-symbols-outlined text-[48px] text-[var(--color-primary)] animate-spin mb-4">refresh</span>
+        <h3 className="font-[var(--font-family-headline-md)] text-xl text-[var(--color-primary)] mb-2 flex items-center gap-2">
+          <span className="material-symbols-outlined text-[#003dff]">auto_awesome</span>
+          Claude-Sonnet-4 Processing...
+        </h3>
+        <p className="font-[var(--font-family-body-md)] text-[var(--color-outline)] text-sm">Analyzing intent for &quot;{query}&quot;...</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="py-8">
+      <div className="text-center mb-10">
+        <h3 className="font-[var(--font-family-headline-md)] text-2xl text-[var(--color-primary)] mb-2">No exact matches found.</h3>
+        <p className="font-[var(--font-family-body-md)] text-[var(--color-outline)]">But our AI found some great alternatives based on your search intent.</p>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+        {mockAlternatives.map(hit => <Hit key={hit.id} hit={hit} />)}
+      </div>
+    </div>
+  );
+}
+
 // Controller to manage Views (Trending vs Results)
 function SearchContent({ onUploadClick }) {
   const { status } = useInstantSearch();
-  const { query } = useSearchBox();
+  const { query, refine } = useSearchBox();
+  const { hits } = useHits();
 
   const trendingSearches = ["Linen Shirts", "Oversized Tees", "Cargo Pants", "Old Money"];
+  const naturalLanguagePrompts = ["flowy red dress for Diwali", "oversized black linen for summer", "wedding guest attire under Rs. 3000"];
   const recentProducts = [
     { id: 1, name: "Digital Printed Shirt - Arctic Blue", image: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk", price: 899 },
     { id: 2, name: "Charcoal Gurkha Pants", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA76zNwvs5gMYBFVZdgoSKJixLptgh8_OB9nQow0L6_sa-MyFkZ_KEm8y6a2HgRpEoWIqeXdoqpUwF94EgjQmd61fahM19_jR7mirZXRODBeuMxABEdij3syuzXzQbdpXRTIDT0jSfZ9w1e8WNpD1AvZU2g9kOq7r6vmwllFI9oFTFs0PUiYBF7TNVegv2eNGwSdmDEnbrnEmdAanvGG7WAdGbHwCKGcgxcHmU228IbrBPWR6kQBJJlX9OMjpPQ4qKvdkkPp-zi-CzN", price: 1499 }
@@ -103,23 +146,42 @@ function SearchContent({ onUploadClick }) {
             </span>
           </div>
           <div className="overflow-y-auto max-h-[60vh] pb-24 hide-scrollbar">
-            <Hits hitComponent={Hit} classNames={{ list: 'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8' }} />
+            {hits.length === 0 && status !== 'stalled' ? (
+              <ZeroResultsAIFallback query={query} />
+            ) : (
+              <Hits hitComponent={Hit} classNames={{ list: 'grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8' }} />
+            )}
           </div>
         </motion.div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-12">
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
             <h3 className="font-[var(--font-family-label-caps)] text-[12px] text-[var(--color-primary)] mb-6 uppercase tracking-widest">Trending Searches</h3>
-            <ul className="flex flex-col gap-4">
+            <ul className="flex flex-col gap-4 mb-10">
               {trendingSearches.map((term, i) => (
                 <li key={i}>
-                  <button className="font-[var(--font-family-body-lg)] text-[20px] text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors text-left flex items-center gap-2 group cursor-pointer w-full">
+                  <button onClick={() => refine(term)} className="font-[var(--font-family-body-lg)] text-[20px] text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors text-left flex items-center gap-2 group cursor-pointer w-full">
                     <span className="material-symbols-outlined text-[18px] opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-2 group-hover:translate-x-0">trending_up</span>
                     {term}
                   </button>
                 </li>
               ))}
             </ul>
+
+            <h3 className="font-[var(--font-family-label-caps)] text-[12px] text-[#003dff] mb-4 uppercase tracking-widest flex items-center gap-2">
+              <span className="material-symbols-outlined text-[16px]">auto_awesome</span> Try Semantic Search
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {naturalLanguagePrompts.map((prompt, i) => (
+                <button 
+                  key={i} 
+                  onClick={() => refine(prompt)}
+                  className="bg-[var(--color-surface-container)] hover:bg-[#003dff] text-[var(--color-primary)] hover:text-white border border-[var(--color-outline-variant)] hover:border-[#003dff] px-4 py-2 rounded-full font-[var(--font-family-body-md)] text-xs transition-colors cursor-pointer"
+                >
+                  &quot;{prompt}&quot;
+                </button>
+              ))}
+            </div>
           </motion.div>
 
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
@@ -197,13 +259,13 @@ function VisualSearchUI({ onClose }) {
               <motion.div 
                 animate={{ top: ['0%', '100%', '0%'] }}
                 transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-                className="absolute left-0 w-full h-[2px] bg-[var(--color-primary)] z-20 shadow-[0_0_15px_var(--color-primary)]"
+                className="absolute left-0 w-full h-[3px] bg-[#003dff] z-20 shadow-[0_0_20px_#003dff]"
               />
             )}
             
             <div className="absolute z-20 flex flex-col items-center">
-              <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin mb-4" />
-              <p className="text-white font-[var(--font-family-label-caps)] text-xs tracking-widest uppercase">Analyzing Image...</p>
+              <span className="material-symbols-outlined text-white text-[48px] animate-pulse mb-4">view_in_ar</span>
+              <p className="text-white font-[var(--font-family-label-caps)] text-xs tracking-widest uppercase bg-black/50 px-4 py-2 rounded-full border border-white/20">Claude Vision Identifying...</p>
             </div>
           </>
         ) : (

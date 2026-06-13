@@ -4,12 +4,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWishlistStore } from '@/store/useWishlistStore';
-import { useCart } from '@/context/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 import { useUI } from '@/context/UIContext';
 
 export default function WishlistPage() {
   const { wishlist, removeFromWishlist, isSyncing, syncWithSupabase } = useWishlistStore();
-  const { addToCart } = useCart();
+  const addToCart = useCartStore(state => state.addToCart);
   const { openCartDrawer } = useUI();
   
   const [mounted, setMounted] = useState(false);

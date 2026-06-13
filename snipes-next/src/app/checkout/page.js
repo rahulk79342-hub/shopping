@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { useCart } from '@/context/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -10,7 +10,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 // Initialize Stripe (use mock key if env var is missing)
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_mock');
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_51MockPublishableKey00000000000000000000000000000000000000000000000000000000000000000000000000');
 
 // Mock Addresses for Autocomplete
 const MOCK_ADDRESSES = [
@@ -18,10 +18,12 @@ const MOCK_ADDRESSES = [
   "456 Park Avenue, New York, NY 10022",
   "789 Silicon Valley Blvd, San Jose, CA 95110",
   "10 Downing Street, London, UK",
-  "1 Infinite Loop, Cupertino, CA 95014"
+  "1 Infinite Loop, Cupertino, CA 95014",
+  "1600 Amphitheatre Pkwy, Mountain View, CA 94043",
+  "350 5th Ave, New York, NY 10118"
 ];
 
-function CheckoutForm({ clientSecret, totalAmount, onSuccess }) {
+function CheckoutForm({ clientSecret, totalAmount, onSuccess, paymentGateway }) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -74,36 +76,137 @@ function CheckoutForm({ clientSecret, totalAmount, onSuccess }) {
         </button>
       </div>
 
-      <div className="relative">
-        {/* If no real key, show a highly styled Mock UI instead of PaymentElement which will fail to mount */}
-        {!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ? (
-          <div className="space-y-4">
-             <p className="text-[12px] text-[var(--color-outline)] font-bold mb-2">MOCK STRIPE ELEMENT</p>
-             <input type="text" placeholder="Card Number (0000 0000 0000 0000)" className="w-full border border-[var(--color-outline-variant)] p-3 rounded-[var(--border-radius-sm)] text-[14px]" />
-             <div className="flex gap-4">
-                <input type="text" placeholder="MM/YY" className="w-1/2 border border-[var(--color-outline-variant)] p-3 rounded-[var(--border-radius-sm)] text-[14px]" />
-                <input type="text" placeholder="CVC" className="w-1/2 border border-[var(--color-outline-variant)] p-3 rounded-[var(--border-radius-sm)] text-[14px]" />
-             </div>
-          </div>
-        ) : (
-          <PaymentElement />
-        )}
-      </div>
+      {/* Conditional Rendering based on selected Gateway */}
+      {paymentGateway === 'stripe' && (
+        <div className="relative animate-fade-in">
+          {/* If no real key, show a highly styled Mock UI instead of PaymentElement which will fail to mount */}
+          {!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ? (
+            <div className="space-y-4">
+               <p className="text-[12px] text-[var(--color-outline)] font-bold mb-2 flex items-center gap-2">
+                 <span className="material-symbols-outlined text-[16px] text-green-500">lock</span> SECURE CARD PAYMENT (MOCK)
+               </p>
+               <div className="relative">
+                 <input type="text" placeholder="Card Number (0000 0000 0000 0000)" className="w-full border border-[var(--color-outline-variant)] p-3 rounded-[var(--border-radius-sm)] text-[14px] pl-10" />
+                 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-outline)]">credit_card</span>
+               </div>
+               <div className="flex gap-4">
+                  <input type="text" placeholder="MM/YY" className="w-1/2 border border-[var(--color-outline-variant)] p-3 rounded-[var(--border-radius-sm)] text-[14px]" />
+                  <input type="text" placeholder="CVC" className="w-1/2 border border-[var(--color-outline-variant)] p-3 rounded-[var(--border-radius-sm)] text-[14px]" />
+               </div>
+            </div>
+          ) : (
+            <PaymentElement />
+          )}
+        </div>
+      )}
 
-      {message && <div className="text-[var(--color-error)] text-sm mt-4">{message}</div>}
+      {paymentGateway === 'razorpay_upi' && (
+        <div className="space-y-4 animate-fade-in border border-[var(--color-outline-variant)] rounded-[var(--border-radius-sm)] p-6 bg-[var(--color-surface-container-low)]">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-[14px] font-[var(--font-family-body-md)] font-bold flex items-center gap-2">
+              <span className="material-symbols-outlined text-[#3399cc]">qr_code_scanner</span> Pay via UPI
+            </p>
+            <div className="flex gap-2">
+              <span className="text-[10px] font-bold bg-black text-white px-2 py-1 rounded">GPay</span>
+              <span className="text-[10px] font-bold bg-[#5f259f] text-white px-2 py-1 rounded">PhonePe</span>
+            </div>
+          </div>
+          <div className="relative">
+            <input type="text" placeholder="Enter UPI ID (e.g., username@upi)" className="w-full border border-[var(--color-outline-variant)] p-3 rounded-[var(--border-radius-sm)] text-[14px] focus:border-[var(--color-primary)] outline-none" />
+          </div>
+          <p className="text-[11px] text-[var(--color-outline)] mt-2">A payment request will be sent to your UPI app.</p>
+        </div>
+      )}
+
+      {paymentGateway === 'simpl' && (
+        <div className="space-y-4 animate-fade-in border border-[var(--color-outline-variant)] rounded-[var(--border-radius-sm)] p-6 bg-[#00D1B2]/5">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[14px] font-[var(--font-family-body-md)] font-bold flex items-center gap-2 text-[#00D1B2]">
+               Simpl Pay Later
+            </p>
+            <span className="bg-[#00D1B2] text-white text-[10px] font-bold px-2 py-1 rounded-sm">simpl</span>
+          </div>
+          <p className="text-[13px] font-[var(--font-family-body-md)] mb-4">Pay in 3 parts of <strong className="font-bold">Rs. {(totalAmount / 3).toFixed(2)}</strong> over 2 months. No hidden fees.</p>
+          <div className="relative">
+            <input type="tel" placeholder="Enter mobile number linked to Simpl" className="w-full border border-[#00D1B2]/30 p-3 rounded-[var(--border-radius-sm)] text-[14px] focus:border-[#00D1B2] outline-none bg-white" />
+          </div>
+          <p className="text-[11px] text-[var(--color-outline)] mt-2">We&apos;ll send an OTP to verify your account.</p>
+        </div>
+      )}
+
+      {paymentGateway === 'razorpay_emi' && (
+        <div className="space-y-4 animate-fade-in border border-[var(--color-outline-variant)] rounded-[var(--border-radius-sm)] p-6 bg-[#3399cc]/5">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-[14px] font-[var(--font-family-body-md)] font-bold flex items-center gap-2 text-[#3399cc]">
+              Razorpay Credit Card EMI
+            </p>
+            <span className="text-[10px] font-bold bg-[#3399cc] text-white px-2 py-1 rounded">0% Interest</span>
+          </div>
+          
+          <select className="w-full border border-[#3399cc]/30 p-3 rounded-[var(--border-radius-sm)] text-[14px] font-[var(--font-family-body-md)] focus:border-[#3399cc] outline-none bg-white cursor-pointer mb-4">
+            <option value="">Select EMI Tenure</option>
+            <option value="3">3 Months x Rs. {(totalAmount / 3).toFixed(2)} / mo (0% interest)</option>
+            <option value="6">6 Months x Rs. {(totalAmount / 6).toFixed(2)} / mo (0% interest)</option>
+            <option value="12">12 Months x Rs. {((totalAmount * 1.05) / 12).toFixed(2)} / mo (5% interest)</option>
+          </select>
+          
+          <div className="flex gap-2">
+            <input type="text" placeholder="Card Number to check eligibility" className="flex-grow border border-[#3399cc]/30 p-3 rounded-[var(--border-radius-sm)] text-[14px] focus:border-[#3399cc] outline-none bg-white" />
+            <button type="button" onClick={(e) => { e.preventDefault(); alert("You are eligible for 0% EMI!"); }} className="bg-[#3399cc] text-white px-4 text-[12px] font-[var(--font-family-label-caps)] uppercase tracking-widest rounded-[var(--border-radius-sm)] hover:bg-[#3399cc]/90 transition-colors">Check</button>
+          </div>
+          <p className="text-[10px] text-[var(--color-outline)] mt-2 flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">shield</span> No hard credit pull for eligibility check.</p>
+        </div>
+      )}
+
+      {paymentGateway === 'klarna' && (
+        <div className="space-y-4 animate-fade-in border border-[var(--color-outline-variant)] rounded-[var(--border-radius-sm)] p-6 bg-[#FFB3C7]/10">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[14px] font-[var(--font-family-body-md)] font-bold flex items-center gap-2 text-black">
+               Klarna.
+            </p>
+            <span className="bg-[#FFB3C7] text-black text-[10px] font-bold px-2 py-1 rounded-sm">International</span>
+          </div>
+          <p className="text-[13px] font-[var(--font-family-body-md)] mb-4 text-[var(--color-outline)]">Pay in 4 interest-free payments of <strong className="font-bold text-black">Rs. {(totalAmount / 4).toFixed(2)}</strong>.</p>
+          <div className="bg-white p-4 border border-[#FFB3C7] rounded-[var(--border-radius-sm)] flex justify-between items-center text-center">
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold text-black mb-1">Today</span>
+              <span className="text-[12px] font-[var(--font-family-price-display)]">Rs. {(totalAmount / 4).toFixed(2)}</span>
+            </div>
+            <div className="flex flex-col opacity-50">
+              <span className="text-[10px] font-bold text-black mb-1">2 Weeks</span>
+              <span className="text-[12px] font-[var(--font-family-price-display)]">Rs. {(totalAmount / 4).toFixed(2)}</span>
+            </div>
+            <div className="flex flex-col opacity-50">
+              <span className="text-[10px] font-bold text-black mb-1">4 Weeks</span>
+              <span className="text-[12px] font-[var(--font-family-price-display)]">Rs. {(totalAmount / 4).toFixed(2)}</span>
+            </div>
+            <div className="flex flex-col opacity-50">
+              <span className="text-[10px] font-bold text-black mb-1">6 Weeks</span>
+              <span className="text-[12px] font-[var(--font-family-price-display)]">Rs. {(totalAmount / 4).toFixed(2)}</span>
+            </div>
+          </div>
+          <p className="text-[11px] text-[var(--color-outline)] mt-2">You will be redirected to Klarna to complete your purchase securely.</p>
+        </div>
+      )}
+
+      {message && <div className="text-[var(--color-error)] text-sm mt-4 p-3 bg-red-50 rounded-sm">{message}</div>}
 
       <button 
-        disabled={isProcessing || !stripe || !elements}
-        className="w-full mt-8 bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[14px] uppercase tracking-widest py-4 rounded-[var(--border-radius-sm)] hover:bg-black/90 transition-colors disabled:opacity-50"
+        disabled={isProcessing || (paymentGateway === 'stripe' && (!stripe || !elements))}
+        className="w-full mt-8 bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[14px] uppercase tracking-widest py-4 rounded-[var(--border-radius-sm)] hover:bg-black/90 transition-all active:scale-[0.99] disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2 shadow-lg"
       >
-        {isProcessing ? 'Processing...' : `Pay Rs. ${totalAmount}.00`}
+        {isProcessing ? (
+          <><span className="material-symbols-outlined animate-spin text-[18px]">refresh</span> Processing...</>
+        ) : (
+          <><span className="material-symbols-outlined text-[18px]">lock</span> Pay Rs. {totalAmount}.00</>
+        )}
       </button>
     </form>
   );
 }
 
 export default function CheckoutPage() {
-  const { cartItems, cartTotal, clearCart } = useCart();
+  const { cartItems, cartTotal: getCartTotal, clearCart } = useCartStore();
   const [mounted, setMounted] = useState(false);
   
   const router = useRouter();
@@ -121,9 +224,11 @@ export default function CheckoutPage() {
   // Payment State
   const [clientSecret, setClientSecret] = useState('');
   const [orderComplete, setOrderComplete] = useState(false);
-  const [orderId, setOrderId] = useState('');
+  const [paymentGateway, setPaymentGateway] = useState('stripe'); // 'stripe' or 'razorpay'
 
   useEffect(() => setMounted(true), []);
+
+  const cartTotal = getCartTotal();
 
   useEffect(() => {
     // Only fetch PaymentIntent if we have items
@@ -151,7 +256,8 @@ export default function CheckoutPage() {
       address: selectedAddress,
       items: cartItems,
       total: cartTotal,
-      mode: checkoutMode
+      mode: checkoutMode,
+      paymentMethod: paymentGateway
     });
 
     if (res.success) {
@@ -272,10 +378,14 @@ export default function CheckoutPage() {
                    onChange={(e) => {
                      setAddressSearch(e.target.value);
                      setShowAddressSuggestions(e.target.value.length > 0);
+                     if (e.target.value === '') setSelectedAddress('');
                    }}
                    placeholder="Start typing your address..." 
                    className="w-full p-2 text-[14px] font-[var(--font-family-body-md)] focus:outline-none"
                  />
+                 {selectedAddress && (
+                   <span className="material-symbols-outlined text-green-600 mr-2">check_circle</span>
+                 )}
               </div>
 
               {/* Mock Google Places Autocomplete Dropdown */}
@@ -303,21 +413,63 @@ export default function CheckoutPage() {
             </div>
 
             {selectedAddress && (
-               <div className="mt-4 p-4 bg-[var(--color-surface-container-low)] border border-green-200 rounded-[var(--border-radius-sm)] flex items-start gap-3">
-                 <span className="material-symbols-outlined text-green-600">check_circle</span>
+               <div className="mt-4 p-4 bg-[var(--color-surface-container-low)] border border-green-200 rounded-[var(--border-radius-sm)] flex items-start gap-3 animate-fade-in shadow-sm">
+                 <span className="material-symbols-outlined text-green-600">local_shipping</span>
                  <div>
-                   <p className="font-[var(--font-family-label-caps)] text-[10px] text-[var(--color-outline)] uppercase tracking-widest mb-1">Verified Address</p>
-                   <p className="font-[var(--font-family-body-md)] text-[14px]">{selectedAddress}</p>
+                   <p className="font-[var(--font-family-label-caps)] text-[10px] text-[var(--color-outline)] uppercase tracking-widest mb-1">Shipping Destination Confirmed</p>
+                   <p className="font-[var(--font-family-body-md)] text-[14px] text-[var(--color-primary)] font-bold">{selectedAddress}</p>
                  </div>
+                 <button onClick={() => { setSelectedAddress(''); setAddressSearch(''); }} className="ml-auto text-[12px] text-[var(--color-outline)] underline hover:text-[var(--color-primary)]">Edit</button>
                </div>
             )}
           </div>
 
           {/* Payment Section */}
           {clientSecret && email && selectedAddress && (
-            <Elements options={{ clientSecret, appearance: { theme: 'stripe' } }} stripe={stripePromise}>
-              <CheckoutForm clientSecret={clientSecret} totalAmount={cartTotal} onSuccess={handlePaymentSuccess} />
-            </Elements>
+            <div className="mt-8">
+              {/* Payment Tabs - Scrollable for BNPL options */}
+              <div className="flex gap-3 mb-6 overflow-x-auto hide-scrollbar pb-2">
+                <button 
+                  onClick={() => setPaymentGateway('stripe')}
+                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'stripe' ? 'border-[#635BFF] bg-[#635BFF]/5' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-[#635BFF]/50'}`}
+                >
+                  <span className="font-bold text-[#635BFF] text-[13px]">Stripe</span>
+                  <span className="text-[9px] text-[var(--color-outline)]">Cards / Apple Pay</span>
+                </button>
+                <button 
+                  onClick={() => setPaymentGateway('razorpay_upi')}
+                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'razorpay_upi' ? 'border-[#3399cc] bg-[#3399cc]/5' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-[#3399cc]/50'}`}
+                >
+                  <span className="font-bold text-[#3399cc] text-[13px]">Razorpay UPI</span>
+                  <span className="text-[9px] text-[var(--color-outline)]">GPay / PhonePe</span>
+                </button>
+                <button 
+                  onClick={() => setPaymentGateway('simpl')}
+                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'simpl' ? 'border-[#00D1B2] bg-[#00D1B2]/5' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-[#00D1B2]/50'}`}
+                >
+                  <span className="font-bold text-[#00D1B2] text-[13px]">Simpl</span>
+                  <span className="text-[9px] text-[var(--color-outline)]">Pay in 3 Parts</span>
+                </button>
+                <button 
+                  onClick={() => setPaymentGateway('razorpay_emi')}
+                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'razorpay_emi' ? 'border-[#3399cc] bg-[#3399cc]/5' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-[#3399cc]/50'}`}
+                >
+                  <span className="font-bold text-[#3399cc] text-[13px]">EMI</span>
+                  <span className="text-[9px] text-[var(--color-outline)]">0% Interest</span>
+                </button>
+                <button 
+                  onClick={() => setPaymentGateway('klarna')}
+                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'klarna' ? 'border-[#FFB3C7] bg-[#FFB3C7]/10' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-[#FFB3C7]/50'}`}
+                >
+                  <span className="font-bold text-black text-[13px]">Klarna.</span>
+                  <span className="text-[9px] text-[var(--color-outline)]">Intl. Pay in 4</span>
+                </button>
+              </div>
+
+              <Elements options={{ clientSecret, appearance: { theme: 'stripe' } }} stripe={stripePromise}>
+                <CheckoutForm clientSecret={clientSecret} totalAmount={cartTotal} onSuccess={handlePaymentSuccess} paymentGateway={paymentGateway} />
+              </Elements>
+            </div>
           )}
 
         </div>

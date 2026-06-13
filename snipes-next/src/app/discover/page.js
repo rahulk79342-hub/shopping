@@ -3,6 +3,7 @@ import { useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import ProductCard from '@/components/ProductCard';
+import OutfitSuggestionCard from '@/components/OutfitSuggestionCard';
 import MobileFilterDrawer from '@/components/MobileFilterDrawer';
 import { fetchMockProducts } from '@/lib/supabase';
 import { useFilterStore } from '@/store/useFilterStore';
@@ -106,7 +107,7 @@ function DiscoverContent() {
                 <span className="font-[var(--font-family-label-caps)] text-[12px] uppercase">Sort By</span>
               </button>
               <div className="absolute right-0 top-full mt-2 w-48 bg-[var(--color-surface)] border border-[var(--color-outline-variant)] shadow-lg hidden group-hover:block z-50">
-                {['new', 'price-asc', 'price-desc', 'trending'].map((s) => (
+                {['new', 'price-asc', 'price-desc', 'trending', 'ai-match'].map((s) => (
                   <button 
                     key={s} 
                     onClick={() => updateFilter('sort', s)}
@@ -150,9 +151,17 @@ function DiscoverContent() {
         </div>
       ) : (
         <section className={viewLayout === 'dense' ? 'grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-4' : 'masonry-grid'}>
-          {products.map(product => (
-            <ProductCard key={product.id} product={product} layout={viewLayout} />
-          ))}
+          {products.map((product, index) => {
+            if (index === 4 && viewLayout !== 'dense') {
+              return (
+                <div key={`outfit-${product.id}`} className="contents">
+                  <OutfitSuggestionCard layout={viewLayout} />
+                  <ProductCard product={product} layout={viewLayout} />
+                </div>
+              );
+            }
+            return <ProductCard key={product.id} product={product} layout={viewLayout} />;
+          })}
         </section>
       )}
 

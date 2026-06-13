@@ -30,6 +30,7 @@ export const fetchMockProducts = async ({ pageParam = 0, filters = {}, sort = 'n
       "https://lh3.googleusercontent.com/aida/AP1WRLvdTNrLqdIbrlVcwvhf1pkicFIWpnzBFdCNmEPxGZPQWSdo5JLETjU7OD2n_HxSzocDKARWSH6316KlftpQ7TnhFoy0mGx_msvfc5QkybOjQoo3H0Dfl1ceWVKM3voQAjRKpFFhc7kJrj21ZQY6aS4zFyRINNnb8xhYILeid1pTKRLT_LG3VXqTFZKBSvir70jC-LREyJzbtBirF6QDKz9BeU13JLHCPk1fd4-MBWrPDa3Mr-u8s8tYQzA"
     ],
     type: ['normal', 'tall', 'short'][Math.floor(Math.random() * 3)],
+    stock: Math.random() > 0.8 ? 0 : 10,
     createdAt: new Date(Date.now() - Math.random() * 10000000000).toISOString()
   }));
 

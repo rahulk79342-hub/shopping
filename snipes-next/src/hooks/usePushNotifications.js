@@ -21,14 +21,8 @@ export function usePushNotifications() {
   const [subscription, setSubscription] = useState(null);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-      setIsSupported(true);
-      registerServiceWorker();
-    }
-  }, []);
 
-  const registerServiceWorker = async () => {
+  async function registerServiceWorker() {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js');
       const sub = await registration.pushManager.getSubscription();
@@ -36,9 +30,16 @@ export function usePushNotifications() {
     } catch (err) {
       console.error('Service Worker Registration failed: ', err);
     }
-  };
+  }
 
-  const subscribeToPush = async () => {
+  useEffect(() => {
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      setIsSupported(true);
+      registerServiceWorker();
+    }
+  }, []);
+
+  async function subscribeToPush() {
     try {
       const registration = await navigator.serviceWorker.ready;
       

@@ -43,10 +43,10 @@ export default function OrderSuccessPage() {
           <span className="material-symbols-outlined text-[40px] text-green-600">verified</span>
         </div>
         
-        <h1 className="font-[var(--font-family-headline-lg)] text-4xl mb-2 text-[var(--color-primary)]">It's Official.</h1>
+        <h1 className="font-[var(--font-family-headline-lg)] text-4xl mb-2 text-[var(--color-primary)]">It&apos;s Official.</h1>
         <p className="font-[var(--font-family-body-lg)] text-[var(--color-outline)] mb-8">
           Your order has been placed successfully.<br/>
-          We've sent a confirmation email and SMS to you.
+          We&apos;ve sent a confirmation email and SMS to you.
         </p>
 
         <div className="bg-[var(--color-surface-container-low)] p-6 rounded-[var(--border-radius-md)] text-left mb-8 border border-dashed border-[var(--color-outline-variant)]">
