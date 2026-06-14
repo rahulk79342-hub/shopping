@@ -329,16 +329,10 @@ export default function CartDrawer() {
               </div>
               
               <div className="bg-[var(--color-surface-container-low)] p-3 rounded-[var(--border-radius-sm)] mb-4 flex flex-col gap-2">
-                 <div className="flex items-start gap-2 border-b border-[var(--color-outline-variant)] pb-2">
+                 <div className="flex items-start gap-2 pb-1">
                    <span className="material-symbols-outlined text-[16px] text-[var(--color-outline)] mt-0.5">local_shipping</span>
                    <p className="font-[var(--font-family-body-md)] text-[11px] text-[var(--color-outline)]">
                      Estimated Delivery: <strong className="text-[var(--color-primary)] font-bold">{deliveryStart.toLocaleDateString('en-US', deliveryFormat)} - {deliveryEnd.toLocaleDateString('en-US', deliveryFormat)}</strong>
-                   </p>
-                 </div>
-                 <div className="flex items-center gap-2 pt-1">
-                   <span className="material-symbols-outlined text-[16px] text-[#FFD700]">stars</span>
-                   <p className="font-[var(--font-family-body-md)] text-[11px] text-[var(--color-outline)]">
-                     You will earn <strong className="text-[var(--color-primary)] font-bold">{loyaltyPoints} Snipes Coins</strong> on this order!
                    </p>
                  </div>
               </div>
@@ -354,10 +348,28 @@ export default function CartDrawer() {
                 </div>
               )}
 
+              {/* Trust Row */}
+              <div className="flex justify-center items-center gap-3 mb-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-2">
+                <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[12px]">sync_alt</span> Free Returns</span>
+                <span>•</span>
+                <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[12px]">lock</span> Secure Checkout</span>
+                <span>•</span>
+                <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[12px]">receipt_long</span> GST Invoice</span>
+              </div>
+
+              {/* Massive VIP Points Nudge */}
+              <div className="w-full bg-black text-white p-3 rounded-t-xl border-b border-white/20 flex items-center justify-center gap-2 shadow-[0_-5px_15px_rgba(234,179,8,0.15)] relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-600/20 to-yellow-400/20 pointer-events-none"></div>
+                <span className="material-symbols-outlined text-yellow-500 text-[18px]">stars</span>
+                <span className="font-bold text-[12px] uppercase tracking-widest">
+                  Checkout now to earn <span className="text-yellow-500">{loyaltyPoints} VIP Points</span>!
+                </span>
+              </div>
+
               <Link 
                 href="/checkout" 
                 onClick={closeCartDrawer}
-                className="w-full bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[12px] tracking-widest py-4 flex items-center justify-center hover:bg-[var(--color-surface-tint)] transition-colors active:scale-[0.99] uppercase cursor-pointer shadow-md rounded-[var(--border-radius-sm)]"
+                className="w-full bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[12px] tracking-widest py-4 flex items-center justify-center hover:bg-[var(--color-surface-tint)] transition-colors active:scale-[0.99] uppercase cursor-pointer shadow-md rounded-b-[var(--border-radius-sm)] relative z-10"
               >
                 Secure Checkout
               </Link>

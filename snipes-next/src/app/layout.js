@@ -7,9 +7,9 @@ import AnnouncementBar from "@/components/AnnouncementBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CartDrawer from "@/components/CartDrawer";
 import QuickAddModal from "@/components/QuickAddModal";
-import SearchOverlay from "@/components/SearchOverlay";
 import SizeRecommender from "@/components/SizeRecommender";
 import Providers from "@/components/Providers";
+import CookieBanner from "@/components/CookieBanner";
 
 const sora = Sora({
   variable: "--font-family-headline-lg",
@@ -81,8 +81,8 @@ export default function RootLayout({ children }) {
               <WhatsAppButton />
               <CartDrawer />
               <QuickAddModal />
-              <SearchOverlay />
               <SizeRecommender />
+              <CookieBanner />
             </div>
           </UIProvider>
         </Providers>

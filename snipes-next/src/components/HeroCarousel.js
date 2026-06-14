@@ -4,46 +4,77 @@ import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const HERO_SLIDES = [
   {
     id: 1,
-    title: "Linen Shirts",
-    subtitle: "BREATHE EASY",
-    imageDesktop: "https://lh3.googleusercontent.com/aida/AP1WRLtXGR7SzSYfLq_WcEd1dIgXMuhck9ZFw-aDoyVPkbMzz6wlmy1y8q8nr7D8F9ieFG_zBepQ-ntDVuMjExLDWUcz43bRNxu4MXtJAIgPdrJ4rMN1zXICmEmL6tyT9e71Eypst3aCZOJ50ZFHXuAMSI5DmFO-za2UnQ-EZ0G35U912G_5srCY01MYPuQvlExHiDp31ozzPfMF4L7i6K3fYjKjwlLngadZWVwjTnyr5SKy9g3zFYW5",
-    imageMobile: "https://lh3.googleusercontent.com/aida/AP1WRLtXGR7SzSYfLq_WcEd1dIgXMuhck9ZFw-aDoyVPkbMzz6wlmy1y8q8nr7D8F9ieFG_zBepQ-ntDVuMjExLDWUcz43bRNxu4MXtJAIgPdrJ4rMN1zXICmEmL6tyT9e71Eypst3aCZOJ50ZFHXuAMSI5DmFO-za2UnQ-EZ0G35U912G_5srCY01MYPuQvlExHiDp31ozzPfMF4L7i6K3fYjKjwlLngadZWVwjTnyr5SKy9g3zFYW5", // Ideally use a portrait crop here
+    type: "video",
+    title: "The Summer Drop",
+    subtitle: "NEW ARRIVALS",
+    mediaDesktop: "https://videos.pexels.com/video-files/8467540/8467540-hd_1920_1080_25fps.mp4",
+    mediaMobile: "https://videos.pexels.com/video-files/8467406/8467406-uhd_1440_2560_25fps.mp4",
     link: "/discover",
+    hotspots: [
+      {
+        id: 'hs1',
+        x: 65,
+        y: 45,
+        product: {
+          name: "Signature Linen Shirt",
+          price: "Rs. 1,499.00",
+          image: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk",
+          link: "/product/1"
+        }
+      },
+      {
+        id: 'hs2',
+        x: 40,
+        y: 75,
+        product: {
+          name: "Classic Chino Trousers",
+          price: "Rs. 1,899.00",
+          image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA76zNwvs5gMYBFVZdgoSKJixLptgh8_OB9nQow0L6_sa-MyFkZ_KEm8y6a2HgRpEoWIqeXdoqpUwF94EgjQmd61fahM19_jR7mirZXRODBeuMxABEdij3syuzXzQbdpXRTIDT0jSfZ9w1e8WNpD1AvZU2g9kOq7r6vmwllFI9oFTFs0PUiYBF7TNVegv2eNGwSdmDEnbrnEmdAanvGG7WAdGbHwCKGcgxcHmU228IbrBPWR6kQBJJlX9OMjpPQ4qKvdkkPp-zi-CzN",
+          link: "/product/2"
+        }
+      }
+    ]
   },
   {
     id: 2,
+    type: "image",
     title: "Printed Shirts",
     subtitle: "MAKE A STATEMENT",
-    imageDesktop: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk",
-    imageMobile: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk",
+    mediaDesktop: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk",
+    mediaMobile: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk",
     link: "/discover",
+    hotspots: []
   },
   {
     id: 3,
+    type: "image",
     title: "Old Money",
     subtitle: "TIMELESS ELEGANCE",
-    imageDesktop: "https://lh3.googleusercontent.com/aida/AP1WRLvSYcGlZrnwqfIIv18eMDIdu2yLyYBG21HM8YJfRqO_iAicuLNUK6anx727focsmckkG7zBbMgV0uhNqsGq8zrEDcq7W1A7-RSbsmKQEvt8zaF0TdkSKstAczSYMBv9CcFDe5jeiEQcGpzsHczxL3WmLBx4t4tpS4HEVDcYOJyrORZr23DyxdoA2bqQhlU-wuQZtkAuGZwChFskCe2q5bfCAidUzkN4jVbZugbdlK7ejH3aTvrL4mMYnio",
-    imageMobile: "https://lh3.googleusercontent.com/aida/AP1WRLvSYcGlZrnwqfIIv18eMDIdu2yLyYBG21HM8YJfRqO_iAicuLNUK6anx727focsmckkG7zBbMgV0uhNqsGq8zrEDcq7W1A7-RSbsmKQEvt8zaF0TdkSKstAczSYMBv9CcFDe5jeiEQcGpzsHczxL3WmLBx4t4tpS4HEVDcYOJyrORZr23DyxdoA2bqQhlU-wuQZtkAuGZwChFskCe2q5bfCAidUzkN4jVbZugbdlK7ejH3aTvrL4mMYnio",
+    mediaDesktop: "https://lh3.googleusercontent.com/aida/AP1WRLvSYcGlZrnwqfIIv18eMDIdu2yLyYBG21HM8YJfRqO_iAicuLNUK6anx727focsmckkG7zBbMgV0uhNqsGq8zrEDcq7W1A7-RSbsmKQEvt8zaF0TdkSKstAczSYMBv9CcFDe5jeiEQcGpzsHczxL3WmLBx4t4tpS4HEVDcYOJyrORZr23DyxdoA2bqQhlU-wuQZtkAuGZwChFskCe2q5bfCAidUzkN4jVbZugbdlK7ejH3aTvrL4mMYnio",
+    mediaMobile: "https://lh3.googleusercontent.com/aida/AP1WRLvSYcGlZrnwqfIIv18eMDIdu2yLyYBG21HM8YJfRqO_iAicuLNUK6anx727focsmckkG7zBbMgV0uhNqsGq8zrEDcq7W1A7-RSbsmKQEvt8zaF0TdkSKstAczSYMBv9CcFDe5jeiEQcGpzsHczxL3WmLBx4t4tpS4HEVDcYOJyrORZr23DyxdoA2bqQhlU-wuQZtkAuGZwChFskCe2q5bfCAidUzkN4jVbZugbdlK7ejH3aTvrL4mMYnio",
     link: "/discover",
+    hotspots: []
   }
 ];
 
 export default function HeroCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, duration: 40, align: "center" }, // Smooth transition, align center
-    [Autoplay({ delay: 10000, stopOnInteraction: false })]
+    { loop: true, duration: 40, align: "center" },
+    [Autoplay({ delay: 8000, stopOnInteraction: false })]
   );
   
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [activeHotspot, setActiveHotspot] = useState(null);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     setSelectedIndex(emblaApi.selectedScrollSnap());
+    setActiveHotspot(null); // Close hotspot on slide change
   }, [emblaApi, setSelectedIndex]);
 
   useEffect(() => {
@@ -57,48 +88,131 @@ export default function HeroCarousel() {
   const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
+  const toggleHotspot = (e, id) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setActiveHotspot(prev => prev === id ? null : id);
+  };
+
   return (
     <section className="relative w-full overflow-hidden bg-[var(--color-background)] group pt-4 md:pt-8 pb-8 md:pb-12">
-      <div className="overflow-hidden w-full h-[60vh] md:h-[75vh]" ref={emblaRef}>
+      <div className="overflow-hidden w-full h-[70vh] md:h-[80vh]" ref={emblaRef}>
         <div className="flex w-full h-full touch-pan-y -ml-4 md:-ml-6">
           {HERO_SLIDES.map((slide, index) => (
-            <div key={slide.id} className="relative flex-[0_0_85%] md:flex-[0_0_60%] min-w-0 h-full pl-4 md:pl-6">
-              <div className="relative w-full h-full rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm">
-                {/* Desktop Image */}
-                <Image
-                  src={slide.imageDesktop}
-                  alt={slide.title}
-                  fill
-                  priority={index === 0}
-                  className="hidden md:block object-cover object-top"
-                  sizes="(max-width: 768px) 100vw, 60vw"
-                />
-                {/* Mobile Image */}
-                <Image
-                  src={slide.imageMobile}
-                  alt={slide.title}
-                  fill
-                  priority={index === 0}
-                  className="block md:hidden object-cover object-top"
-                  sizes="(max-width: 768px) 85vw, 100vw"
-                />
+            <div key={slide.id} className="relative flex-[0_0_90%] md:flex-[0_0_65%] min-w-0 h-full pl-4 md:pl-6">
+              <div className="relative w-full h-full rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm group/slide">
                 
-                {/* Content */}
-                <div className="absolute inset-0 flex flex-col justify-start items-center md:items-start text-center md:text-left pt-10 md:pt-12 px-6 z-10">
+                {/* Media Layer */}
+                {slide.type === 'video' ? (
+                  <>
+                    <video
+                      src={slide.mediaDesktop}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="hidden md:block w-full h-full object-cover"
+                    />
+                    <video
+                      src={slide.mediaMobile}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="block md:hidden w-full h-full object-cover"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Image
+                      src={slide.mediaDesktop}
+                      alt={slide.title}
+                      fill
+                      priority={index === 0}
+                      className="hidden md:block object-cover object-center"
+                      sizes="(max-width: 768px) 100vw, 65vw"
+                    />
+                    <Image
+                      src={slide.mediaMobile}
+                      alt={slide.title}
+                      fill
+                      priority={index === 0}
+                      className="block md:hidden object-cover object-center"
+                      sizes="(max-width: 768px) 90vw, 100vw"
+                    />
+                  </>
+                )}
+
+                {/* Dark Overlay for better text readability */}
+                <div className="absolute inset-0 bg-black/20 md:bg-black/10 z-0 transition-opacity"></div>
+                
+                {/* Content Layer */}
+                <div className="absolute inset-0 flex flex-col justify-start items-center md:items-start text-center md:text-left pt-12 md:pt-16 px-8 z-10 pointer-events-none">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     className="max-w-2xl"
                   >
-                    <h2 className="text-[32px] md:text-[48px] text-[#2c527a] leading-[1] mb-1" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>
+                    <h2 className="text-[36px] md:text-[56px] text-white leading-[1.1] mb-2 drop-shadow-md" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>
                       {slide.title}
                     </h2>
-                    <span className="font-[var(--font-family-label-caps)] text-[11px] md:text-[13px] text-gray-500 uppercase tracking-[0.2em] block font-semibold">
+                    <span className="font-[var(--font-family-label-caps)] text-[12px] md:text-[14px] text-white/90 uppercase tracking-[0.2em] block font-bold drop-shadow-md">
                       {slide.subtitle}
                     </span>
+                    <Link href={slide.link} className="inline-block mt-6 px-8 py-3 bg-white text-black font-bold text-[12px] uppercase tracking-widest rounded-full hover:bg-black hover:text-white transition-colors pointer-events-auto">
+                      Shop Now
+                    </Link>
                   </motion.div>
                 </div>
+
+                {/* Hotspots Layer */}
+                {slide.hotspots && slide.hotspots.length > 0 && (
+                  <div className="absolute inset-0 z-20 pointer-events-none">
+                    {slide.hotspots.map(hotspot => (
+                       <div 
+                         key={hotspot.id} 
+                         className="absolute pointer-events-auto"
+                         style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%` }}
+                       >
+                         {/* Pulsing Dot */}
+                         <button 
+                           onClick={(e) => toggleHotspot(e, hotspot.id)}
+                           className="relative w-6 h-6 -ml-3 -mt-3 flex items-center justify-center group"
+                           aria-label="View product"
+                         >
+                           <span className="absolute w-full h-full bg-white rounded-full opacity-40 animate-ping"></span>
+                           <span className="relative w-3 h-3 bg-white rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)] border-2 border-white group-hover:scale-125 transition-transform"></span>
+                         </button>
+
+                         {/* Product Card Popover */}
+                         <AnimatePresence>
+                           {activeHotspot === hotspot.id && (
+                             <motion.div 
+                               initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                               animate={{ opacity: 1, y: 0, scale: 1 }}
+                               exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                               className="absolute left-1/2 -translate-x-1/2 bottom-full mb-4 w-48 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-3 border border-white/20"
+                             >
+                               {/* Triangle pointer */}
+                               <div className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-4 h-4 bg-white/95 rotate-45 border-r border-b border-white/20"></div>
+                               
+                               <Link href={hotspot.product.link} className="flex flex-col gap-3 relative z-10 group/card">
+                                 <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-gray-100">
+                                   <Image src={hotspot.product.image} fill className="object-cover group-hover/card:scale-110 transition-transform duration-500" alt={hotspot.product.name} />
+                                 </div>
+                                 <div className="text-center">
+                                    <p className="text-[12px] font-bold text-black leading-tight mb-1">{hotspot.product.name}</p>
+                                    <p className="text-[12px] font-medium text-gray-600">{hotspot.product.price}</p>
+                                 </div>
+                               </Link>
+                             </motion.div>
+                           )}
+                         </AnimatePresence>
+                       </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}

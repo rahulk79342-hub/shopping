@@ -6,42 +6,44 @@ export default function Benefits() {
     {
       id: 1,
       icon: "local_shipping",
-      title: "Free Shipping",
-      description: "On all orders over ₹2000"
+      title: "Carbon-Neutral Shipping",
+      description: "Free & 100% offset on all orders"
     },
     {
       id: 2,
-      icon: "verified",
-      title: "Premium Quality",
-      description: "Finest fabrics & craftsmanship"
+      icon: "eco",
+      title: "Sustainable Fabrics",
+      description: "Made from 100% organic cotton"
     },
     {
       id: 3,
-      icon: "support_agent",
-      title: "24/7 Support",
-      description: "Always here to help you"
+      icon: "sync_alt",
+      title: "Easy Returns",
+      description: "14-day hassle-free policy"
     },
     {
       id: 4,
-      icon: "sync_alt",
-      title: "Easy Returns",
-      description: "14-day return policy"
+      icon: "lock",
+      title: "Secure Payments",
+      description: "256-bit encrypted checkout"
     }
   ];
 
   return (
-    <section className="w-full py-12 md:py-16 bg-white border-t border-gray-100">
+    <section className="w-full py-16 md:py-20 bg-[#f8f8f8]">
       <div className="max-w-screen-2xl mx-auto px-4 md:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
           {benefits.map((benefit) => (
-            <div key={benefit.id} className="flex flex-col items-center text-center">
-              <span className="material-symbols-outlined text-[32px] md:text-[40px] text-black mb-4">
-                {benefit.icon}
-              </span>
-              <h3 className="font-bold text-[14px] md:text-[16px] text-black mb-1 uppercase tracking-wide">
+            <div key={benefit.id} className="flex flex-col items-center text-center group">
+              <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-6 shadow-sm border border-gray-100 group-hover:scale-110 transition-transform duration-300">
+                <span className="material-symbols-outlined text-[28px] text-black">
+                  {benefit.icon}
+                </span>
+              </div>
+              <h3 className="font-bold text-[13px] md:text-[15px] text-black mb-2 uppercase tracking-widest">
                 {benefit.title}
               </h3>
-              <p className="text-[12px] md:text-[14px] text-gray-500">
+              <p className="text-[13px] md:text-[14px] text-gray-500 max-w-[200px]">
                 {benefit.description}
               </p>
             </div>
