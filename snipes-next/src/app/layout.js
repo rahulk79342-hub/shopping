@@ -7,8 +7,13 @@ import AnnouncementBar from "@/components/AnnouncementBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CartDrawer from "@/components/CartDrawer";
 import QuickAddModal from "@/components/QuickAddModal";
+<<<<<<< HEAD
 import SearchOverlay from "@/components/SearchOverlay";
+=======
+import SizeRecommender from "@/components/SizeRecommender";
+>>>>>>> c0a30dc4f1f78e9f3ff54d6758e50f169f82bd39
 import Providers from "@/components/Providers";
+import CookieBanner from "@/components/CookieBanner";
 
 const inter = Inter({
   variable: "--font-family-inter",
@@ -74,7 +79,12 @@ export default function RootLayout({ children }) {
               <WhatsAppButton />
               <CartDrawer />
               <QuickAddModal />
+<<<<<<< HEAD
               <SearchOverlay />
+=======
+              <SizeRecommender />
+              <CookieBanner />
+>>>>>>> c0a30dc4f1f78e9f3ff54d6758e50f169f82bd39
             </div>
           </UIProvider>
         </Providers>

@@ -4,18 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
+<<<<<<< HEAD
 import { motion } from "framer-motion";
 import { MdOutlineArrowBack, MdOutlineArrowForward } from 'react-icons/md';
 
+=======
+import { motion, AnimatePresence } from "framer-motion";
+>>>>>>> c0a30dc4f1f78e9f3ff54d6758e50f169f82bd39
 
 export default function BestsellersCarousel({ products }) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { align: "start", loop: true, skipSnaps: false, dragFree: true },
-    [Autoplay({ delay: 4000, stopOnInteraction: true })]
+    [Autoplay({ delay: 5000, stopOnInteraction: true })]
   );
   
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
+  const [activeTab, setActiveTab] = useState('bestsellers');
 
   const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
@@ -28,41 +33,58 @@ export default function BestsellersCarousel({ products }) {
 
   useEffect(() => {
     if (!emblaApi) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     onSelect();
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
   }, [emblaApi, onSelect]);
 
+  // Re-init carousel when tab changes to reset position
+  useEffect(() => {
+    if (emblaApi) {
+      emblaApi.scrollTo(0, true);
+    }
+  }, [activeTab, emblaApi]);
+
   if (!products || products.length === 0) return null;
 
+  // Simulate different data for "New Arrivals"
+  const displayProducts = activeTab === 'bestsellers' ? products : [...products].reverse();
+
   return (
-    <section className="w-full py-32 overflow-hidden bg-[var(--color-surface-container-low)]">
-      <div className="max-w-[1440px] mx-auto px-[var(--spacing-margin-mobile)] md:px-12">
+    <section className="w-full py-16 md:py-24 overflow-hidden bg-[var(--color-surface-container-low)]">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-12">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 border-b border-[var(--color-outline-variant)] pb-8 gap-6">
-          <div>
-            <span className="font-[var(--font-family-label-caps)] text-[10px] text-[var(--color-outline)] uppercase tracking-[0.3em] block mb-2">Most Wanted</span>
-            <h2 className="font-[var(--font-family-headline-lg)] text-[32px] md:text-[56px] text-[var(--color-primary)] leading-none tracking-tight">
+        {/* Header with Tabs */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 border-b border-gray-200 pb-6 gap-6">
+          <div className="flex gap-6 md:gap-10">
+            <button 
+              onClick={() => setActiveTab('bestsellers')} 
+              className={`text-[24px] md:text-[40px] tracking-tight leading-none transition-colors duration-300 ${activeTab === 'bestsellers' ? 'text-black font-bold' : 'text-gray-400 font-medium hover:text-gray-600'}`}
+              style={{ fontFamily: activeTab === 'bestsellers' ? "Georgia, serif" : "inherit", fontStyle: activeTab === 'bestsellers' ? "italic" : "normal" }}
+            >
               Bestsellers
-            </h2>
+            </button>
+            <button 
+              onClick={() => setActiveTab('newArrivals')} 
+              className={`text-[24px] md:text-[40px] tracking-tight leading-none transition-colors duration-300 ${activeTab === 'newArrivals' ? 'text-black font-bold' : 'text-gray-400 font-medium hover:text-gray-600'}`}
+              style={{ fontFamily: activeTab === 'newArrivals' ? "Georgia, serif" : "inherit", fontStyle: activeTab === 'newArrivals' ? "italic" : "normal" }}
+            >
+              New Arrivals
+            </button>
           </div>
           
           {/* Custom Navigation */}
-          <div className="flex gap-4">
+          <div className="hidden md:flex gap-4">
             <button 
               onClick={scrollPrev}
-              disabled={!prevBtnEnabled}
-              className={`w-12 h-12 flex items-center justify-center border border-[var(--color-outline-variant)] rounded-full transition-all duration-300 ${!prevBtnEnabled ? 'opacity-30 cursor-not-allowed' : 'hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] cursor-pointer'}`}
+              className="w-12 h-12 flex items-center justify-center border border-gray-300 rounded-full hover:bg-black hover:text-white hover:border-black transition-all duration-300 cursor-pointer"
               aria-label="Previous slide"
             >
               <MdOutlineArrowBack className="text-[20px]" />
             </button>
             <button 
               onClick={scrollNext}
-              disabled={!nextBtnEnabled}
-              className={`w-12 h-12 flex items-center justify-center border border-[var(--color-outline-variant)] rounded-full transition-all duration-300 ${!nextBtnEnabled ? 'opacity-30 cursor-not-allowed' : 'hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] cursor-pointer'}`}
+              className="w-12 h-12 flex items-center justify-center border border-gray-300 rounded-full hover:bg-black hover:text-white hover:border-black transition-all duration-300 cursor-pointer"
               aria-label="Next slide"
             >
               <MdOutlineArrowForward className="text-[20px]" />
@@ -72,54 +94,72 @@ export default function BestsellersCarousel({ products }) {
 
         {/* Carousel Viewport */}
         <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
-          <div className="flex -ml-4 md:-ml-8 touch-pan-y">
-            {products.map((product, index) => (
-              <div 
-                key={product._id || index} 
-                className="flex-[0_0_80%] min-w-0 md:flex-[0_0_35%] lg:flex-[0_0_28%] pl-4 md:pl-8"
-              >
-                <div className="relative group flex flex-col h-full">
-                  <div className="relative aspect-[3/4] overflow-hidden bg-[var(--color-surface-container)] mb-6">
-                    <Link href={`/product/${product.slug?.current || product._id}`} className="block w-full h-full relative">
-                      <Image 
-                        src={product.imageUrl} 
-                        alt={product.title}
-                        fill
-                        sizes="(max-width: 768px) 80vw, (max-width: 1024px) 35vw, 28vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                      />
-                      <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    </Link>
-                    
-                    {/* Quick Add Overlay */}
-                    <div className="absolute bottom-0 left-0 w-full p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-                      <button className="w-full bg-[var(--color-background)] text-[var(--color-primary)] font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest py-4 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] transition-colors duration-300 shadow-lg cursor-pointer">
-                        Quick Add
-                      </button>
-                    </div>
-                  </div>
-                  
-                  <div className="flex flex-col gap-2">
-                    <Link href={`/product/${product.slug?.current || product._id}`}>
-                      <h3 className="font-[var(--font-family-headline-md)] text-[18px] text-[var(--color-primary)] hover:text-[var(--color-outline)] transition-colors">
-                        {product.title}
-                      </h3>
-                    </Link>
-                    <div className="flex items-center gap-2">
-                      <p className={`font-[var(--font-family-body-md)] text-[14px] ${product.sale ? 'text-[var(--color-sale-red)]' : 'text-[var(--color-outline)]'}`}>
-                        Rs. {product.price.toLocaleString('en-IN')}
-                      </p>
-                      {product.originalPrice && (
-                        <p className="font-[var(--font-family-body-md)] text-[12px] text-gray-400 line-through">
-                          Rs. {product.originalPrice.toLocaleString('en-IN')}
-                        </p>
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={activeTab}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4 }}
+              className="flex -ml-4 md:-ml-8 touch-pan-y"
+            >
+              {displayProducts.map((product, index) => (
+                <div 
+                  key={product._id || index} 
+                  className="flex-[0_0_85%] min-w-0 md:flex-[0_0_35%] lg:flex-[0_0_28%] pl-4 md:pl-8"
+                >
+                  <div className="relative group flex flex-col h-full">
+                    <div className="relative aspect-[3/4] overflow-hidden bg-gray-100 mb-5 rounded-[16px]">
+                      <Link href={`/product/${product.slug?.current || product._id}`} className="block w-full h-full relative">
+                        <Image 
+                          src={product.imageUrl} 
+                          alt={product.title}
+                          fill
+                          sizes="(max-width: 768px) 85vw, (max-width: 1024px) 35vw, 28vw"
+                          className="object-cover object-top group-hover:scale-105 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                        />
+                        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      </Link>
+
+                      {/* Rank Badge (#1 Best Seller) */}
+                      {activeTab === 'bestsellers' && index === 0 && (
+                        <div className="absolute top-4 left-4 bg-black text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest flex items-center gap-1 shadow-xl z-10">
+                          <span className="material-symbols-outlined text-[12px]">workspace_premium</span>
+                          #1 Best Seller this week
+                        </div>
                       )}
+
+                      {/* Low Stock Indicator */}
+                      {index === 2 && (
+                        <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md border border-orange-200 text-orange-600 text-[11px] font-bold px-3 py-2 rounded-xl flex items-center gap-1.5 shadow-lg z-10 translate-y-2 group-hover:translate-y-0 transition-transform">
+                          <span className="material-symbols-outlined text-[14px]">warning</span>
+                          Only 3 left — Order soon!
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-col gap-1 px-1">
+                      <Link href={`/product/${product.slug?.current || product._id}`}>
+                        <h3 className="font-bold text-[15px] md:text-[17px] text-black hover:underline decoration-2 underline-offset-4 leading-tight">
+                          {product.title}
+                        </h3>
+                      </Link>
+                      <div className="flex items-center gap-2">
+                        <p className={`font-medium text-[14px] ${product.sale ? 'text-red-600' : 'text-gray-600'}`}>
+                          Rs. {product.price.toLocaleString('en-IN')}
+                        </p>
+                        {product.originalPrice && (
+                          <p className="font-medium text-[12px] text-gray-400 line-through">
+                            Rs. {product.originalPrice.toLocaleString('en-IN')}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
         
       </div>
