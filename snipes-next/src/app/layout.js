@@ -1,4 +1,4 @@
-import { Sora, Hanken_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { UIProvider } from "@/context/UIContext";
 import Navbar from "@/components/Navbar";
@@ -8,17 +8,10 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import CartDrawer from "@/components/CartDrawer";
 import QuickAddModal from "@/components/QuickAddModal";
 import SearchOverlay from "@/components/SearchOverlay";
-import SizeRecommender from "@/components/SizeRecommender";
 import Providers from "@/components/Providers";
 
-const sora = Sora({
-  variable: "--font-family-headline-lg",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const hanken = Hanken_Grotesk({
-  variable: "--font-family-body-md",
+const inter = Inter({
+  variable: "--font-family-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -70,7 +63,7 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
       </head>
-      <body className={`${sora.variable} ${hanken.variable} antialiased`} suppressHydrationWarning>
+      <body className={`${inter.variable} antialiased`} suppressHydrationWarning>
         <Providers>
           <UIProvider>
             <div className="bg-[var(--color-background)] min-h-screen text-[var(--color-on-background)] selection:bg-[var(--color-primary)] selection:text-white">
@@ -82,7 +75,6 @@ export default function RootLayout({ children }) {
               <CartDrawer />
               <QuickAddModal />
               <SearchOverlay />
-              <SizeRecommender />
             </div>
           </UIProvider>
         </Providers>

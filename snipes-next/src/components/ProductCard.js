@@ -7,6 +7,8 @@ import { useUI } from '../context/UIContext';
 import { useWishlistStore } from '@/store/useWishlistStore';
 import { useCartStore } from '@/store/useCartStore';
 import { useCurrency } from '@/hooks/useCurrency';
+import { MdOutlineFavorite, MdOutlineChevronLeft, MdOutlineChevronRight, MdOutlineLocalMall, MdOutlineAdd } from 'react-icons/md';
+
 
 export default function ProductCard({ product, layout = 'normal' }) {
   const router = useRouter();
@@ -76,7 +78,7 @@ export default function ProductCard({ product, layout = 'normal' }) {
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist({ ...product, image: images[0] }); }}
           className={`absolute top-2 right-2 md:top-4 md:right-4 backdrop-blur-sm w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full transition-all duration-300 z-10 cursor-pointer shadow-sm ${isWishlisted ? 'bg-white text-[var(--color-sale-red)] opacity-100 scale-110' : 'bg-white/80 text-[var(--color-primary)] opacity-0 group-hover:opacity-100 hover:bg-white hover:scale-110'}`}
         >
-          <span className="material-symbols-outlined text-[18px] md:text-[20px]" style={{ fontVariationSettings: isWishlisted ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
+          <MdOutlineFavorite className="text-[18px] md:text-[20px]"  />
         </button>
 
         {images.length > 1 && (
@@ -85,53 +87,27 @@ export default function ProductCard({ product, layout = 'normal' }) {
               onClick={handlePrevImage}
               className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[var(--color-primary)] w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 cursor-pointer shadow-sm"
             >
-              <span className="material-symbols-outlined text-[16px]">chevron_left</span>
+              <MdOutlineChevronLeft className="text-[16px]" />
             </button>
             <button 
               onClick={handleNextImage}
               className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-[var(--color-primary)] w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 cursor-pointer shadow-sm"
             >
-              <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+              <MdOutlineChevronRight className="text-[16px]" />
             </button>
           </>
         )}
 
-        {/* Mobile Quick Add Bag Icon (Matches Screenshot) */}
+        {/* Quick Add Button (Mobile & Desktop Hover) */}
         {!isSoldOut && (
           <button 
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); /* Optional: hook up to mobile quick add drawer */ }}
-            className="absolute bottom-2 right-2 md:bottom-3 md:right-3 w-8 h-8 md:hidden bg-white rounded-full flex items-center justify-center shadow-md z-10 text-gray-800 border border-gray-100"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); openQuickAdd(product); }}
+            className="absolute bottom-2 right-2 md:bottom-3 md:right-3 w-8 h-8 md:w-10 md:h-10 bg-white rounded-full flex items-center justify-center shadow-md z-10 text-gray-800 border border-gray-100 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:scale-105"
           >
-            <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300" }}>local_mall</span>
+            <MdOutlineLocalMall className="text-[14px] md:hidden" />
+            <MdOutlineAdd className="text-[20px] hidden md:block" />
           </button>
         )}
-
-        {/* Full-width Quick Add Overlay / Size Flyout (Desktop) */}
-        <div className="absolute bottom-0 left-0 w-full p-2 md:p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] z-20 hidden md:block">
-          {isSoldOut ? (
-            <button 
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-              className="w-full bg-white text-black font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest py-3 md:py-4 transition-colors duration-300 shadow-lg cursor-pointer hover:bg-[var(--color-surface-container)]"
-            >
-              Notify Me
-            </button>
-          ) : (
-            <div className="bg-[var(--color-background)] shadow-2xl p-1 md:p-2 border border-[var(--color-outline-variant)]">
-              <div className="text-center font-[var(--font-family-label-caps)] text-[10px] uppercase tracking-widest text-[var(--color-outline)] mb-2 mt-1">Quick Add</div>
-              <div className="grid grid-cols-4 gap-1">
-                {['S', 'M', 'L', 'XL'].map(size => (
-                  <button 
-                    key={size}
-                    onClick={(e) => handleQuickAddSize(e, size)}
-                    className="bg-[var(--color-surface-container)] text-[var(--color-primary)] font-[var(--font-family-body-md)] text-xs py-2 hover:bg-[var(--color-primary)] hover:text-white transition-colors duration-200 cursor-pointer"
-                  >
-                    {size}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
       </Link>
       
       <div className="flex flex-col px-1 mt-2.5">

@@ -2,6 +2,8 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { MdOutlineLocalShipping, MdOutlineInventory2, MdOutlinePrint } from 'react-icons/md';
+
 
 export default function ReturnsSuccessPage() {
   const searchParams = useSearchParams();
@@ -18,7 +20,7 @@ export default function ReturnsSuccessPage() {
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 to-purple-500"></div>
 
         <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span className="material-symbols-outlined text-[40px] text-blue-500">local_shipping</span>
+          <MdOutlineLocalShipping className="text-[40px] text-blue-500" />
         </div>
         
         <h1 className="font-[var(--font-family-headline-lg)] text-3xl mb-2 text-[var(--color-primary)]">Return Approved</h1>
@@ -28,7 +30,7 @@ export default function ReturnsSuccessPage() {
 
         <div className="bg-[var(--color-surface-container-low)] p-6 rounded-[var(--border-radius-md)] text-left mb-8 border border-[var(--color-outline-variant)]">
           <h3 className="font-bold text-[16px] mb-4 flex items-center gap-2">
-            <span className="material-symbols-outlined text-[20px]">inventory_2</span>
+            <MdOutlineInventory2 className="text-[20px]" />
             Next Steps
           </h3>
           <ol className="list-decimal pl-5 space-y-3 text-[14px] font-[var(--font-family-body-md)] text-[var(--color-outline)]">
@@ -47,7 +49,7 @@ export default function ReturnsSuccessPage() {
                rel="noopener noreferrer"
                className="w-full bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[12px] uppercase py-4 tracking-widest hover:bg-[var(--color-surface-tint)] transition-colors rounded-[var(--border-radius-sm)] flex items-center justify-center gap-3"
              >
-               <span className="material-symbols-outlined text-[18px]">print</span>
+               <MdOutlinePrint className="text-[18px]" />
                Download Return Label
              </a>
           ) : (

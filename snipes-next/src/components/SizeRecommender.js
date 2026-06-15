@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { useUI } from '../context/UIContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MdOutlineClose } from 'react-icons/md';
+
 
 export default function SizeRecommender() {
   const { isSizeGuideOpen, closeSizeGuide } = useUI();
@@ -57,7 +59,7 @@ export default function SizeRecommender() {
             <div className="p-6 border-b border-[var(--color-outline-variant)] flex justify-between items-center">
               <h2 className="font-[var(--font-family-headline-md)] text-[20px] text-[var(--color-primary)]">Size Recommender</h2>
               <button onClick={closeSizeGuide} className="text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors cursor-pointer p-1">
-                <span className="material-symbols-outlined text-[24px]">close</span>
+                <MdOutlineClose className="text-[24px]" />
               </button>
             </div>
 

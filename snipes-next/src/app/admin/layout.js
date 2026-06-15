@@ -1,6 +1,8 @@
 "use client";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { MdOutlineDashboard, MdOutlineSell, MdOutlineEditNote, MdOutlineStorefront } from 'react-icons/md';
+
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
@@ -25,28 +27,28 @@ export default function AdminLayout({ children }) {
             href="/admin" 
             className={`flex items-center gap-3 px-4 py-3 rounded-lg font-[var(--font-family-body-md)] text-[14px] transition-colors ${pathname === '/admin' ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
           >
-            <span className="material-symbols-outlined text-[20px]">dashboard</span>
+            <MdOutlineDashboard className="text-[20px]" />
             Dashboard
           </Link>
           <Link 
             href="/admin/promotions" 
             className={`flex items-center gap-3 px-4 py-3 rounded-lg font-[var(--font-family-body-md)] text-[14px] transition-colors ${pathname === '/admin/promotions' ? 'bg-white/10 text-white' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
           >
-            <span className="material-symbols-outlined text-[20px]">sell</span>
+            <MdOutlineSell className="text-[20px]" />
             Promotions
           </Link>
           <Link 
             href="/admin/studio" 
             className={`flex items-center gap-3 px-4 py-3 rounded-lg font-[var(--font-family-body-md)] text-[14px] transition-colors text-gray-400 hover:text-white hover:bg-white/5`}
           >
-            <span className="material-symbols-outlined text-[20px]">edit_document</span>
+            <MdOutlineEditNote className="text-[20px]" />
             CMS (Sanity)
           </Link>
         </nav>
 
         <div className="p-6 border-t border-white/10">
           <Link href="/" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-[14px] font-[var(--font-family-body-md)]">
-            <span className="material-symbols-outlined text-[20px]">storefront</span>
+            <MdOutlineStorefront className="text-[20px]" />
             Back to Store
           </Link>
         </div>

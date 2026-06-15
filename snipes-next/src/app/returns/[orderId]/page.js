@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createClient } from '@supabase/supabase-js';
 import Image from 'next/image';
+import { MdOutlineCheckCircle, MdOutlineCloudUpload, MdOutlineAccountBalanceWallet, MdOutlineSwapHoriz } from 'react-icons/md';
+
 
 // Initialize Supabase Client for Storage
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -194,14 +196,14 @@ export default function ReturnsFormPage(props) {
                       <p className="text-[14px] text-[var(--color-primary)] animate-pulse font-bold">Uploading to Supabase Storage...</p>
                     ) : photoUrl ? (
                       <div className="flex flex-col items-center">
-                        <span className="material-symbols-outlined text-green-500 mb-2">check_circle</span>
+                        <MdOutlineCheckCircle className="text-green-500 mb-2" />
                         <p className="text-[12px] text-[var(--color-outline)]">Image uploaded successfully</p>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={photoUrl} alt="Upload preview" className="h-16 mt-2 rounded-sm" />
                       </div>
                     ) : (
                       <div className="flex flex-col items-center cursor-pointer">
-                        <span className="material-symbols-outlined text-[32px] text-[var(--color-outline)] mb-2">cloud_upload</span>
+                        <MdOutlineCloudUpload className="text-[32px] text-[var(--color-outline)] mb-2" />
                         <p className="text-[14px] text-[var(--color-outline)]">Tap to upload a photo</p>
                         <input 
                           type="file" 
@@ -228,7 +230,7 @@ export default function ReturnsFormPage(props) {
                         onChange={() => setResolution('credit')}
                         className="hidden"
                       />
-                      <span className="material-symbols-outlined text-[32px]">account_balance_wallet</span>
+                      <MdOutlineAccountBalanceWallet className="text-[32px]" />
                       <div>
                         <h3 className="font-bold text-[14px]">Instant Store Credit</h3>
                         <p className="text-[12px] text-[var(--color-outline)]">Get a gift card instantly upon drop-off. +Rs. 500 Bonus!</p>
@@ -244,7 +246,7 @@ export default function ReturnsFormPage(props) {
                         onChange={() => setResolution('exchange')}
                         className="hidden"
                       />
-                      <span className="material-symbols-outlined text-[32px]">swap_horiz</span>
+                      <MdOutlineSwapHoriz className="text-[32px]" />
                       <div>
                         <h3 className="font-bold text-[14px]">Exchange Item</h3>
                         <p className="text-[12px] text-[var(--color-outline)]">Swap for a different size or color.</p>

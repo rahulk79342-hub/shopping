@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useUI } from '../context/UIContext';
 import { useCartStore } from '@/store/useCartStore';
 import Image from 'next/image';
+import { MdOutlineClose } from 'react-icons/md';
+
 
 export default function QuickAddModal() {
   const { quickAddProduct, closeQuickAdd, openCartDrawer } = useUI();
@@ -48,7 +50,7 @@ export default function QuickAddModal() {
           onClick={closeQuickAdd} 
           className="absolute top-4 right-4 z-20 w-10 h-10 bg-white md:bg-transparent rounded-full flex items-center justify-center text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors cursor-pointer"
         >
-          <span className="material-symbols-outlined">close</span>
+          <MdOutlineClose  />
         </button>
 
         {/* Left: Image Gallery */}

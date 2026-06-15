@@ -2,6 +2,8 @@
 import { useState, useCallback } from 'react';
 import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
+import { MdOutlineChevronLeft, MdOutlineChevronRight, MdOutlineSwapVert } from 'react-icons/md';
+
 
 export default function OutfitBuilder({ data }) {
   const [topRef, topApi] = useEmblaCarousel({ axis: 'x', loop: true });
@@ -67,17 +69,17 @@ export default function OutfitBuilder({ data }) {
             </div>
           </div>
           <button onClick={scrollPrevTop} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-[var(--color-primary)] opacity-0 group-hover:opacity-100 transition-opacity md:hidden group-hover:md:flex shadow-sm active:scale-95">
-            <span className="material-symbols-outlined text-[18px]">chevron_left</span>
+            <MdOutlineChevronLeft className="text-[18px]" />
           </button>
           <button onClick={scrollNextTop} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-[var(--color-primary)] opacity-0 group-hover:opacity-100 transition-opacity md:hidden group-hover:md:flex shadow-sm active:scale-95">
-            <span className="material-symbols-outlined text-[18px]">chevron_right</span>
+            <MdOutlineChevronRight className="text-[18px]" />
           </button>
         </div>
 
         {/* Divider */}
         <div className="w-full flex justify-center py-2 relative z-10 -my-4 pointer-events-none">
           <div className="bg-[var(--color-primary)] text-[var(--color-on-primary)] rounded-full w-8 h-8 flex items-center justify-center shadow-lg border-2 border-[var(--color-background)]">
-            <span className="material-symbols-outlined text-[16px]">swap_vert</span>
+            <MdOutlineSwapVert className="text-[16px]" />
           </div>
         </div>
 
@@ -102,10 +104,10 @@ export default function OutfitBuilder({ data }) {
             </div>
           </div>
           <button onClick={scrollPrevBottom} className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-[var(--color-primary)] opacity-0 group-hover:opacity-100 transition-opacity md:hidden group-hover:md:flex shadow-sm active:scale-95">
-            <span className="material-symbols-outlined text-[18px]">chevron_left</span>
+            <MdOutlineChevronLeft className="text-[18px]" />
           </button>
           <button onClick={scrollNextBottom} className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-[var(--color-primary)] opacity-0 group-hover:opacity-100 transition-opacity md:hidden group-hover:md:flex shadow-sm active:scale-95">
-            <span className="material-symbols-outlined text-[18px]">chevron_right</span>
+            <MdOutlineChevronRight className="text-[18px]" />
           </button>
         </div>
 

@@ -1,6 +1,8 @@
 "use client";
 import { useFilterStore } from '@/store/useFilterStore';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MdOutlineClose, MdOutlineCheck } from 'react-icons/md';
+
 
 export default function MobileFilterDrawer({ searchParams, updateFilter }) {
   const { isMobileFilterOpen, closeMobileFilter } = useFilterStore();
@@ -35,7 +37,7 @@ export default function MobileFilterDrawer({ searchParams, updateFilter }) {
             <div className="flex items-center justify-between p-6 border-b border-[var(--color-outline-variant)]">
               <h3 className="font-[var(--font-family-headline-md)] text-[20px] text-[var(--color-primary)]">Filter & Sort</h3>
               <button onClick={closeMobileFilter} className="p-2 rounded-full bg-[var(--color-surface-container)] text-[var(--color-primary)] active:scale-95 transition-transform cursor-pointer">
-                <span className="material-symbols-outlined text-[20px]">close</span>
+                <MdOutlineClose className="text-[20px]" />
               </button>
             </div>
 
@@ -55,7 +57,7 @@ export default function MobileFilterDrawer({ searchParams, updateFilter }) {
                       <span className="font-[var(--font-family-body-md)] capitalize">
                         {sortKey === 'new' ? 'Newest Arrivals' : sortKey.replace('-', ' ')}
                       </span>
-                      {currentSort === sortKey && <span className="material-symbols-outlined text-[18px]">check</span>}
+                      {currentSort === sortKey && <MdOutlineCheck className="text-[18px]" />}
                     </button>
                   ))}
                 </div>

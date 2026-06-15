@@ -6,12 +6,14 @@ import { logout } from '@/app/actions/auth';
 import { useCartStore } from '@/store/useCartStore';
 import { useUI } from '@/context/UIContext';
 import Image from 'next/image';
+import { MdOutlineShoppingBag, MdOutlineStars, MdOutlineAdd, MdOutlineReceiptLong, MdOutlineCheckroom, MdOutlineLocationOn } from 'react-icons/md';
+
 
 const TABS = [
-  { id: 'orders', label: 'Order History', icon: 'receipt_long' },
-  { id: 'loyalty', label: 'Snipes Rewards', icon: 'stars' },
-  { id: 'profile', label: 'Style Profile', icon: 'checkroom' },
-  { id: 'addresses', label: 'Addresses', icon: 'location_on' },
+  { id: 'orders', label: 'Order History', icon: MdOutlineReceiptLong },
+  { id: 'loyalty', label: 'Snipes Rewards', icon: MdOutlineStars },
+  { id: 'profile', label: 'Style Profile', icon: MdOutlineCheckroom },
+  { id: 'addresses', label: 'Addresses', icon: MdOutlineLocationOn },
 ];
 
 export default function AccountPage() {
@@ -63,7 +65,7 @@ export default function AccountPage() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-3 px-6 py-4 font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest text-left whitespace-nowrap transition-colors border-b border-[var(--color-outline-variant)] md:border-b-0 md:border-l-2 last:border-0 ${activeTab === tab.id ? 'bg-[var(--color-surface-container)] text-[var(--color-primary)] border-l-[var(--color-primary)]' : 'border-l-transparent text-[var(--color-outline)] hover:bg-[var(--color-surface-container-low)] hover:text-[var(--color-primary)]'}`}
                 >
-                  <span className="material-symbols-outlined text-[18px]">{tab.icon}</span>
+                  <tab.icon className="text-[18px]" />
                   {tab.label}
                 </button>
               ))}
@@ -120,7 +122,7 @@ export default function AccountPage() {
                           onClick={() => handleReorder({ id: 1, name: "Digital Printed Shirt", price: 2499, image: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk", size: 'L' })}
                           className="w-full md:w-auto bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest px-6 py-3 rounded-[var(--border-radius-sm)] hover:bg-[var(--color-surface-tint)] transition-colors flex items-center justify-center gap-2"
                         >
-                          <span className="material-symbols-outlined text-[16px]">shopping_bag</span>
+                          <MdOutlineShoppingBag className="text-[16px]" />
                           Buy It Again
                         </button>
                       </div>
@@ -135,7 +137,7 @@ export default function AccountPage() {
                   <h2 className="font-[var(--font-family-headline-md)] text-2xl mb-6">Snipes Rewards</h2>
                   
                   <div className="bg-gradient-to-br from-[#111] to-[#333] text-white p-8 rounded-[var(--border-radius-lg)] shadow-lg relative overflow-hidden">
-                    <span className="material-symbols-outlined absolute -right-4 -bottom-4 text-[150px] opacity-10" style={{fontVariationSettings: "'FILL' 1"}}>stars</span>
+                    <MdOutlineStars className="absolute -right-4 -bottom-4 text-[150px] opacity-10"  />
                     
                     <p className="font-[var(--font-family-label-caps)] text-[12px] uppercase tracking-widest text-yellow-400 mb-2">Gold Tier</p>
                     <div className="flex items-end gap-2 mb-8">
@@ -213,7 +215,7 @@ export default function AccountPage() {
                   <div className="flex justify-between items-center mb-6">
                     <h2 className="font-[var(--font-family-headline-md)] text-2xl">Saved Addresses</h2>
                     <button className="flex items-center gap-2 text-[var(--color-primary)] text-[14px] hover:underline">
-                      <span className="material-symbols-outlined text-[18px]">add</span> Add New
+                      <MdOutlineAdd className="text-[18px]" /> Add New
                     </button>
                   </div>
                   

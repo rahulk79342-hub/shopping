@@ -15,27 +15,25 @@ export default function Newsletter() {
   };
 
   return (
-    <section className="w-full py-16 md:py-24 bg-[#0a0a0a] text-white">
-      <div className="max-w-2xl mx-auto px-4 text-center">
-        <h2 className="text-[28px] md:text-[40px] font-bold tracking-tighter uppercase mb-4" style={{ fontFamily: "Arial, sans-serif" }}>
-          Join the Club
-        </h2>
-        <p className="text-[14px] md:text-[16px] text-gray-400 mb-8 max-w-md mx-auto">
-          Subscribe to our newsletter for early access to new drops, exclusive offers, and styling tips.
+    <section className="w-full py-16 bg-white border-t border-gray-100">
+      <div className="max-w-xl mx-auto px-4 text-center">
+        <h2 className="text-[24px] font-bold text-black mb-2">Join our email list</h2>
+        <p className="text-[14px] text-gray-600 mb-6">
+          Sign up for new arrivals, offers, and more!
         </p>
         
-        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3 max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="flex gap-2">
           <input 
             type="email" 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email" 
-            className="flex-1 bg-transparent border border-gray-600 rounded-full px-6 py-3 text-[14px] focus:outline-none focus:border-white transition-colors text-white placeholder-gray-500"
+            placeholder="Email" 
+            className="flex-1 bg-transparent border border-gray-300 px-4 py-3 text-[14px] focus:outline-none focus:border-black transition-colors"
             required
           />
           <button 
             type="submit" 
-            className="bg-white text-black px-8 py-3 rounded-full font-bold uppercase tracking-wide text-[12px] hover:bg-gray-200 transition-colors"
+            className="bg-black text-white px-8 py-3 text-[14px] font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors"
           >
             {subscribed ? 'Subscribed!' : 'Subscribe'}
           </button>

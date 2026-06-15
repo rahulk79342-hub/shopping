@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { MdOutlineClose, MdOutlineCheckCircle } from 'react-icons/md';
+
 
 export default function ExitIntentPopup() {
   const [isVisible, setIsVisible] = useState(false);
@@ -59,7 +61,7 @@ export default function ExitIntentPopup() {
               onClick={() => setIsVisible(false)}
               className="absolute top-4 right-4 z-10 text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors cursor-pointer"
             >
-              <span className="material-symbols-outlined">close</span>
+              <MdOutlineClose  />
             </button>
 
             <div className="p-10 text-center">
@@ -101,7 +103,7 @@ export default function ExitIntentPopup() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="py-12"
                 >
-                  <span className="material-symbols-outlined text-[48px] text-[var(--color-secondary)] mb-4">check_circle</span>
+                  <MdOutlineCheckCircle className="text-[48px] text-[var(--color-secondary)] mb-4" />
                   <h2 className="font-[var(--font-family-headline-md)] text-[24px] text-[var(--color-primary)] mb-2">You&apos;re on the list.</h2>
                   <p className="font-[var(--font-family-body-md)] text-[var(--color-outline)] text-sm">Check your inbox for your welcome code.</p>
                 </motion.div>

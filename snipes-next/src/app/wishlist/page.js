@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useWishlistStore } from '@/store/useWishlistStore';
 import { useCartStore } from '@/store/useCartStore';
 import { useUI } from '@/context/UIContext';
+import { MdOutlineCloudSync, MdOutlineIosShare, MdOutlineFavoriteBorder, MdOutlineDelete, MdOutlineCheck, MdOutlineSync, MdOutlineCloudDone } from 'react-icons/md';
+
 
 export default function WishlistPage() {
   const { wishlist, removeFromWishlist, isSyncing, syncWithSupabase } = useWishlistStore();
@@ -83,12 +85,12 @@ export default function WishlistPage() {
               onClick={handleSimulateLogin}
               className="flex-1 md:flex-none border border-[var(--color-outline-variant)] px-4 py-3 font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest text-[var(--color-primary)] hover:bg-[var(--color-surface-container)] transition-colors flex items-center justify-center gap-2"
             >
-              <span className="material-symbols-outlined text-[16px]">cloud_sync</span>
+              <MdOutlineCloudSync className="text-[16px]" />
               Save to Account
             </button>
           ) : (
             <div className="flex-1 md:flex-none px-4 py-3 font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest text-green-600 bg-green-50 flex items-center justify-center gap-2">
-              <span className="material-symbols-outlined text-[16px]">{isSyncing ? 'sync' : 'cloud_done'}</span>
+              {isSyncing ? <MdOutlineSync className="text-[16px]" /> : <MdOutlineCloudDone className="text-[16px]" />}
               {isSyncing ? 'Syncing...' : 'Synced to Supabase'}
             </div>
           )}
@@ -97,7 +99,7 @@ export default function WishlistPage() {
             onClick={handleShare}
             className="flex-1 md:flex-none bg-[var(--color-surface-container-high)] px-4 py-3 font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest text-[var(--color-primary)] hover:bg-[var(--color-outline-variant)] transition-colors flex items-center justify-center gap-2"
           >
-            <span className="material-symbols-outlined text-[16px]">ios_share</span>
+            <MdOutlineIosShare className="text-[16px]" />
             Share
           </button>
         </div>
@@ -106,7 +108,7 @@ export default function WishlistPage() {
       {/* Wishlist Grid */}
       {wishlist.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <span className="material-symbols-outlined text-[64px] text-[var(--color-outline-variant)] mb-6">favorite_border</span>
+          <MdOutlineFavoriteBorder className="text-[64px] text-[var(--color-outline-variant)] mb-6" />
           <h2 className="font-[var(--font-family-headline-md)] text-2xl text-[var(--color-primary)] mb-4">Your wishlist is empty</h2>
           <p className="font-[var(--font-family-body-md)] text-[var(--color-outline)] mb-8">Save items you love here to buy them later.</p>
           <Link 
@@ -140,7 +142,7 @@ export default function WishlistPage() {
                       onClick={() => removeFromWishlist(item.id)}
                       className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-[var(--color-primary)] hover:bg-white hover:text-[var(--color-error)] transition-colors shadow-sm z-10"
                     >
-                      <span className="material-symbols-outlined text-[20px]">delete</span>
+                      <MdOutlineDelete className="text-[20px]" />
                     </button>
 
                     {isOutOfStock && (
@@ -168,7 +170,7 @@ export default function WishlistPage() {
                         <div className="w-full">
                           {notifyState[item.id] === 'success' ? (
                             <div className="w-full bg-green-50 text-green-700 py-3 font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest text-center flex items-center justify-center gap-2">
-                              <span className="material-symbols-outlined text-[16px]">check</span> Will Notify
+                              <MdOutlineCheck className="text-[16px]" /> Will Notify
                             </div>
                           ) : (
                             <form onSubmit={(e) => handleNotifySubmit(e, item)} className="flex w-full">

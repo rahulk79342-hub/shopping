@@ -1,6 +1,8 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import { MdOutlineStar } from 'react-icons/md';
+
 
 export default function Testimonials() {
   const reviews = [
@@ -42,7 +44,7 @@ export default function Testimonials() {
             >
               <div className="flex gap-1 mb-4">
                 {[...Array(review.stars)].map((_, i) => (
-                  <span key={i} className="material-symbols-outlined text-[16px] text-black">star</span>
+                  <MdOutlineStar key={i} className="text-[16px] text-black" />
                 ))}
               </div>
               <p className="text-[16px] md:text-[18px] text-gray-800 italic leading-relaxed mb-6 flex-1" style={{ fontFamily: "Georgia, serif" }}>

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { loginWithMagicLink, loginWithOAuth } from '@/app/actions/auth';
 import { motion } from 'framer-motion';
+import { FaApple } from 'react-icons/fa';
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -64,7 +66,7 @@ export default function LoginPage() {
             onClick={() => loginWithOAuth('apple')}
             className="w-full bg-black text-white border border-black py-3 rounded-[var(--border-radius-sm)] flex justify-center items-center gap-3 hover:bg-black/90 transition-colors"
           >
-            <span className="material-symbols-outlined text-[20px]">apple</span>
+            <FaApple className="text-[20px]" />
             <span className="font-[var(--font-family-body-md)] text-[14px]">Continue with Apple</span>
           </button>
         </div>
