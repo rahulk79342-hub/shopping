@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
 import { useSupabaseTracking } from '@/hooks/useSupabaseTracking';
+import { MdOutlineLocalShipping, MdOutlineNotificationsActive } from 'react-icons/md';
+
 
 export default function TrackingPage(props) {
   // Use React.use() to unwrap params in Next.js 15+ if needed, or just destructure if 14
@@ -79,7 +81,7 @@ export default function TrackingPage(props) {
           >
             {/* Hero Estimation Block */}
             <div className="bg-gradient-to-r from-[#111] to-[#333] text-white p-8 rounded-[var(--border-radius-md)] shadow-lg relative overflow-hidden">
-              <span className="material-symbols-outlined absolute -right-10 -bottom-10 text-[180px] opacity-10" style={{fontVariationSettings: "'FILL' 1"}}>local_shipping</span>
+              <MdOutlineLocalShipping className="absolute -right-10 -bottom-10 text-[180px] opacity-10"  />
               
               <p className="font-[var(--font-family-label-caps)] text-[12px] uppercase tracking-widest text-gray-300 mb-2">Estimated Delivery</p>
               
@@ -98,7 +100,7 @@ export default function TrackingPage(props) {
             {isSupported && currentStatus !== 'delivered' && (
               <div className="bg-blue-50 border border-blue-100 p-6 rounded-[var(--border-radius-md)] flex flex-col md:flex-row justify-between items-center gap-4">
                 <div className="flex items-center gap-4 text-blue-900">
-                  <span className="material-symbols-outlined text-[28px] text-blue-500">notifications_active</span>
+                  <MdOutlineNotificationsActive className="text-[28px] text-blue-500" />
                   <div>
                     <h3 className="font-bold text-[14px]">Live Delivery Updates</h3>
                     <p className="text-[12px] text-blue-700">Get push notifications when your package moves.</p>

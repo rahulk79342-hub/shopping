@@ -2,6 +2,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { MdOutlineViewInAr, MdOutlineClose, MdOutlineAccessibilityNew, MdOutlinePhotoCamera, MdOutlineUpload, MdOutlinePerson, MdOutlineFlipCameraIos, MdOutlineShare, MdOutlineBookmark } from 'react-icons/md';
+
 
 export default function VirtualTryOnModal({ isOpen, onClose, product }) {
   const [phase, setPhase] = useState('idle'); // idle, camera, scanning, results
@@ -117,11 +119,11 @@ export default function VirtualTryOnModal({ isOpen, onClose, product }) {
         {/* Header */}
         <div className="flex justify-between items-center p-4 md:p-6 border-b border-[var(--color-outline-variant)] bg-[var(--color-background)] relative z-10">
           <h2 className="font-[var(--font-family-headline-md)] text-xl text-[var(--color-primary)] flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#003dff]">view_in_ar</span>
+            <MdOutlineViewInAr className="text-[#003dff]" />
             Virtual Try-On
           </h2>
           <button onClick={onClose} className="w-10 h-10 rounded-full bg-[var(--color-surface-container)] flex items-center justify-center text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors">
-            <span className="material-symbols-outlined">close</span>
+            <MdOutlineClose  />
           </button>
         </div>
 
@@ -131,7 +133,7 @@ export default function VirtualTryOnModal({ isOpen, onClose, product }) {
           {phase === 'idle' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto">
               <div className="w-32 h-32 bg-[var(--color-surface-container)] rounded-full flex items-center justify-center mb-8 relative">
-                <span className="material-symbols-outlined text-[48px] text-[var(--color-primary)] z-10">accessibility_new</span>
+                <MdOutlineAccessibilityNew className="text-[48px] text-[var(--color-primary)] z-10" />
                 <motion.div animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }} transition={{ repeat: Infinity, duration: 2 }} className="absolute inset-0 rounded-full border-2 border-[var(--color-primary)]" />
               </div>
               <h3 className="font-[var(--font-family-headline-lg)] text-3xl text-[var(--color-primary)] mb-4">See It On You</h3>
@@ -141,13 +143,13 @@ export default function VirtualTryOnModal({ isOpen, onClose, product }) {
               
               <div className="w-full space-y-4">
                 <button onClick={startCamera} className="w-full py-4 bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-xs tracking-widest uppercase flex items-center justify-center gap-2 rounded-full hover:scale-105 transition-transform shadow-lg cursor-pointer">
-                  <span className="material-symbols-outlined text-[18px]">photo_camera</span>
+                  <MdOutlinePhotoCamera className="text-[18px]" />
                   Open Camera
                 </button>
                 <div className="relative">
                   <input type="file" accept="image/*" onChange={handleUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
                   <button className="w-full py-4 bg-[var(--color-surface-container)] text-[var(--color-primary)] font-[var(--font-family-label-caps)] text-xs tracking-widest uppercase flex items-center justify-center gap-2 rounded-full hover:bg-[var(--color-outline-variant)] transition-colors">
-                    <span className="material-symbols-outlined text-[18px]">upload</span>
+                    <MdOutlineUpload className="text-[18px]" />
                     Upload Photo
                   </button>
                 </div>
@@ -171,7 +173,7 @@ export default function VirtualTryOnModal({ isOpen, onClose, product }) {
               {/* Overlay Guide */}
               <div className="absolute inset-0 pointer-events-none flex items-center justify-center p-8">
                 <div className="w-full max-w-sm aspect-[3/4] border-2 border-dashed border-white/50 rounded-3xl flex flex-col items-center justify-center">
-                  <span className="material-symbols-outlined text-white/50 text-[64px] mb-4">person</span>
+                  <MdOutlinePerson className="text-white/50 text-[64px] mb-4" />
                   <p className="text-white/70 font-[var(--font-family-label-caps)] text-xs tracking-widest uppercase text-center">Align body within frame</p>
                 </div>
               </div>
@@ -179,13 +181,13 @@ export default function VirtualTryOnModal({ isOpen, onClose, product }) {
               {/* Controls */}
               <div className="absolute bottom-0 left-0 right-0 p-8 flex justify-center items-center gap-12 bg-gradient-to-t from-black/80 to-transparent">
                 <button onClick={toggleCamera} className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white cursor-pointer hover:bg-white/30 transition-colors">
-                  <span className="material-symbols-outlined">flip_camera_ios</span>
+                  <MdOutlineFlipCameraIos  />
                 </button>
                 <button onClick={handleCapture} className="w-20 h-20 rounded-full bg-white flex items-center justify-center p-1 cursor-pointer hover:scale-105 transition-transform">
                   <div className="w-full h-full rounded-full border-2 border-black" />
                 </button>
                 <button onClick={() => setPhase('idle')} className="w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-white cursor-pointer hover:bg-white/30 transition-colors">
-                  <span className="material-symbols-outlined">close</span>
+                  <MdOutlineClose  />
                 </button>
               </div>
             </motion.div>
@@ -286,11 +288,11 @@ export default function VirtualTryOnModal({ isOpen, onClose, product }) {
 
                   <div className="flex flex-col gap-3 mt-auto">
                     <button onClick={handleShare} className="w-full py-4 bg-[#25D366] text-white font-[var(--font-family-label-caps)] text-xs tracking-widest uppercase flex items-center justify-center gap-2 rounded-full hover:scale-105 transition-transform shadow-lg cursor-pointer">
-                      <span className="material-symbols-outlined text-[18px]">share</span>
+                      <MdOutlineShare className="text-[18px]" />
                       Share to Social
                     </button>
                     <button onClick={() => alert("Saved to Style Profile!")} className="w-full py-4 bg-[var(--color-surface-container)] text-[var(--color-primary)] font-[var(--font-family-label-caps)] text-xs tracking-widest uppercase flex items-center justify-center gap-2 rounded-full hover:bg-[var(--color-outline-variant)] transition-colors cursor-pointer border border-[var(--color-outline-variant)] relative z-20">
-                      <span className="material-symbols-outlined text-[18px]">bookmark</span>
+                      <MdOutlineBookmark className="text-[18px]" />
                       Save to Profile
                     </button>
                     <button onClick={() => setPhase('idle')} className="w-full py-3 text-[var(--color-outline)] font-[var(--font-family-body-md)] text-sm underline hover:text-[var(--color-primary)] transition-colors cursor-pointer mt-2 relative z-20">

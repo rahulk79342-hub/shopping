@@ -7,6 +7,8 @@ import Image from 'next/image';
 import Lottie from 'lottie-react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MdOutlineClose, MdOutlineLocalShipping, MdOutlineShoppingBag, MdOutlineDelete, MdOutlineAdd, MdOutlineSell, MdOutlineExpandMore, MdOutlineCardGiftcard, MdOutlineStars } from 'react-icons/md';
+
 
 export default function CartDrawer() {
   const { cartItems, savedForLater, updateQuantity, removeFromCart, addToCart, saveForLater, moveToCart, removeSaved, cartTotal: getCartTotal } = useCartStore();
@@ -102,7 +104,7 @@ export default function CartDrawer() {
               </Dialog.Title>
               <Dialog.Close asChild>
                 <button className="text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors cursor-pointer p-1">
-                  <span className="material-symbols-outlined text-[24px]">close</span>
+                  <MdOutlineClose className="text-[24px]" />
                 </button>
               </Dialog.Close>
             </div>
@@ -115,7 +117,7 @@ export default function CartDrawer() {
                      <>You are <strong className="font-bold">Rs. {amountNeeded}.00</strong> away from free shipping!</>
                   ) : (
                      <span className="text-green-600 font-bold flex items-center gap-1">
-                       <span className="material-symbols-outlined text-[14px]">local_shipping</span> 
+                       <MdOutlineLocalShipping className="text-[14px]" /> 
                        You&apos;ve unlocked free shipping!
                      </span>
                   )}
@@ -136,7 +138,7 @@ export default function CartDrawer() {
           <div className="flex-1 overflow-y-auto px-6 pt-6 pb-32 flex flex-col gap-6 custom-scrollbar bg-[var(--color-surface)]">
             {cartItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center">
-                <span className="material-symbols-outlined text-[64px] text-[var(--color-outline-variant)] mb-4">shopping_bag</span>
+                <MdOutlineShoppingBag className="text-[64px] text-[var(--color-outline-variant)] mb-4" />
                 <p className="font-[var(--font-family-body-md)] text-[var(--color-outline)] mb-6">Your bag is currently empty.</p>
                 <button onClick={closeCartDrawer} className="bg-[var(--color-primary)] text-white px-8 py-3 font-[var(--font-family-label-caps)] text-[12px] uppercase cursor-pointer hover:bg-[var(--color-surface-tint)] shadow-sm">
                   CONTINUE SHOPPING
@@ -157,7 +159,7 @@ export default function CartDrawer() {
                       <div className="w-24 aspect-[3/4] bg-[var(--color-surface-container)] flex-shrink-0 relative overflow-hidden rounded-[var(--border-radius-sm)]">
                         <Image src={item.image} alt={item.name} fill sizes="96px" className="object-cover"/>
                         <button onClick={() => removeFromCart(item.id, item.size)} className="absolute top-1 right-1 p-1 bg-white/90 rounded-full text-[var(--color-outline)] hover:text-[var(--color-error)] opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer shadow-sm">
-                          <span className="material-symbols-outlined text-[14px]">delete</span>
+                          <MdOutlineDelete className="text-[14px]" />
                         </button>
                       </div>
                       <div className="flex flex-col flex-grow py-1">
@@ -234,7 +236,7 @@ export default function CartDrawer() {
                              onClick={() => addToCart({...upsell, quantity: 1, size: 'OS'})}
                              className="absolute bottom-1 right-1 w-8 h-8 bg-white text-[var(--color-primary)] rounded-full flex items-center justify-center shadow-md hover:bg-[var(--color-primary)] hover:text-white transition-colors cursor-pointer"
                            >
-                             <span className="material-symbols-outlined text-[16px]">add</span>
+                             <MdOutlineAdd className="text-[16px]" />
                            </button>
                         </div>
                         <h5 className="font-[var(--font-family-body-md)] text-[12px] font-bold line-clamp-1">{upsell.name}</h5>
@@ -256,8 +258,8 @@ export default function CartDrawer() {
               <div className="mb-4">
                 <details className="group">
                   <summary className="font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest text-[var(--color-primary)] cursor-pointer flex justify-between items-center list-none [&::-webkit-details-marker]:hidden mb-2">
-                    <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">sell</span> Apply Promo Code</span>
-                    <span className="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    <span className="flex items-center gap-1"><MdOutlineSell className="text-[16px]" /> Apply Promo Code</span>
+                    <MdOutlineExpandMore className="group-open:rotate-180 transition-transform" />
                   </summary>
                   <form onSubmit={handleApplyPromo} className="flex pt-2 pb-1 relative">
                     <input 
@@ -295,8 +297,8 @@ export default function CartDrawer() {
               <div className="mb-2">
                 <details className="group">
                   <summary className="font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest text-[var(--color-primary)] cursor-pointer flex justify-between items-center list-none [&::-webkit-details-marker]:hidden mb-1">
-                    <span className="flex items-center gap-1"><span className="material-symbols-outlined text-[16px]">featured_seasonal_and_gifts</span> Gift Options</span>
-                    <span className="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    <span className="flex items-center gap-1"><MdOutlineCardGiftcard className="text-[16px]" /> Gift Options</span>
+                    <MdOutlineExpandMore className="group-open:rotate-180 transition-transform" />
                   </summary>
                   <div className="pt-2 pb-2">
                     <label className="flex items-center gap-2 cursor-pointer font-[var(--font-family-body-md)] text-xs text-[var(--color-outline)] mb-2">
@@ -330,13 +332,13 @@ export default function CartDrawer() {
               
               <div className="bg-[var(--color-surface-container-low)] p-3 rounded-[var(--border-radius-sm)] mb-4 flex flex-col gap-2">
                  <div className="flex items-start gap-2 border-b border-[var(--color-outline-variant)] pb-2">
-                   <span className="material-symbols-outlined text-[16px] text-[var(--color-outline)] mt-0.5">local_shipping</span>
+                   <MdOutlineLocalShipping className="text-[16px] text-[var(--color-outline)] mt-0.5" />
                    <p className="font-[var(--font-family-body-md)] text-[11px] text-[var(--color-outline)]">
                      Estimated Delivery: <strong className="text-[var(--color-primary)] font-bold">{deliveryStart.toLocaleDateString('en-US', deliveryFormat)} - {deliveryEnd.toLocaleDateString('en-US', deliveryFormat)}</strong>
                    </p>
                  </div>
                  <div className="flex items-center gap-2 pt-1">
-                   <span className="material-symbols-outlined text-[16px] text-[#FFD700]">stars</span>
+                   <MdOutlineStars className="text-[16px] text-[#FFD700]" />
                    <p className="font-[var(--font-family-body-md)] text-[11px] text-[var(--color-outline)]">
                      You will earn <strong className="text-[var(--color-primary)] font-bold">{loyaltyPoints} Snipes Coins</strong> on this order!
                    </p>

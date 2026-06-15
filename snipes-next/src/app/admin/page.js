@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { MdOutlineWarning } from 'react-icons/md';
+
 
 const mockRevenueData = [
   { name: 'Jan', revenue: 4000 },
@@ -106,7 +108,7 @@ export default function AdminDashboard() {
         {/* Inventory Alerts */}
         <section className="bg-white p-6 rounded-xl border border-[var(--color-outline-variant)] shadow-sm">
           <h2 className="font-[var(--font-family-headline-md)] text-lg mb-4 flex items-center gap-2 text-red-600">
-            <span className="material-symbols-outlined">warning</span>
+            <MdOutlineWarning  />
             Low Stock Alerts
           </h2>
           <div className="space-y-4">

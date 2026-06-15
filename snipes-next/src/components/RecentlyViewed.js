@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import { useRecentStore } from "@/store/useRecentStore";
+import { MdOutlineNorthEast } from 'react-icons/md';
+
 
 export default function RecentlyViewed() {
   const { recentProducts } = useRecentStore();
@@ -78,7 +80,7 @@ export default function RecentlyViewed() {
                       </div>
                     </div>
                     <div className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-black text-white flex items-center justify-center shrink-0 group-hover:bg-gray-800 transition-colors shadow-md">
-                      <span className="material-symbols-outlined text-[14px] md:text-[16px]">north_east</span>
+                      <MdOutlineNorthEast className="text-[14px] md:text-[16px]" />
                     </div>
                   </div>
                 </Link>

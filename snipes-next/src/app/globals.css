@@ -2,7 +2,7 @@
 
 @theme {
   /* Ultra-Premium Luxury Palette */
-  --color-primary: #0A0A0A; /* Obsidian Black */
+  --color-primary: #000000; /* Obsidian Black */
   --color-on-primary: #FFFFFF;
   --color-primary-container: #1A1A1A;
   --color-on-primary-container: #F9F9F9;
@@ -12,7 +12,7 @@
   --color-secondary-container: #E8E3D3;
   --color-on-secondary-container: #2A2518;
 
-  --color-background: #FDFCFB; /* Alabaster White */
+  --color-background: #FFFFFF; /* Alabaster White */
   --color-on-background: #0A0A0A;
   --color-surface: #F9F9F9;
   --color-on-surface: #0A0A0A;
@@ -68,14 +68,14 @@
   --spacing-stack-xl: 64px;
   --spacing-stack-sm: 8px;
 
-  --font-family-headline-lg-mobile: "Sora";
-  --font-family-display-lg: "Sora";
-  --font-family-body-md: "Hanken Grotesk";
-  --font-family-price-display: "Sora";
-  --font-family-label-caps: "Sora";
-  --font-family-headline-lg: "Sora";
-  --font-family-body-lg: "Hanken Grotesk";
-  --font-family-headline-md: "Sora";
+  --font-family-headline-lg-mobile: "Inter";
+  --font-family-display-lg: "Inter";
+  --font-family-body-md: "Inter";
+  --font-family-price-display: "Inter";
+  --font-family-label-caps: "Inter";
+  --font-family-headline-lg: "Inter";
+  --font-family-body-lg: "Inter";
+  --font-family-headline-md: "Inter";
 
   /* Need to create utilities for fonts with line height manually or just map sizes */
   --text-headline-lg-mobile: 28px;

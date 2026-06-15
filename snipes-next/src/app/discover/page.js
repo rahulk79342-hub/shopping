@@ -7,6 +7,8 @@ import OutfitSuggestionCard from '@/components/OutfitSuggestionCard';
 import MobileFilterDrawer from '@/components/MobileFilterDrawer';
 import { fetchMockProducts } from '@/lib/supabase';
 import { useFilterStore } from '@/store/useFilterStore';
+import { MdOutlineGridView, MdOutlineApps, MdOutlineSort, MdOutlineSearchOff, MdOutlineTune } from 'react-icons/md';
+
 
 function DiscoverContent() {
   const router = useRouter();
@@ -90,20 +92,20 @@ function DiscoverContent() {
                 className={`p-2 rounded transition-colors flex items-center justify-center cursor-pointer ${viewLayout === 'normal' ? 'bg-[var(--color-surface-container)] text-[var(--color-primary)]' : 'text-[var(--color-outline)] hover:text-[var(--color-primary)]'}`}
                 title="Grid View"
               >
-                <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>grid_view</span>
+                <MdOutlineGridView   />
               </button>
               <button 
                 onClick={() => setViewLayout('dense')}
                 className={`p-2 rounded transition-colors flex items-center justify-center cursor-pointer ${viewLayout === 'dense' ? 'bg-[var(--color-surface-container)] text-[var(--color-primary)]' : 'text-[var(--color-outline)] hover:text-[var(--color-primary)]'}`}
                 title="Catalog View"
               >
-                <span className="material-symbols-outlined">apps</span>
+                <MdOutlineApps  />
               </button>
             </div>
             
             <div className="relative group">
               <button className="flex items-center gap-2 border border-[var(--color-outline)] px-4 py-2 hover:bg-[var(--color-primary)] hover:text-white transition-all cursor-pointer">
-                <span className="material-symbols-outlined text-[18px]">sort</span>
+                <MdOutlineSort className="text-[18px]" />
                 <span className="font-[var(--font-family-label-caps)] text-[12px] uppercase">Sort By</span>
               </button>
               <div className="absolute right-0 top-full mt-2 w-48 bg-[var(--color-surface)] border border-[var(--color-outline-variant)] shadow-lg hidden group-hover:block z-50">
@@ -145,7 +147,7 @@ function DiscoverContent() {
         </div>
       ) : products.length === 0 ? (
         <div className="w-full h-64 flex items-center justify-center flex-col gap-4">
-          <span className="material-symbols-outlined text-[48px] text-[var(--color-outline)]">search_off</span>
+          <MdOutlineSearchOff className="text-[48px] text-[var(--color-outline)]" />
           <p className="font-[var(--font-family-body-md)] text-[var(--color-outline)]">No products found for these filters.</p>
           <button onClick={() => router.push('/discover')} className="text-[var(--color-primary)] underline uppercase font-[var(--font-family-label-caps)] text-xs">Clear Filters</button>
         </div>
@@ -181,7 +183,7 @@ function DiscoverContent() {
           onClick={openMobileFilter}
           className="bg-[var(--color-primary)] text-white w-full max-w-[300px] py-3 rounded-full font-[var(--font-family-label-caps)] text-xs uppercase tracking-widest shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2 cursor-pointer"
         >
-          <span className="material-symbols-outlined text-[18px]">tune</span>
+          <MdOutlineTune className="text-[18px]" />
           Filter & Sort
         </button>
       </div>

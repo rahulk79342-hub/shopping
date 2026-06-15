@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { MdOutlineKeyboardReturn } from 'react-icons/md';
+
 
 export default function ReturnsEntryPage() {
   const router = useRouter();
@@ -30,7 +32,7 @@ export default function ReturnsEntryPage() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-[450px] bg-white p-8 md:p-10 rounded-[var(--border-radius-md)] border border-[var(--color-outline-variant)] shadow-xl relative overflow-hidden"
       >
-        <span className="material-symbols-outlined absolute -right-10 -bottom-10 text-[180px] opacity-[0.03]" style={{fontVariationSettings: "'FILL' 1"}}>keyboard_return</span>
+        <MdOutlineKeyboardReturn className="absolute -right-10 -bottom-10 text-[180px] opacity-[0.03]"  />
         
         <div className="relative z-10">
           <h1 className="font-[var(--font-family-headline-md)] text-2xl text-center mb-2">Returns & Exchanges</h1>

@@ -5,6 +5,8 @@ import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { motion } from "framer-motion";
+import { MdOutlineArrowBack, MdOutlineArrowForward } from 'react-icons/md';
+
 
 export default function BestsellersCarousel({ products }) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -55,7 +57,7 @@ export default function BestsellersCarousel({ products }) {
               className={`w-12 h-12 flex items-center justify-center border border-[var(--color-outline-variant)] rounded-full transition-all duration-300 ${!prevBtnEnabled ? 'opacity-30 cursor-not-allowed' : 'hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] cursor-pointer'}`}
               aria-label="Previous slide"
             >
-              <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+              <MdOutlineArrowBack className="text-[20px]" />
             </button>
             <button 
               onClick={scrollNext}
@@ -63,7 +65,7 @@ export default function BestsellersCarousel({ products }) {
               className={`w-12 h-12 flex items-center justify-center border border-[var(--color-outline-variant)] rounded-full transition-all duration-300 ${!nextBtnEnabled ? 'opacity-30 cursor-not-allowed' : 'hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] cursor-pointer'}`}
               aria-label="Next slide"
             >
-              <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
+              <MdOutlineArrowForward className="text-[20px]" />
             </button>
           </div>
         </div>

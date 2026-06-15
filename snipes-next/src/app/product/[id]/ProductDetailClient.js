@@ -10,6 +10,8 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { useWishlistStore } from '@/store/useWishlistStore';
 import { useRecentStore } from '@/store/useRecentStore';
 import VirtualTryOnModal from '@/components/VirtualTryOnModal';
+import { MdOutlineChevronRight, MdOutlineFavorite, MdOutlineFavoriteBorder, MdOutlineShare, MdOutlineViewInAr, MdOutlinePlayCircle, MdOutline360, MdOutlineStar, MdOutlineInfo, MdOutlineCheck, MdOutlineStraighten, MdOutlineShoppingBag, MdOutlineExpandMore, MdOutlineAutoAwesome, MdOutlineAddShoppingCart } from 'react-icons/md';
+
 
 export default function ProductDetailClient({ product, relatedProducts }) {
   const addToCart = useCartStore(state => state.addToCart);
@@ -98,9 +100,9 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         
         <nav className="hidden md:flex items-center gap-2 font-[var(--font-family-body-md)] text-xs text-[var(--color-outline)] mb-[var(--spacing-stack-md)]">
           <Link href="/" className="hover:text-[var(--color-primary)]">Home</Link>
-          <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+          <MdOutlineChevronRight className="text-[14px]" />
           <Link href="/discover" className="hover:text-[var(--color-primary)]">Collections</Link>
-          <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+          <MdOutlineChevronRight className="text-[14px]" />
           <span className="text-[var(--color-primary)]">{product.name}</span>
         </nav>
 
@@ -138,7 +140,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 className={`absolute top-4 right-4 w-10 h-10 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm active:scale-95 cursor-pointer z-10 transition-all ${wishlist.some(item => item.id === product.id) ? 'bg-white text-[var(--color-sale-red)] scale-110' : 'bg-white/80 text-[var(--color-primary)] hover:bg-white hover:scale-110'}`}
                 title="Add to Wishlist"
               >
-                <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: wishlist.some(item => item.id === product.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
+                {wishlist.some(item => item.id === product.id) ? <MdOutlineFavorite className="text-[20px]" /> : <MdOutlineFavoriteBorder className="text-[20px]" />}
               </button>
 
               <button 
@@ -146,14 +148,14 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 className="absolute top-16 right-4 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-[var(--color-primary)] shadow-sm hover:bg-white transition-all z-10 cursor-pointer hover:scale-110"
                 title="Share"
               >
-                <span className="material-symbols-outlined text-[20px]">share</span>
+                <MdOutlineShare className="text-[20px]" />
               </button>
 
               <button 
                 onClick={() => setIsVTOOpen(true)}
                 className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-2 shadow-lg active:scale-95 cursor-pointer z-10 hover:bg-white transition-colors group border border-[var(--color-outline-variant)]"
               >
-                <span className="material-symbols-outlined text-[#003dff] group-hover:scale-110 transition-transform">view_in_ar</span>
+                <MdOutlineViewInAr className="text-[#003dff] group-hover:scale-110 transition-transform" />
                 <span className="font-[var(--font-family-label-caps)] text-[10px] uppercase tracking-widest text-[var(--color-primary)] font-bold">Virtual Try-On</span>
               </button>
             </div>
@@ -169,13 +171,13 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                     <Image src={media.url} alt={`Thumbnail ${idx}`} fill sizes="80px" className="object-cover"/>
                   ) : (
                     <div className="absolute inset-0 bg-black flex items-center justify-center">
-                       <span className="material-symbols-outlined text-white text-[24px]">play_circle</span>
+                       <MdOutlinePlayCircle className="text-white text-[24px]" />
                     </div>
                   )}
                 </button>
               ))}
               <div className="w-20 h-24 flex-shrink-0 border border-[var(--color-outline-variant)] border-dashed flex flex-col items-center justify-center gap-1 text-[var(--color-outline)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors cursor-pointer ml-2">
-                <span className="material-symbols-outlined text-[24px]">360</span>
+                <MdOutline360 className="text-[24px]" />
                 <span className="text-[10px] uppercase font-[var(--font-family-label-caps)] tracking-widest">360&deg; Spin</span>
               </div>
             </div>
@@ -196,7 +198,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               <div className="flex items-center gap-2 cursor-pointer group mb-6">
                 <div className="flex text-[var(--color-primary)]">
                   {[1,2,3,4,5].map(star => (
-                    <span key={star} className="material-symbols-outlined text-[16px]" style={{fontVariationSettings: "'FILL' 1"}}>star</span>
+                    <MdOutlineStar key={star} className="text-[16px]"  />
                   ))}
                 </div>
                 <span className="text-sm font-[var(--font-family-body-md)] text-[var(--color-outline)] group-hover:underline underline-offset-2">4.9 (128 reviews)</span>
@@ -209,7 +211,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                     <span className="bg-[#FFB3C7] text-black text-[10px] font-bold px-2 py-0.5 rounded-sm tracking-wide">Klarna.</span>
                     <p className="font-[var(--font-family-body-md)] text-[12px] text-[var(--color-primary)]">Pay in 4 interest-free payments of <strong className="font-bold">Rs. {(product.price / 4).toFixed(2)}</strong>.</p>
                   </div>
-                  <span className="material-symbols-outlined text-[16px] text-[var(--color-outline)] cursor-pointer hover:text-[var(--color-primary)]">info</span>
+                  <MdOutlineInfo className="text-[16px] text-[var(--color-outline)] cursor-pointer hover:text-[var(--color-primary)]" />
                 </div>
                 <div className="h-px w-full bg-[var(--color-outline-variant)] my-1" />
                 <div className="flex items-center justify-between">
@@ -217,7 +219,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                     <span className="bg-[#3399cc] text-white text-[10px] font-bold px-2 py-0.5 rounded-sm tracking-wide">Razorpay</span>
                     <p className="font-[var(--font-family-body-md)] text-[12px] text-[var(--color-primary)]">Up to <strong className="font-bold">6 months 0% EMI</strong> available on credit cards.</p>
                   </div>
-                  <span className="material-symbols-outlined text-[16px] text-[var(--color-outline)] cursor-pointer hover:text-[var(--color-primary)]">info</span>
+                  <MdOutlineInfo className="text-[16px] text-[var(--color-outline)] cursor-pointer hover:text-[var(--color-primary)]" />
                 </div>
               </div>
             </div>
@@ -262,7 +264,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                     aria-label={`Select color ${color.name}`}
                   >
                     {activeColor === color.name && (
-                      <span className="material-symbols-outlined text-[16px]" style={{ color: color.hex === '#FAF9F6' ? '#000' : '#fff' }}>check</span>
+                      <MdOutlineCheck className="text-[16px]" style={{ color: color.hex === '#FAF9F6' ? '#000' : '#fff' }} />
                     )}
                   </button>
                 ))}
@@ -276,7 +278,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                   onClick={openSizeGuide} 
                   className="font-[var(--font-family-label-caps)] text-[10px] uppercase tracking-widest text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-secondary)] cursor-pointer flex items-center gap-1"
                 >
-                  <span className="material-symbols-outlined text-[14px]">straighten</span> Size Guide
+                  <MdOutlineStraighten className="text-[14px]" /> Size Guide
                 </button>
               </div>
               <div className="grid grid-cols-4 gap-3">
@@ -299,7 +301,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 disabled={stockLeft === 0}
                 className={`w-full font-[var(--font-family-label-caps)] text-[12px] py-5 transition-all active:scale-[0.98] flex items-center justify-center gap-2 uppercase tracking-widest shadow-xl ${stockLeft === 0 ? 'bg-[var(--color-surface-container)] text-[var(--color-outline)] cursor-not-allowed' : 'bg-[var(--color-primary)] text-white hover:bg-[var(--color-secondary)] hover:text-black cursor-pointer'}`}
               >
-                <span className="material-symbols-outlined text-[18px]">shopping_bag</span>
+                <MdOutlineShoppingBag className="text-[18px]" />
                 {stockLeft === 0 ? 'SOLD OUT' : 'ADD TO BAG'}
               </button>
             </div>
@@ -313,7 +315,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               <details className="group py-4" open>
                 <summary className="font-[var(--font-family-label-caps)] text-[12px] uppercase tracking-widest text-[var(--color-primary)] cursor-pointer flex justify-between items-center list-none [&::-webkit-details-marker]:hidden">
                   Details & Fit
-                  <span className="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                  <MdOutlineExpandMore className="group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="pt-4 font-[var(--font-family-body-md)] text-sm text-[var(--color-outline)] space-y-2">
                   <p>• Relaxed, oversized fit</p>
@@ -325,7 +327,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               <details className="group py-4">
                 <summary className="font-[var(--font-family-label-caps)] text-[12px] uppercase tracking-widest text-[var(--color-primary)] cursor-pointer flex justify-between items-center list-none [&::-webkit-details-marker]:hidden">
                   Material & Care
-                  <span className="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                  <MdOutlineExpandMore className="group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="pt-4 font-[var(--font-family-body-md)] text-sm text-[var(--color-outline)] space-y-2">
                   <p>• Machine wash cold inside out.</p>
@@ -336,7 +338,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
               <details className="group py-4">
                 <summary className="font-[var(--font-family-label-caps)] text-[12px] uppercase tracking-widest text-[var(--color-primary)] cursor-pointer flex justify-between items-center list-none [&::-webkit-details-marker]:hidden">
                   Shipping & Returns
-                  <span className="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                  <MdOutlineExpandMore className="group-open:rotate-180 transition-transform" />
                 </summary>
                 <div className="pt-4 font-[var(--font-family-body-md)] text-sm text-[var(--color-outline)] space-y-2">
                   <p>Free standard shipping on orders over Rs. 2000.</p>
@@ -351,7 +353,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
         <section className="px-[var(--spacing-margin-mobile)] md:px-0 py-16 md:py-24 border-t border-[var(--color-outline-variant)] mt-12 md:mt-24">
           <div className="flex justify-between items-end mb-8">
             <h3 className="font-[var(--font-family-headline-lg)] text-2xl md:text-3xl text-[var(--color-primary)] flex items-center gap-2">
-              <span className="material-symbols-outlined text-[24px] text-[var(--color-secondary)]">auto_awesome</span>
+              <MdOutlineAutoAwesome className="text-[24px] text-[var(--color-secondary)]" />
               AI Outfit Pairings
             </h3>
           </div>
@@ -367,7 +369,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                         onClick={(e) => { e.preventDefault(); handleAddRecommended(rec); }}
                         className="absolute bottom-4 right-4 bg-white text-[var(--color-primary)] w-10 h-10 rounded-full shadow-lg flex items-center justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-20 hover:scale-105 cursor-pointer"
                       >
-                        <span className="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                        <MdOutlineAddShoppingCart className="text-[18px]" />
                       </button>
                     </Link>
                   </div>
@@ -385,7 +387,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
             {[1,2,3].map(review => (
               <div key={review} className="bg-[var(--color-surface-container-low)] p-6 rounded-[var(--border-radius-lg)] border border-[var(--color-outline-variant)]">
                 <div className="flex text-[var(--color-primary)] mb-3">
-                  {[1,2,3,4,5].map(star => <span key={star} className="material-symbols-outlined text-[14px]" style={{fontVariationSettings: "'FILL' 1"}}>star</span>)}
+                  {[1,2,3,4,5].map(star => <MdOutlineStar key={star} className="text-[14px]"  />)}
                 </div>
                 <h4 className="font-[var(--font-family-body-md)] font-bold text-[var(--color-primary)] mb-2">Perfect fit, amazing quality!</h4>
                 <p className="font-[var(--font-family-body-md)] text-sm text-[var(--color-outline)] mb-4 leading-relaxed">
