@@ -11,7 +11,7 @@ export default function BestsellersCarousel({ products }) {
     { align: "start", loop: true, skipSnaps: false, dragFree: true },
     [Autoplay({ delay: 5000, stopOnInteraction: true })]
   );
-  
+
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [activeTab, setActiveTab] = useState('bestsellers');
@@ -45,38 +45,38 @@ export default function BestsellersCarousel({ products }) {
   const displayProducts = activeTab === 'bestsellers' ? products : [...products].reverse();
 
   return (
-    <section className="w-full py-16 md:py-24 overflow-hidden bg-[var(--color-surface-container-low)]">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-12">
-        
+    <section className="w-full py-12 md:py-20 overflow-hidden bg-[var(--color-surface-container-low)]">
+      <div className="max-w-screen-2xl mx-auto px-4 md:px-8 xl:px-12">
+
         {/* Header with Tabs */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 border-b border-gray-200 pb-6 gap-6">
           <div className="flex gap-6 md:gap-10">
-            <button 
-              onClick={() => setActiveTab('bestsellers')} 
+            <button
+              onClick={() => setActiveTab('bestsellers')}
               className={`text-[24px] md:text-[40px] tracking-tight leading-none transition-colors duration-300 ${activeTab === 'bestsellers' ? 'text-black font-bold' : 'text-gray-400 font-medium hover:text-gray-600'}`}
               style={{ fontFamily: activeTab === 'bestsellers' ? "Georgia, serif" : "inherit", fontStyle: activeTab === 'bestsellers' ? "italic" : "normal" }}
             >
               Bestsellers
             </button>
-            <button 
-              onClick={() => setActiveTab('newArrivals')} 
+            <button
+              onClick={() => setActiveTab('newArrivals')}
               className={`text-[24px] md:text-[40px] tracking-tight leading-none transition-colors duration-300 ${activeTab === 'newArrivals' ? 'text-black font-bold' : 'text-gray-400 font-medium hover:text-gray-600'}`}
               style={{ fontFamily: activeTab === 'newArrivals' ? "Georgia, serif" : "inherit", fontStyle: activeTab === 'newArrivals' ? "italic" : "normal" }}
             >
               New Arrivals
             </button>
           </div>
-          
+
           {/* Custom Navigation */}
           <div className="hidden md:flex gap-4">
-            <button 
+            <button
               onClick={scrollPrev}
               className="w-12 h-12 flex items-center justify-center border border-gray-300 rounded-full hover:bg-black hover:text-white hover:border-black transition-all duration-300 cursor-pointer"
               aria-label="Previous slide"
             >
               <span className="material-symbols-outlined text-[20px]">arrow_back</span>
             </button>
-            <button 
+            <button
               onClick={scrollNext}
               className="w-12 h-12 flex items-center justify-center border border-gray-300 rounded-full hover:bg-black hover:text-white hover:border-black transition-all duration-300 cursor-pointer"
               aria-label="Next slide"
@@ -89,7 +89,7 @@ export default function BestsellersCarousel({ products }) {
         {/* Carousel Viewport */}
         <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
           <AnimatePresence mode="wait">
-            <motion.div 
+            <motion.div
               key={activeTab}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -98,15 +98,15 @@ export default function BestsellersCarousel({ products }) {
               className="flex -ml-4 md:-ml-8 touch-pan-y"
             >
               {displayProducts.map((product, index) => (
-                <div 
-                  key={product._id || index} 
+                <div
+                  key={product._id || index}
                   className="flex-[0_0_85%] min-w-0 md:flex-[0_0_35%] lg:flex-[0_0_28%] pl-4 md:pl-8"
                 >
                   <div className="relative group flex flex-col h-full">
                     <div className="relative aspect-[3/4] overflow-hidden bg-gray-100 mb-5 rounded-[16px]">
                       <Link href={`/product/${product.slug?.current || product._id}`} className="block w-full h-full relative">
-                        <Image 
-                          src={product.imageUrl} 
+                        <Image
+                          src={product.imageUrl || "https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=800&q=80"}
                           alt={product.title}
                           fill
                           sizes="(max-width: 768px) 85vw, (max-width: 1024px) 35vw, 28vw"
@@ -123,15 +123,9 @@ export default function BestsellersCarousel({ products }) {
                         </div>
                       )}
 
-                      {/* Low Stock Indicator */}
-                      {index === 2 && (
-                        <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md border border-orange-200 text-orange-600 text-[11px] font-bold px-3 py-2 rounded-xl flex items-center gap-1.5 shadow-lg z-10 translate-y-2 group-hover:translate-y-0 transition-transform">
-                          <span className="material-symbols-outlined text-[14px]">warning</span>
-                          Only 3 left — Order soon!
-                        </div>
-                      )}
+
                     </div>
-                    
+
                     <div className="flex flex-col gap-1 px-1">
                       <Link href={`/product/${product.slug?.current || product._id}`}>
                         <h3 className="font-bold text-[15px] md:text-[17px] text-black hover:underline decoration-2 underline-offset-4 leading-tight">
@@ -155,7 +149,7 @@ export default function BestsellersCarousel({ products }) {
             </motion.div>
           </AnimatePresence>
         </div>
-        
+
       </div>
     </section>
   );

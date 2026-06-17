@@ -4,59 +4,69 @@ import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { motion, AnimatePresence } from "framer-motion";
+
+import { categorizedImages } from '@/lib/supabase';
 
 const HERO_SLIDES = [
   {
     id: 1,
-    type: "video",
-    title: "The Summer Drop",
-    subtitle: "NEW ARRIVALS",
-    mediaDesktop: "https://videos.pexels.com/video-files/8467540/8467540-hd_1920_1080_25fps.mp4",
-    mediaMobile: "https://videos.pexels.com/video-files/8467406/8467406-uhd_1440_2560_25fps.mp4",
+    type: "image",
+    title: "Linen Shirts",
+    subtitle: "BREATHE EASY",
+    mediaDesktop: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1600&q=80",
+    mediaMobile: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80",
     link: "/discover",
-    hotspots: [
-      {
-        id: 'hs1',
-        x: 65,
-        y: 45,
-        product: {
-          name: "Signature Linen Shirt",
-          price: "Rs. 1,499.00",
-          image: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk",
-          link: "/product/1"
-        }
-      },
-      {
-        id: 'hs2',
-        x: 40,
-        y: 75,
-        product: {
-          name: "Classic Chino Trousers",
-          price: "Rs. 1,899.00",
-          image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA76zNwvs5gMYBFVZdgoSKJixLptgh8_OB9nQow0L6_sa-MyFkZ_KEm8y6a2HgRpEoWIqeXdoqpUwF94EgjQmd61fahM19_jR7mirZXRODBeuMxABEdij3syuzXzQbdpXRTIDT0jSfZ9w1e8WNpD1AvZU2g9kOq7r6vmwllFI9oFTFs0PUiYBF7TNVegv2eNGwSdmDEnbrnEmdAanvGG7WAdGbHwCKGcgxcHmU228IbrBPWR6kQBJJlX9OMjpPQ4qKvdkkPp-zi-CzN",
-          link: "/product/2"
-        }
-      }
-    ]
+    hotspots: []
   },
   {
     id: 2,
     type: "image",
-    title: "Printed Shirts",
-    subtitle: "MAKE A STATEMENT",
-    mediaDesktop: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk",
-    mediaMobile: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk",
+    title: "Streetwear T-Shirts",
+    subtitle: "URBAN ESSENTIALS",
+    mediaDesktop: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=1600&q=80",
+    mediaMobile: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=800&q=80",
     link: "/discover",
     hotspots: []
   },
   {
     id: 3,
     type: "image",
+    title: "Designer Shirts",
+    subtitle: "ELEVATE YOUR STYLE",
+    mediaDesktop: "https://images.unsplash.com/photo-1480455624313-e29b44bbfde1?auto=format&fit=crop&w=1600&q=80",
+    mediaMobile: "https://images.unsplash.com/photo-1480455624313-e29b44bbfde1?auto=format&fit=crop&w=800&q=80",
+    link: "/discover",
+    hotspots: []
+  },
+  {
+    id: 4,
+    type: "image",
     title: "Old Money",
     subtitle: "TIMELESS ELEGANCE",
-    mediaDesktop: "https://lh3.googleusercontent.com/aida/AP1WRLvSYcGlZrnwqfIIv18eMDIdu2yLyYBG21HM8YJfRqO_iAicuLNUK6anx727focsmckkG7zBbMgV0uhNqsGq8zrEDcq7W1A7-RSbsmKQEvt8zaF0TdkSKstAczSYMBv9CcFDe5jeiEQcGpzsHczxL3WmLBx4t4tpS4HEVDcYOJyrORZr23DyxdoA2bqQhlU-wuQZtkAuGZwChFskCe2q5bfCAidUzkN4jVbZugbdlK7ejH3aTvrL4mMYnio",
-    mediaMobile: "https://lh3.googleusercontent.com/aida/AP1WRLvSYcGlZrnwqfIIv18eMDIdu2yLyYBG21HM8YJfRqO_iAicuLNUK6anx727focsmckkG7zBbMgV0uhNqsGq8zrEDcq7W1A7-RSbsmKQEvt8zaF0TdkSKstAczSYMBv9CcFDe5jeiEQcGpzsHczxL3WmLBx4t4tpS4HEVDcYOJyrORZr23DyxdoA2bqQhlU-wuQZtkAuGZwChFskCe2q5bfCAidUzkN4jVbZugbdlK7ejH3aTvrL4mMYnio",
+    mediaDesktop: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1600&q=80",
+    mediaMobile: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80",
+    link: "/discover",
+    hotspots: []
+  },
+  {
+    id: 5,
+    type: "image",
+    title: "The Summer Drop",
+    subtitle: "NEW ARRIVALS",
+    mediaDesktop: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=1600&q=80",
+    mediaMobile: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=800&q=80",
+    link: "/discover",
+    hotspots: []
+  },
+  {
+    id: 6,
+    type: "image",
+    title: "Essential Tops",
+    subtitle: "EVERYDAY COMFORT",
+    mediaDesktop: "https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=1600&q=80",
+    mediaMobile: "https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=800&q=80",
     link: "/discover",
     hotspots: []
   }
@@ -64,8 +74,11 @@ const HERO_SLIDES = [
 
 export default function HeroCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, duration: 40, align: "center" },
-    [Autoplay({ delay: 8000, stopOnInteraction: false })]
+    { loop: true, duration: 40, align: "center", dragFree: true },
+    [
+      Autoplay({ delay: 8000, stopOnInteraction: false }),
+      WheelGesturesPlugin()
+    ]
   );
   
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -96,11 +109,11 @@ export default function HeroCarousel() {
 
   return (
     <section className="relative w-full overflow-hidden bg-[var(--color-background)] group pt-4 md:pt-8 pb-8 md:pb-12">
-      <div className="overflow-hidden w-full h-[70vh] md:h-[80vh]" ref={emblaRef}>
-        <div className="flex w-full h-full touch-pan-y -ml-4 md:-ml-6">
+      <div className="overflow-hidden w-full" ref={emblaRef}>
+        <div className="flex w-full touch-pan-y -ml-4 md:-ml-8 xl:-ml-12 items-center">
           {HERO_SLIDES.map((slide, index) => (
-            <div key={slide.id} className="relative flex-[0_0_90%] md:flex-[0_0_65%] min-w-0 h-full pl-4 md:pl-6">
-              <div className="relative w-full h-full rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm group/slide">
+            <div key={slide.id} className="relative flex-[0_0_80%] md:flex-[0_0_65%] min-w-0 pl-4 md:pl-8 xl:pl-12 select-none">
+              <div className="relative w-full aspect-[4/5] md:aspect-auto md:h-[80vh] rounded-[24px] md:rounded-[32px] overflow-hidden shadow-sm group/slide">
                 
                 {/* Media Layer */}
                 {slide.type === 'video' ? (
@@ -111,7 +124,7 @@ export default function HeroCarousel() {
                       loop
                       muted
                       playsInline
-                      className="hidden md:block w-full h-full object-cover"
+                      className="hidden md:block w-full h-full object-cover pointer-events-none"
                     />
                     <video
                       src={slide.mediaMobile}
@@ -119,7 +132,7 @@ export default function HeroCarousel() {
                       loop
                       muted
                       playsInline
-                      className="block md:hidden w-full h-full object-cover"
+                      className="block md:hidden w-full h-full object-cover pointer-events-none"
                     />
                   </>
                 ) : (
@@ -128,16 +141,18 @@ export default function HeroCarousel() {
                       src={slide.mediaDesktop}
                       alt={slide.title}
                       fill
-                      priority={index === 0}
-                      className="hidden md:block object-cover object-center"
+                      priority={true}
+                      draggable={false}
+                      className="hidden md:block object-cover object-[center_15%] pointer-events-none"
                       sizes="(max-width: 768px) 100vw, 65vw"
                     />
                     <Image
                       src={slide.mediaMobile}
                       alt={slide.title}
                       fill
-                      priority={index === 0}
-                      className="block md:hidden object-cover object-center"
+                      priority={true}
+                      draggable={false}
+                      className="block md:hidden object-cover object-top pointer-events-none"
                       sizes="(max-width: 768px) 90vw, 100vw"
                     />
                   </>

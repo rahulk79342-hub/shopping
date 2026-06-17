@@ -27,31 +27,31 @@ export default function PressMentions() {
 
       {/* Infinite Marquee */}
       <div className="relative flex overflow-x-hidden group">
-         {/* Gradient masks for smooth fade in/out at edges */}
-         <div className="absolute top-0 left-0 w-24 md:w-48 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-         <div className="absolute top-0 right-0 w-24 md:w-48 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-         
-         <motion.div
-           className="flex gap-16 md:gap-32 items-center whitespace-nowrap py-4"
-           animate={{
-             x: ["0%", "-33.33%"],
-           }}
-           transition={{
-             ease: "linear",
-             duration: 20,
-             repeat: Infinity,
-           }}
-         >
-           {duplicatedPublications.map((pub, i) => (
-             <div 
-               key={i} 
-               className="text-[24px] md:text-[32px] text-gray-300 opacity-60 hover:opacity-100 hover:text-black transition-all duration-300 cursor-default select-none"
-               style={pub.style}
-             >
-               {pub.name}
-             </div>
-           ))}
-         </motion.div>
+        {/* Gradient masks for smooth fade in/out at edges */}
+        <div className="absolute top-0 left-0 w-24 md:w-48 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-24 md:w-48 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+        <motion.div
+          className="flex gap-16 md:gap-32 items-center whitespace-nowrap py-4"
+          animate={{
+            x: ["0%", "-33.33%"],
+          }}
+          transition={{
+            ease: "linear",
+            duration: 20,
+            repeat: Infinity,
+          }}
+        >
+          {duplicatedPublications.map((pub, i) => (
+            <div
+              key={i}
+              className="text-[24px] md:text-[32px] text-gray-300 opacity-60 hover:opacity-100 hover:text-black transition-all duration-300 cursor-default select-none"
+              style={pub.style}
+            >
+              {pub.name}
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

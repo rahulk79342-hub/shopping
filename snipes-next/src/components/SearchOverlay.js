@@ -62,7 +62,7 @@ function Hit({ hit }) {
     >
       <div className="w-full aspect-square relative bg-[var(--color-surface-container)] rounded-[var(--border-radius-md)] overflow-hidden">
         <Image 
-          src={hit.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_YavZNiw9DhrBb0ZBgyJifNRaItiQDPQUi190lzf_JBwvZh3tWuqKExcUQ7eiZcM6BMOmdoVawxp7B661YYJoSVHa_NlGyj796o0KV2R1Q9Nc45Q3CNxnoQTn90NPz_W_G5RvD6zZyvqdKTdxVvkjDwKvoFNpfMcRoi9jGYZ-PpK3F7wbv1h7xKcQNrcKB59Y8RmwskjgfFomuWiIiKlNnTjxBlMtQyXkykV6wYO5CsJBp5nwj5joHCf52oJfQKzUZlUzaK2CIrJW'} 
+          src={hit.image || 'https://i.imgur.com/SZPDSgy.jpeg'} 
           alt={hit.name} 
           fill 
           sizes="(max-width: 768px) 50vw, 25vw"
@@ -88,8 +88,8 @@ function ZeroResultsAIFallback({ query }) {
   }, [query]);
 
   const mockAlternatives = [
-    { id: 10, name: "AI Suggested: Flowy Red Dress", image: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk", price: 2499 },
-    { id: 11, name: "AI Suggested: Crimson Maxi", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA76zNwvs5gMYBFVZdgoSKJixLptgh8_OB9nQow0L6_sa-MyFkZ_KEm8y6a2HgRpEoWIqeXdoqpUwF94EgjQmd61fahM19_jR7mirZXRODBeuMxABEdij3syuzXzQbdpXRTIDT0jSfZ9w1e8WNpD1AvZU2g9kOq7r6vmwllFI9oFTFs0PUiYBF7TNVegv2eNGwSdmDEnbrnEmdAanvGG7WAdGbHwCKGcgxcHmU228IbrBPWR6kQBJJlX9OMjpPQ4qKvdkkPp-zi-CzN", price: 1899 }
+    { id: 10, name: "AI Suggested: Flowy Red Dress", image: "https://i.imgur.com/Y54Bt8J.jpeg", price: 2499 },
+    { id: 11, name: "AI Suggested: Crimson Maxi", image: "https://i.imgur.com/J6MinJn.jpeg", price: 1899 }
   ];
 
   if (isProcessing) {
@@ -127,8 +127,8 @@ function SearchContent({ onUploadClick }) {
   const trendingSearches = ["Linen Shirts", "Oversized Tees", "Cargo Pants", "Old Money"];
   const naturalLanguagePrompts = ["flowy red dress for Diwali", "oversized black linen for summer", "wedding guest attire under Rs. 3000"];
   const recentProducts = [
-    { id: 1, name: "Digital Printed Shirt - Arctic Blue", image: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk", price: 899 },
-    { id: 2, name: "Charcoal Gurkha Pants", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA76zNwvs5gMYBFVZdgoSKJixLptgh8_OB9nQow0L6_sa-MyFkZ_KEm8y6a2HgRpEoWIqeXdoqpUwF94EgjQmd61fahM19_jR7mirZXRODBeuMxABEdij3syuzXzQbdpXRTIDT0jSfZ9w1e8WNpD1AvZU2g9kOq7r6vmwllFI9oFTFs0PUiYBF7TNVegv2eNGwSdmDEnbrnEmdAanvGG7WAdGbHwCKGcgxcHmU228IbrBPWR6kQBJJlX9OMjpPQ4qKvdkkPp-zi-CzN", price: 1499 }
+    { id: 1, name: "Digital Printed Shirt - Arctic Blue", image: "https://i.imgur.com/T8oq9X2.jpeg", price: 899 },
+    { id: 2, name: "Charcoal Gurkha Pants", image: "https://i.imgur.com/axsyGpD.jpeg", price: 1499 }
   ];
 
   return (

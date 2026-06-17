@@ -119,7 +119,7 @@ export default function QuickAddModal() {
                   >
                     {/* Image Gallery */}
                     <div className="w-full bg-[#f8f8f8] rounded-[16px] overflow-hidden aspect-[3/4] relative mb-6">
-                      <Image src={quickAddProduct.image || quickAddProduct.img} alt={quickAddProduct.name} fill sizes="(max-width: 768px) 100vw, 480px" className="object-cover object-top" />
+                      <Image src={quickAddProduct.image || quickAddProduct.img || "https://i.imgur.com/NLn4e7S.jpeg"} alt={quickAddProduct.name} fill sizes="(max-width: 768px) 100vw, 480px" className="object-cover object-top" />
                     </div>
 
                     {/* Product Info */}

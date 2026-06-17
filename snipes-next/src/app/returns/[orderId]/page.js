@@ -1,5 +1,5 @@
 "use client";
-import { useState, use } from 'react';
+import { useState, use, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,18 +15,15 @@ const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supaba
 const MOCK_ORDER = {
   id: "ORD-12345",
   items: [
-    { id: 1, name: "Premium Comfort Tee", price: 1499, size: "M", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC_YavZNiw9DhrBb0ZBgyJifNRaItiiT1h33c94H62jKkK7H2Xl-3m43Z9131wzS4Qf" },
-    { id: 2, name: "Urban Cargo Pants", price: 3999, size: "32", image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA76zNwvs5gMYBFVZdgoSKJixLptgh8_OB9nQow0L6_aFjYVjF6UlsA8V66yKxRz2B4" }
+    { id: 1, name: "Premium Comfort Tee", price: 1499, size: "M", image: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?auto=format&fit=crop&w=800&q=80" },
+    { id: 2, name: "Urban Cargo Pants", price: 3999, size: "32", image: "https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=800&q=80" }
   ]
 };
 
-export default function ReturnsFormPage(props) {
+function ReturnsFormContent({ orderId }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get('email') || 'customer@example.com';
-  
-  const params = use(props.params);
-  const orderId = params.orderId || MOCK_ORDER.id;
   
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [resolution, setResolution] = useState('credit'); // 'credit' or 'exchange'
@@ -117,8 +114,7 @@ export default function ReturnsFormPage(props) {
   };
 
   return (
-    <main className="min-h-screen bg-[var(--color-surface)] pb-24">
-      {/* Header */}
+    <>
       <header className="bg-white border-b border-[var(--color-outline-variant)] py-6 px-6 md:px-12 flex justify-between items-center sticky top-0 z-40">
         <Link href="/" className="font-[var(--font-family-display-lg)] text-[24px] font-extrabold tracking-tighter text-[var(--color-primary)]">
           DEMO
@@ -273,6 +269,19 @@ export default function ReturnsFormPage(props) {
 
         </form>
       </div>
+    </>
+  );
+}
+
+export default function ReturnsFormPage(props) {
+  const params = use(props.params);
+  const orderId = params.orderId || MOCK_ORDER.id;
+
+  return (
+    <main className="min-h-screen bg-[var(--color-surface)] pb-24">
+      <Suspense fallback={<div className="min-h-screen bg-[var(--color-surface)] flex items-center justify-center">Loading...</div>}>
+        <ReturnsFormContent orderId={orderId} />
+      </Suspense>
     </main>
   );
 }

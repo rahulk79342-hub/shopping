@@ -31,7 +31,7 @@ export default function CartDrawer() {
   }, []);
 
   const cartTotal = getCartTotal();
-  const FREE_SHIPPING_THRESHOLD = 5000;
+  const FREE_SHIPPING_THRESHOLD = 2000;
   const progress = Math.min((cartTotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
   const amountNeeded = Math.max(FREE_SHIPPING_THRESHOLD - cartTotal, 0);
   
@@ -48,8 +48,8 @@ export default function CartDrawer() {
 
   // Upsell Data
   const upsellProducts = [
-    { id: 901, name: "Premium Shoetrees", price: 1299, image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD2T5ScOkf6IGg-8_FhievtvgyT3NP2bgwX4PxJxAmxL5rI1dqkz7qMYE1Hcuu3nuLT-8TS5ga_RJQvRdmscfKLJRLKpSlvhCDSQJld2aLlhyJ_bCM5NaRIjUZ3vUv8__E4aGjFEaCbB89BaZcHTxpJ4Xe1DDGzz1RvpJEdQy7hHsI4iuu0OZoWpQqiF7_oG0I01WEHkLeohuJPZc9m5tuDwUQ6CRvMC-hvmrvlA06GBWUi4QAX716W41QeZXo4wYH8Um85lRy0_rJB" },
-    { id: 902, name: "Linen Care Spray", price: 599, image: "https://lh3.googleusercontent.com/aida/AP1WRLvdTNrLqdIbrlVcwvhf1pkicFIWpnzBFdCNmEPxGZPQWSdo5JLETjU7OD2n_HxSzocDKARWSH6316KlftpQ7TnhFoy0mGx_msvfc5QkybOjQoo3H0Dfl1ceWVKM3voQAjRKpFFhc7kJrj21ZQY6aS4zFyRINNnb8xhYILeid1pTKRLT_LG3VXqTFZKBSvir70jC-LREyJzbtBirF6QDKz9BeU13JLHCPk1fd4-MBWrPDa3Mr-u8s8tYQzA" }
+    { id: 901, name: "Premium Shoetrees", price: 1299, image: "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=80" },
+    { id: 902, name: "Linen Care Spray", price: 599, image: "https://images.unsplash.com/photo-1626557981101-aae6f84aa6ff?auto=format&fit=crop&w=800&q=80" }
   ];
 
   const handleApplyPromo = (e) => {
@@ -133,7 +133,7 @@ export default function CartDrawer() {
           </div>
 
           {/* Cart Items List */}
-          <div className="flex-1 overflow-y-auto px-6 pt-6 pb-32 flex flex-col gap-6 custom-scrollbar bg-[var(--color-surface)]">
+          <div className="flex-1 overflow-y-auto px-6 pt-6 pb-6 flex flex-col gap-6 custom-scrollbar bg-[var(--color-surface)]">
             {cartItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center">
                 <span className="material-symbols-outlined text-[64px] text-[var(--color-outline-variant)] mb-4">shopping_bag</span>
@@ -250,7 +250,7 @@ export default function CartDrawer() {
 
           {/* Footer / Checkout */}
           {cartItems.length > 0 && (
-            <div className="border-t border-[var(--color-outline-variant)] p-6 bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+            <div className="border-t border-[var(--color-outline-variant)] p-4 bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-20">
               
               {/* Promo Code Input */}
               <div className="mb-4">

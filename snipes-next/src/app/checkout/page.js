@@ -288,8 +288,8 @@ export default function CheckoutPage() {
     <main className="min-h-screen bg-[var(--color-surface)] pb-24">
       {/* Checkout Header */}
       <header className="bg-white border-b border-[var(--color-outline-variant)] py-6 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50">
-        <Link href="/" className="font-[var(--font-family-display-lg)] text-[24px] font-extrabold tracking-tighter text-[var(--color-primary)]">
-          DEMO
+        <Link href="/" className="font-[var(--font-family-display-lg)] text-[24px] font-extrabold tracking-tighter text-[var(--color-primary)] uppercase" style={{ fontFamily: "Arial, sans-serif", letterSpacing: "-1px" }}>
+          SNIPES
         </Link>
         <div className="flex items-center gap-2 text-[var(--color-outline)]">
           <span className="material-symbols-outlined text-[16px]">lock</span>
@@ -431,35 +431,35 @@ export default function CheckoutPage() {
               <div className="flex gap-3 mb-6 overflow-x-auto hide-scrollbar pb-2">
                 <button 
                   onClick={() => setPaymentGateway('stripe')}
-                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'stripe' ? 'border-[#635BFF] bg-[#635BFF]/5' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-[#635BFF]/50'}`}
+                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'stripe' ? 'border-blue-600 bg-blue-50' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-blue-300'}`}
                 >
-                  <span className="font-bold text-[#635BFF] text-[13px]">Stripe</span>
+                  <span className="font-bold text-blue-600 text-[13px]">Stripe</span>
                   <span className="text-[9px] text-[var(--color-outline)]">Cards / Apple Pay</span>
                 </button>
                 <button 
                   onClick={() => setPaymentGateway('razorpay_upi')}
-                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'razorpay_upi' ? 'border-[#3399cc] bg-[#3399cc]/5' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-[#3399cc]/50'}`}
+                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'razorpay_upi' ? 'border-cyan-600 bg-cyan-50' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-cyan-300'}`}
                 >
-                  <span className="font-bold text-[#3399cc] text-[13px]">Razorpay UPI</span>
+                  <span className="font-bold text-cyan-600 text-[13px]">Razorpay UPI</span>
                   <span className="text-[9px] text-[var(--color-outline)]">GPay / PhonePe</span>
                 </button>
                 <button 
                   onClick={() => setPaymentGateway('simpl')}
-                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'simpl' ? 'border-[#00D1B2] bg-[#00D1B2]/5' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-[#00D1B2]/50'}`}
+                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'simpl' ? 'border-teal-500 bg-teal-50' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-teal-300'}`}
                 >
-                  <span className="font-bold text-[#00D1B2] text-[13px]">Simpl</span>
+                  <span className="font-bold text-teal-500 text-[13px]">Simpl</span>
                   <span className="text-[9px] text-[var(--color-outline)]">Pay in 3 Parts</span>
                 </button>
                 <button 
                   onClick={() => setPaymentGateway('razorpay_emi')}
-                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'razorpay_emi' ? 'border-[#3399cc] bg-[#3399cc]/5' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-[#3399cc]/50'}`}
+                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'razorpay_emi' ? 'border-cyan-600 bg-cyan-50' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-cyan-300'}`}
                 >
-                  <span className="font-bold text-[#3399cc] text-[13px]">EMI</span>
+                  <span className="font-bold text-cyan-600 text-[13px]">EMI</span>
                   <span className="text-[9px] text-[var(--color-outline)]">0% Interest</span>
                 </button>
                 <button 
                   onClick={() => setPaymentGateway('klarna')}
-                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'klarna' ? 'border-[#FFB3C7] bg-[#FFB3C7]/10' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-[#FFB3C7]/50'}`}
+                  className={`flex-shrink-0 min-w-[120px] py-3 flex flex-col items-center justify-center gap-1 rounded-[var(--border-radius-sm)] transition-all border-2 ${paymentGateway === 'klarna' ? 'border-pink-300 bg-pink-50' : 'border-[var(--color-outline-variant)] bg-white shadow-sm hover:border-pink-200'}`}
                 >
                   <span className="font-bold text-black text-[13px]">Klarna.</span>
                   <span className="text-[9px] text-[var(--color-outline)]">Intl. Pay in 4</span>

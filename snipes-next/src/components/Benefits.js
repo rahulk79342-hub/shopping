@@ -30,8 +30,8 @@ export default function Benefits() {
   ];
 
   return (
-    <section className="w-full py-16 md:py-20 bg-[#f8f8f8]">
-      <div className="max-w-screen-2xl mx-auto px-4 md:px-8">
+    <section className="w-full py-12 md:py-20 bg-[#f8f8f8]">
+      <div className="max-w-screen-2xl mx-auto px-4 md:px-8 xl:px-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
           {benefits.map((benefit) => (
             <div key={benefit.id} className="flex flex-col items-center text-center group">

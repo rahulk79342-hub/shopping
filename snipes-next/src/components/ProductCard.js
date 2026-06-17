@@ -3,16 +3,16 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useWishlistStore } from '@/store/useWishlistStore';
-import { useUI } from '@/context/UIContext';
+
 import { motion } from 'framer-motion';
 
 export default function ProductCard({ product }) {
-  const { openQuickAdd } = useUI();
-  const toggleWishlist = useWishlistStore(state => state.toggleWishlist);
-  const isInWishlist = useWishlistStore(state => state.isInWishlist);
 
-  const [activeImage, setActiveImage] = useState(product.img || product.imageUrl);
-  const isWishlisted = isInWishlist(product.id || product._id);
+  const toggleWishlist = useWishlistStore(state => state.toggleWishlist);
+  const wishlistItems = useWishlistStore(state => state.wishlistItems);
+
+  const [activeImage, setActiveImage] = useState(product.images?.[0] || product.img || product.imageUrl || product.image || "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80");
+  const isWishlisted = wishlistItems.includes(product.id || product._id);
 
   const handleWishlist = (e) => {
     e.preventDefault();
@@ -20,15 +20,24 @@ export default function ProductCard({ product }) {
     toggleWishlist(product.id || product._id);
   };
 
-  const handleQuickAdd = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    openQuickAdd({ ...product, img: activeImage });
-  };
-
   const price = product.price;
   const originalPrice = product.originalPrice;
   const isSale = product.sale || !!originalPrice;
+
+  const handleShare = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const url = `${window.location.origin}/product/${product.slug?.current || product.id || product._id}`;
+    if (navigator.share) {
+      navigator.share({
+        title: product.name || product.title,
+        url: url
+      }).catch(console.error);
+    } else {
+      navigator.clipboard.writeText(url);
+      alert("Link copied to clipboard!");
+    }
+  };
 
   return (
     <div className="group flex flex-col">
@@ -43,21 +52,34 @@ export default function ProductCard({ product }) {
           />
         </Link>
 
-        {/* Wishlist Heart Icon */}
-        <button 
-          onClick={handleWishlist} 
-          className="absolute top-2 right-2 md:top-4 md:right-4 z-10 w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-black hover:scale-110 active:scale-95 transition-all shadow-sm"
-          aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-        >
-          <motion.span 
-            initial={false}
-            animate={{ scale: isWishlisted ? [1, 1.2, 1] : 1 }}
-            className={`material-symbols-outlined text-[16px] md:text-[18px] transition-colors ${isWishlisted ? 'text-red-500' : 'text-gray-400 hover:text-black'}`} 
-            style={{ fontVariationSettings: isWishlisted ? "'FILL' 1" : "'FILL' 0" }}
+        {/* Action Icons (Wishlist & Share) */}
+        <div className="absolute top-2 right-2 md:top-4 md:right-4 z-10 flex flex-col gap-2">
+          {/* Wishlist Heart Icon */}
+          <button 
+            onClick={handleWishlist} 
+            className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-black hover:scale-110 active:scale-95 transition-all shadow-sm"
+            aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
           >
-            favorite
-          </motion.span>
-        </button>
+            <motion.span 
+              initial={false}
+              animate={{ scale: isWishlisted ? [1, 1.3, 1] : 1 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+              className={`material-symbols-outlined text-[16px] md:text-[18px] ${isWishlisted ? 'text-red-500' : 'text-gray-400 hover:text-black'}`} 
+              style={{ fontVariationSettings: isWishlisted ? "'FILL' 1" : "'FILL' 0" }}
+            >
+              favorite
+            </motion.span>
+          </button>
+
+          {/* Share Icon */}
+          <button 
+            onClick={handleShare} 
+            className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-gray-400 hover:text-black hover:scale-110 active:scale-95 transition-all shadow-sm md:opacity-0 md:-translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
+            aria-label="Share product"
+          >
+            <span className="material-symbols-outlined text-[16px] md:text-[18px]">share</span>
+          </button>
+        </div>
 
         {/* Tag */}
         {product.tag && (
@@ -66,21 +88,6 @@ export default function ProductCard({ product }) {
           </div>
         )}
 
-        {/* Quick Add Button (Reveals on Desktop Hover) */}
-        <button 
-          onClick={handleQuickAdd} 
-          className="hidden md:flex absolute bottom-4 left-4 right-4 z-10 bg-white/95 backdrop-blur-md text-black font-bold text-[12px] py-3.5 rounded-full uppercase tracking-widest opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg items-center justify-center hover:bg-black hover:text-white"
-        >
-          Quick Add
-        </button>
-        
-        {/* Quick Add Button (Mobile always visible icon) */}
-        <button 
-          onClick={handleQuickAdd} 
-          className="md:hidden absolute bottom-2 right-2 z-10 w-8 h-8 rounded-full bg-black text-white flex items-center justify-center shadow-md active:scale-95 transition-transform"
-        >
-           <span className="material-symbols-outlined text-[16px]">add_shopping_cart</span>
-        </button>
       </div>
 
       {/* Info & Swatches */}

@@ -17,7 +17,7 @@ export async function POST(request) {
       console.log(`[Mock Resend] Registered ${email} for restock alerts on ${productName || productId}`);
       
       // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // Removed simulated network latency
 
       return NextResponse.json({ 
         success: true, 

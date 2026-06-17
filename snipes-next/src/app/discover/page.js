@@ -81,18 +81,18 @@ function DiscoverContent() {
             </h2>
             <p className="text-sm text-[var(--color-outline)] mt-2">{totalCount} Products</p>
           </div>
-          
+
           {/* Desktop Controls */}
           <div className="hidden md:flex items-center gap-6">
             <div className="flex items-center gap-2 border-r border-[var(--color-outline-variant)] pr-6">
-              <button 
+              <button
                 onClick={() => setViewLayout('normal')}
                 className={`p-2 rounded transition-colors flex items-center justify-center cursor-pointer ${viewLayout === 'normal' ? 'bg-[var(--color-surface-container)] text-[var(--color-primary)]' : 'text-[var(--color-outline)] hover:text-[var(--color-primary)]'}`}
                 title="Grid View"
               >
-                <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>grid_view</span>
+                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>grid_view</span>
               </button>
-              <button 
+              <button
                 onClick={() => setViewLayout('dense')}
                 className={`p-2 rounded transition-colors flex items-center justify-center cursor-pointer ${viewLayout === 'dense' ? 'bg-[var(--color-surface-container)] text-[var(--color-primary)]' : 'text-[var(--color-outline)] hover:text-[var(--color-primary)]'}`}
                 title="Catalog View"
@@ -100,7 +100,7 @@ function DiscoverContent() {
                 <span className="material-symbols-outlined">apps</span>
               </button>
             </div>
-            
+
             <div className="relative group">
               <button className="flex items-center gap-2 border border-[var(--color-outline)] px-4 py-2 hover:bg-[var(--color-primary)] hover:text-white transition-all cursor-pointer">
                 <span className="material-symbols-outlined text-[18px]">sort</span>
@@ -108,8 +108,8 @@ function DiscoverContent() {
               </button>
               <div className="absolute right-0 top-full mt-2 w-48 bg-[var(--color-surface)] border border-[var(--color-outline-variant)] shadow-lg hidden group-hover:block z-50">
                 {['new', 'price-asc', 'price-desc', 'trending', 'ai-match'].map((s) => (
-                  <button 
-                    key={s} 
+                  <button
+                    key={s}
                     onClick={() => updateFilter('sort', s)}
                     className="w-full text-left px-4 py-3 text-sm hover:bg-[var(--color-surface-container)] transition-colors capitalize font-[var(--font-family-body-md)]"
                   >
@@ -124,14 +124,13 @@ function DiscoverContent() {
         {/* Categories Quick Filter */}
         <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2 pt-4">
           {['all', 'shirts', 'bottoms', 'accessories', 'sale'].map(cat => (
-            <button 
+            <button
               key={cat}
               onClick={() => cat === 'sale' ? updateFilter('sale', filters.sale ? null : 'true') : updateFilter('category', cat)}
-              className={`whitespace-nowrap px-6 py-2 rounded-[var(--border-radius-lg)] font-[var(--font-family-label-caps)] text-[var(--text-label-caps)] active:scale-95 transition-all cursor-pointer border uppercase tracking-widest ${
-                (cat === 'sale' && filters.sale) || (cat !== 'sale' && filters.category === cat) 
-                  ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)] border-[var(--color-primary)]' 
+              className={`whitespace-nowrap px-6 py-2 rounded-[var(--border-radius-lg)] font-[var(--font-family-label-caps)] text-[var(--text-label-caps)] active:scale-95 transition-all cursor-pointer border uppercase tracking-widest ${(cat === 'sale' && filters.sale) || (cat !== 'sale' && filters.category === cat)
+                  ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]'
                   : 'bg-transparent text-[var(--color-on-surface)] border-[var(--color-outline-variant)] hover:border-[var(--color-primary)]'
-              }`}
+                }`}
             >
               {cat}
             </button>
@@ -177,7 +176,7 @@ function DiscoverContent() {
 
       {/* Mobile Sticky Filter Bar */}
       <div className="fixed bottom-0 left-0 w-full bg-[var(--color-surface)] border-t border-[var(--color-outline-variant)] p-4 md:hidden z-40 flex justify-center shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
-        <button 
+        <button
           onClick={openMobileFilter}
           className="bg-[var(--color-primary)] text-white w-full max-w-[300px] py-3 rounded-full font-[var(--font-family-label-caps)] text-xs uppercase tracking-widest shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2 cursor-pointer"
         >

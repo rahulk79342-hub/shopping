@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import Lottie from 'lottie-react';
 
-export default function OrderSuccessPage() {
+function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get('orderId') || 'ORD-UNKNOWN';
   
@@ -20,11 +20,10 @@ export default function OrderSuccessPage() {
       .catch(err => console.error("Failed to load confetti", err));
   }, []);
 
-  if (!mounted) return <div className="min-h-screen bg-[var(--color-background)]"></div>;
+  if (!mounted) return null;
 
   return (
-    <main className="min-h-screen bg-[var(--color-surface)] relative overflow-hidden flex flex-col items-center pt-20 md:pt-32 px-4 pb-20">
-      
+    <>
       {/* Full-screen Lottie Overlay */}
       {confettiData && (
         <div className="absolute inset-0 pointer-events-none z-50 flex items-start justify-center overflow-hidden">
@@ -76,6 +75,16 @@ export default function OrderSuccessPage() {
         </div>
 
       </div>
+    </>
+  );
+}
+
+export default function OrderSuccessPage() {
+  return (
+    <main className="min-h-screen bg-[var(--color-surface)] relative overflow-hidden flex flex-col items-center pt-20 md:pt-32 px-4 pb-20">
+      <Suspense fallback={<div className="min-h-screen bg-[var(--color-background)]"></div>}>
+        <OrderSuccessContent />
+      </Suspense>
     </main>
   );
 }

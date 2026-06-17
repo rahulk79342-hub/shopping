@@ -15,8 +15,7 @@ import StyleQuiz from '@/components/StyleQuiz';
 import ShoppableLookbook from '@/components/ShoppableLookbook';
 import CountdownDrop from '@/components/CountdownDrop';
 import RecentlyViewed from '@/components/RecentlyViewed';
-import PressMentions from '@/components/PressMentions';
-import LoyaltyTeaser from '@/components/LoyaltyTeaser';
+
 import { getBestsellers } from '@/lib/sanity';
 import { useCurrency } from '@/hooks/useCurrency';
 import Newsletter from "@/components/Newsletter";
@@ -76,14 +75,14 @@ export default function Home() {
       {/* New Professional Sliding Hero Carousel */}
       <HeroCarousel />
 
-      {/* Press & Media Mentions */}
-      <PressMentions />
-
-      {/* Recently Viewed (Sticky on Mobile, Row on Desktop) */}
-      <RecentlyViewed />
-
       {/* Featured Categories (Desktop visual tiles / Mobile icon pills) */}
       <FeaturedCategories />
+
+      {/* Recently Viewed */}
+      <RecentlyViewed />
+
+      {/* Press & Media Mentions */}
+
 
       {/* Featured Collections (Editorial splits) */}
       <FeaturedCollections />
@@ -112,8 +111,6 @@ export default function Home() {
       {/* Instagram Feed Integration */}
       <InstagramFeed />
 
-      {/* Loyalty Programme Teaser */}
-      <LoyaltyTeaser />
 
       {/* USP / Benefits Section */}
       <Benefits />

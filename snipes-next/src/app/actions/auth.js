@@ -11,7 +11,7 @@ export async function loginWithMagicLink(formData) {
     console.log(`[Mock Auth] Sending Magic Link to ${email}`);
     
     // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 800));
+    // Removed simulated network latency for faster auth
 
     // To simulate a successful login link click, we just set the cookie now
     // In reality, this happens when they click the email link and hit the callback route

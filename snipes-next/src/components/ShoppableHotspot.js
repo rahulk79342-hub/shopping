@@ -2,18 +2,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { useUI } from '@/context/UIContext';
+import Link from 'next/link';
 
 export default function ShoppableHotspot({ hotspot }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { openQuickAdd } = useUI();
-
-  const handleQuickAdd = (e) => {
-    e.stopPropagation();
-    openQuickAdd(hotspot.product);
-    setIsOpen(false);
-  };
-
   return (
     <div 
       className="absolute z-10" 
@@ -65,12 +57,12 @@ export default function ShoppableHotspot({ hotspot }) {
                   </span>
                 </div>
               </div>
-              <button 
-                onClick={handleQuickAdd}
-                className="w-full bg-[var(--color-primary)] text-white py-2 font-[var(--font-family-label-caps)] text-[10px] uppercase tracking-widest hover:bg-[var(--color-secondary)] hover:text-[var(--color-on-secondary)] transition-colors rounded-[var(--border-radius-md)]"
+              <Link 
+                href={`/product/${hotspot.product.id || hotspot.product._id}`}
+                className="block text-center w-full bg-[var(--color-primary)] text-white py-2 font-[var(--font-family-label-caps)] text-[10px] uppercase tracking-widest hover:bg-[var(--color-secondary)] hover:text-[var(--color-on-secondary)] transition-colors rounded-[var(--border-radius-md)] mt-2"
               >
-                Quick Add
-              </button>
+                View Details
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>

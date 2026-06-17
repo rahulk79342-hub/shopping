@@ -7,7 +7,7 @@ const COLLECTIONS = [
     id: 1,
     title: "The Summer Edit",
     subtitle: "Breathable linen and vibrant prints designed for the heat.",
-    img: "https://lh3.googleusercontent.com/aida/AP1WRLvw9FdItBs4xTS_sjAW7ZS9oTvshB8ITreVknakm6GMz86Zo0W786YpzmYVSmC1KErN9goD0XG1VJutC2FAwXySv_2ovKk9QqiiwSezdFGZoo-6zzAz4YYfUPcAOwq8Gtel_Q75arPu1aD8lH_UWit-6m9DG5AHP3F9a_vreoH0InhMZccvmHvyN69HZeUl0A7WBvVb5aspdaWoiYMTTXm0316rRjaZoBEuFpuc7rSGGRpXi8i_gjmy6Lk",
+    img: "https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?auto=format&fit=crop&w=800&q=80",
     link: "/discover",
     cta: "Shop Summer"
   },
@@ -15,7 +15,7 @@ const COLLECTIONS = [
     id: 2,
     title: "Workwear Essentials",
     subtitle: "Sharp staples for the modern office.",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuA76zNwvs5gMYBFVZdgoSKJixLptgh8_OB9nQow0L6_sa-MyFkZ_KEm8y6a2HgRpEoWIqeXdoqpUwF94EgjQmd61fahM19_jR7mirZXRODBeuMxABEdij3syuzXzQbdpXRTIDT0jSfZ9w1e8WNpD1AvZU2g9kOq7r6vmwllFI9oFTFs0PUiYBF7TNVegv2eNGwSdmDEnbrnEmdAanvGG7WAdGbHwCKGcgxcHmU228IbrBPWR6kQBJJlX9OMjpPQ4qKvdkkPp-zi-CzN",
+    img: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
     link: "/discover",
     cta: "Shop Workwear"
   },
@@ -23,7 +23,7 @@ const COLLECTIONS = [
     id: 3,
     title: "Vacation Ready",
     subtitle: "Effortless resort wear.",
-    img: "https://lh3.googleusercontent.com/aida/AP1WRLvSYcGlZrnwqfIIv18eMDIdu2yLyYBG21HM8YJfRqO_iAicuLNUK6anx727focsmckkG7zBbMgV0uhNqsGq8zrEDcq7W1A7-RSbsmKQEvt8zaF0TdkSKstAczSYMBv9CcFDe5jeiEQcGpzsHczxL3WmLBx4t4tpS4HEVDcYOJyrORZr23DyxdoA2bqQhlU-wuQZtkAuGZwChFskCe2q5bfCAidUzkN4jVbZugbdlK7ejH3aTvrL4mMYnio",
+    img: "https://images.unsplash.com/photo-1504198458649-3128b932f49e?auto=format&fit=crop&w=800&q=80",
     link: "/discover",
     cta: "Shop Resort"
   }
@@ -34,8 +34,8 @@ export default function FeaturedCollections() {
   const smalls = COLLECTIONS.slice(1, 3);
 
   return (
-    <section className="w-full py-12 md:py-16 overflow-hidden bg-[var(--color-background)]">
-      <div className="max-w-screen-2xl mx-auto px-4 md:px-8">
+    <section className="w-full py-12 md:py-20 overflow-hidden bg-[var(--color-background)]">
+      <div className="max-w-screen-2xl mx-auto px-4 md:px-8 xl:px-12">
         
         <div className="flex justify-between items-end mb-8 md:mb-10">
           <div>

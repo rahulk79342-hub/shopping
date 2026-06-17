@@ -20,7 +20,7 @@ export async function GET(request) {
       console.log(`[Mock EasyPost] Fetching tracking for ${trackingCode}`);
       
       // Simulate network delay
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // Removed simulated network latency
 
       const mockData = {
         tracking_code: trackingCode,
