@@ -8,6 +8,8 @@ import Link from 'next/link';
 // Algolia Integration
 import { liteClient as algoliasearch } from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits, useInstantSearch, useSearchBox, useHits } from 'react-instantsearch';
+import { MdOutlineClose, MdOutlinePhotoCamera, MdOutlineSearch, MdOutlineRefresh, MdOutlineAutoAwesome, MdOutlineTrendingUp, MdOutlineViewInAr, MdOutlineCloudUpload } from 'react-icons/md';
+
 
 // Using Algolia's public test credentials for immediate functionality
 const searchClient = algoliasearch(
@@ -38,14 +40,14 @@ function CustomSearchBox({ onUploadClick }) {
       <div className="absolute right-0 bottom-4 flex items-center gap-4">
         {query ? (
           <button onClick={() => clear()} className="text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors cursor-pointer flex items-center justify-center">
-            <span className="material-symbols-outlined text-[24px] md:text-[32px]">close</span>
+            <MdOutlineClose className="text-[24px] md:text-[32px]" />
           </button>
         ) : (
           <button onClick={onUploadClick} className="text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors cursor-pointer flex items-center justify-center group" title="Visual Search">
-             <span className="material-symbols-outlined text-[24px] md:text-[32px] group-hover:scale-110 transition-transform">photo_camera</span>
+             <MdOutlinePhotoCamera className="text-[24px] md:text-[32px] group-hover:scale-110 transition-transform" />
           </button>
         )}
-        <span className="material-symbols-outlined text-[24px] md:text-[36px] text-[var(--color-primary)] pointer-events-none">search</span>
+        <MdOutlineSearch className="text-[24px] md:text-[36px] text-[var(--color-primary)] pointer-events-none" />
       </div>
     </div>
   );
@@ -95,9 +97,9 @@ function ZeroResultsAIFallback({ query }) {
   if (isProcessing) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <span className="material-symbols-outlined text-[48px] text-[var(--color-primary)] animate-spin mb-4">refresh</span>
+        <MdOutlineRefresh className="text-[48px] text-[var(--color-primary)] animate-spin mb-4" />
         <h3 className="font-[var(--font-family-headline-md)] text-xl text-[var(--color-primary)] mb-2 flex items-center gap-2">
-          <span className="material-symbols-outlined text-[#003dff]">auto_awesome</span>
+          <MdOutlineAutoAwesome className="text-[#003dff]" />
           Claude-Sonnet-4 Processing...
         </h3>
         <p className="font-[var(--font-family-body-md)] text-[var(--color-outline)] text-sm">Analyzing intent for &quot;{query}&quot;...</p>
@@ -161,7 +163,7 @@ function SearchContent({ onUploadClick }) {
               {trendingSearches.map((term, i) => (
                 <li key={i}>
                   <button onClick={() => refine(term)} className="font-[var(--font-family-body-lg)] text-[20px] text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors text-left flex items-center gap-2 group cursor-pointer w-full">
-                    <span className="material-symbols-outlined text-[18px] opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-2 group-hover:translate-x-0">trending_up</span>
+                    <MdOutlineTrendingUp className="text-[18px] opacity-0 group-hover:opacity-100 transition-opacity transform -translate-x-2 group-hover:translate-x-0" />
                     {term}
                   </button>
                 </li>
@@ -169,7 +171,7 @@ function SearchContent({ onUploadClick }) {
             </ul>
 
             <h3 className="font-[var(--font-family-label-caps)] text-[12px] text-[#003dff] mb-4 uppercase tracking-widest flex items-center gap-2">
-              <span className="material-symbols-outlined text-[16px]">auto_awesome</span> Try Semantic Search
+              <MdOutlineAutoAwesome className="text-[16px]" /> Try Semantic Search
             </h3>
             <div className="flex flex-wrap gap-2">
               {naturalLanguagePrompts.map((prompt, i) => (
@@ -233,7 +235,7 @@ function VisualSearchUI({ onClose }) {
       className="absolute inset-0 z-50 bg-[var(--color-background)] flex flex-col items-center justify-center p-6"
     >
       <button onClick={() => onClose()} className="absolute top-8 right-8 text-[var(--color-outline)] hover:text-[var(--color-primary)]">
-        <span className="material-symbols-outlined text-[32px]">close</span>
+        <MdOutlineClose className="text-[32px]" />
       </button>
 
       <div className="text-center mb-8">
@@ -264,13 +266,13 @@ function VisualSearchUI({ onClose }) {
             )}
             
             <div className="absolute z-20 flex flex-col items-center">
-              <span className="material-symbols-outlined text-white text-[48px] animate-pulse mb-4">view_in_ar</span>
+              <MdOutlineViewInAr className="text-white text-[48px] animate-pulse mb-4" />
               <p className="text-white font-[var(--font-family-label-caps)] text-xs tracking-widest uppercase bg-black/50 px-4 py-2 rounded-full border border-white/20">Claude Vision Identifying...</p>
             </div>
           </>
         ) : (
           <div className="flex flex-col items-center text-[var(--color-outline)] group-hover:text-[var(--color-primary)] transition-colors pointer-events-none">
-             <span className="material-symbols-outlined text-[64px] mb-4">cloud_upload</span>
+             <MdOutlineCloudUpload className="text-[64px] mb-4" />
              <p className="font-[var(--font-family-label-caps)] text-sm tracking-widest uppercase">Tap to Upload</p>
           </div>
         )}
@@ -317,7 +319,7 @@ export default function SearchOverlay() {
                 onClick={closeSearch}
                 className="w-12 h-12 rounded-full hover:bg-[var(--color-surface-container)] flex items-center justify-center transition-colors text-[var(--color-outline)] hover:text-[var(--color-primary)] cursor-pointer"
               >
-                <span className="material-symbols-outlined text-[28px]">close</span>
+                <MdOutlineClose className="text-[28px]" />
               </button>
             </div>
 

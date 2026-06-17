@@ -8,6 +8,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { createPaymentIntent, createOrder } from '@/app/actions/checkout';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { MdOutlineLock, MdOutlineCreditCard, MdOutlineQrCodeScanner, MdOutlineShield, MdOutlineRefresh, MdOutlineSearch, MdOutlineCheckCircle, MdOutlineLocationOn, MdOutlineLocalShipping } from 'react-icons/md';
+import { FaApple } from 'react-icons/fa';
+
 
 // Initialize Stripe (use mock key if env var is missing)
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_51MockPublishableKey00000000000000000000000000000000000000000000000000000000000000000000000000');
@@ -69,7 +72,7 @@ function CheckoutForm({ clientSecret, totalAmount, onSuccess, paymentGateway }) 
       {/* Mock Express Checkout Buttons */}
       <div className="flex gap-4 mb-6 pb-6 border-b border-[var(--color-outline-variant)]">
         <button type="button" className="flex-1 bg-black text-white py-3 rounded-[var(--border-radius-sm)] flex items-center justify-center gap-2 font-[var(--font-family-label-caps)] text-[12px] uppercase">
-          <span className="material-symbols-outlined text-[16px]">apple</span> Pay
+          <FaApple className="text-[16px]" /> Pay
         </button>
         <button type="button" className="flex-1 bg-white text-black border border-black py-3 rounded-[var(--border-radius-sm)] flex items-center justify-center gap-2 font-[var(--font-family-label-caps)] text-[12px] uppercase">
           Google Pay
@@ -83,11 +86,11 @@ function CheckoutForm({ clientSecret, totalAmount, onSuccess, paymentGateway }) 
           {!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ? (
             <div className="space-y-4">
                <p className="text-[12px] text-[var(--color-outline)] font-bold mb-2 flex items-center gap-2">
-                 <span className="material-symbols-outlined text-[16px] text-green-500">lock</span> SECURE CARD PAYMENT (MOCK)
+                 <MdOutlineLock className="text-[16px] text-green-500" /> SECURE CARD PAYMENT (MOCK)
                </p>
                <div className="relative">
                  <input type="text" placeholder="Card Number (0000 0000 0000 0000)" className="w-full border border-[var(--color-outline-variant)] p-3 rounded-[var(--border-radius-sm)] text-[14px] pl-10" />
-                 <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-outline)]">credit_card</span>
+                 <MdOutlineCreditCard className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-outline)]" />
                </div>
                <div className="flex gap-4">
                   <input type="text" placeholder="MM/YY" className="w-1/2 border border-[var(--color-outline-variant)] p-3 rounded-[var(--border-radius-sm)] text-[14px]" />
@@ -104,7 +107,7 @@ function CheckoutForm({ clientSecret, totalAmount, onSuccess, paymentGateway }) 
         <div className="space-y-4 animate-fade-in border border-[var(--color-outline-variant)] rounded-[var(--border-radius-sm)] p-6 bg-[var(--color-surface-container-low)]">
           <div className="flex items-center justify-between mb-4">
             <p className="text-[14px] font-[var(--font-family-body-md)] font-bold flex items-center gap-2">
-              <span className="material-symbols-outlined text-[#3399cc]">qr_code_scanner</span> Pay via UPI
+              <MdOutlineQrCodeScanner className="text-[#3399cc]" /> Pay via UPI
             </p>
             <div className="flex gap-2">
               <span className="text-[10px] font-bold bg-black text-white px-2 py-1 rounded">GPay</span>
@@ -154,7 +157,7 @@ function CheckoutForm({ clientSecret, totalAmount, onSuccess, paymentGateway }) 
             <input type="text" placeholder="Card Number to check eligibility" className="flex-grow border border-[#3399cc]/30 p-3 rounded-[var(--border-radius-sm)] text-[14px] focus:border-[#3399cc] outline-none bg-white" />
             <button type="button" onClick={(e) => { e.preventDefault(); alert("You are eligible for 0% EMI!"); }} className="bg-[#3399cc] text-white px-4 text-[12px] font-[var(--font-family-label-caps)] uppercase tracking-widest rounded-[var(--border-radius-sm)] hover:bg-[#3399cc]/90 transition-colors">Check</button>
           </div>
-          <p className="text-[10px] text-[var(--color-outline)] mt-2 flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">shield</span> No hard credit pull for eligibility check.</p>
+          <p className="text-[10px] text-[var(--color-outline)] mt-2 flex items-center gap-1"><MdOutlineShield className="text-[14px]" /> No hard credit pull for eligibility check.</p>
         </div>
       )}
 
@@ -196,9 +199,9 @@ function CheckoutForm({ clientSecret, totalAmount, onSuccess, paymentGateway }) 
         className="w-full mt-8 bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[14px] uppercase tracking-widest py-4 rounded-[var(--border-radius-sm)] hover:bg-black/90 transition-all active:scale-[0.99] disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2 shadow-lg"
       >
         {isProcessing ? (
-          <><span className="material-symbols-outlined animate-spin text-[18px]">refresh</span> Processing...</>
+          <><MdOutlineRefresh className="animate-spin text-[18px]" /> Processing...</>
         ) : (
-          <><span className="material-symbols-outlined text-[18px]">lock</span> Pay Rs. {totalAmount}.00</>
+          <><MdOutlineLock className="text-[18px]" /> Pay Rs. {totalAmount}.00</>
         )}
       </button>
     </form>
@@ -292,7 +295,7 @@ export default function CheckoutPage() {
           SNIPES
         </Link>
         <div className="flex items-center gap-2 text-[var(--color-outline)]">
-          <span className="material-symbols-outlined text-[16px]">lock</span>
+          <MdOutlineLock className="text-[16px]" />
           <span className="font-[var(--font-family-label-caps)] text-[10px] uppercase tracking-widest">Secure Checkout</span>
         </div>
       </header>
@@ -371,7 +374,7 @@ export default function CheckoutPage() {
             
             <div className="relative">
               <div className="flex items-center border border-[var(--color-outline-variant)] rounded-[var(--border-radius-sm)] p-2 focus-within:border-[var(--color-primary)] transition-colors">
-                 <span className="material-symbols-outlined text-[var(--color-outline)] ml-2">search</span>
+                 <MdOutlineSearch className="text-[var(--color-outline)] ml-2" />
                  <input 
                    type="text" 
                    value={addressSearch}
@@ -384,7 +387,7 @@ export default function CheckoutPage() {
                    className="w-full p-2 text-[14px] font-[var(--font-family-body-md)] focus:outline-none"
                  />
                  {selectedAddress && (
-                   <span className="material-symbols-outlined text-green-600 mr-2">check_circle</span>
+                   <MdOutlineCheckCircle className="text-green-600 mr-2" />
                  )}
               </div>
 
@@ -403,7 +406,7 @@ export default function CheckoutPage() {
                         onClick={() => handleAddressSelect(address)}
                         className="p-3 text-[13px] font-[var(--font-family-body-md)] hover:bg-[var(--color-surface-container)] cursor-pointer border-b border-[var(--color-outline-variant)] last:border-b-0 flex items-center gap-3"
                       >
-                        <span className="material-symbols-outlined text-[16px] text-[var(--color-outline)]">location_on</span>
+                        <MdOutlineLocationOn className="text-[16px] text-[var(--color-outline)]" />
                         {address}
                       </li>
                     ))}
@@ -414,7 +417,7 @@ export default function CheckoutPage() {
 
             {selectedAddress && (
                <div className="mt-4 p-4 bg-[var(--color-surface-container-low)] border border-green-200 rounded-[var(--border-radius-sm)] flex items-start gap-3 animate-fade-in shadow-sm">
-                 <span className="material-symbols-outlined text-green-600">local_shipping</span>
+                 <MdOutlineLocalShipping className="text-green-600" />
                  <div>
                    <p className="font-[var(--font-family-label-caps)] text-[10px] text-[var(--color-outline)] uppercase tracking-widest mb-1">Shipping Destination Confirmed</p>
                    <p className="font-[var(--font-family-body-md)] text-[14px] text-[var(--color-primary)] font-bold">{selectedAddress}</p>

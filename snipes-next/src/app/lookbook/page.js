@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { getLookbookCampaign } from '@/lib/sanity';
 import ShoppableHotspot from '@/components/ShoppableHotspot';
 import OutfitBuilder from '@/components/OutfitBuilder';
+import { MdOutlineFormatQuote } from 'react-icons/md';
+
 
 export default function Lookbook() {
   const [data, setData] = useState(null);
@@ -59,7 +61,7 @@ export default function Lookbook() {
 
       {/* Narrative Section */}
       <section className="max-w-[800px] mx-auto px-[var(--spacing-margin-mobile)] md:px-12 py-24 md:py-32 text-center">
-        <span className="material-symbols-outlined text-[32px] text-[var(--color-outline)] mb-6">format_quote</span>
+        <MdOutlineFormatQuote className="text-[32px] text-[var(--color-outline)] mb-6" />
         <p className="font-[var(--font-family-headline-md)] text-[24px] md:text-[32px] text-[var(--color-primary)] leading-tight mb-8">
           &quot;Redefining the modern silhouette with unstructured tailoring, premium linens, and a nod to classic motorsport heritage.&quot;
         </p>

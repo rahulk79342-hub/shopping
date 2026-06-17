@@ -3,6 +3,8 @@ import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import Lottie from 'lottie-react';
+import { MdOutlineVerified, MdOutlineLocalShipping, MdOutlineReceiptLong, MdOutlineLocationOn } from 'react-icons/md';
+
 
 function OrderSuccessContent() {
   const searchParams = useSearchParams();
@@ -39,7 +41,7 @@ function OrderSuccessContent() {
       <div className="max-w-xl w-full bg-white p-8 md:p-12 rounded-[var(--border-radius-lg)] shadow-2xl border border-[var(--color-outline-variant)] relative z-10 text-center">
         
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-          <span className="material-symbols-outlined text-[40px] text-green-600">verified</span>
+          <MdOutlineVerified className="text-[40px] text-green-600" />
         </div>
         
         <h1 className="font-[var(--font-family-headline-lg)] text-4xl mb-2 text-[var(--color-primary)]">It&apos;s Official.</h1>
@@ -53,19 +55,19 @@ function OrderSuccessContent() {
           <p className="font-[var(--font-family-headline-md)] text-2xl text-[var(--color-primary)] mb-4">{orderId}</p>
           
           <div className="flex items-center gap-3 text-[14px] text-[var(--color-outline)] mb-2">
-            <span className="material-symbols-outlined text-[18px]">local_shipping</span>
+            <MdOutlineLocalShipping className="text-[18px]" />
             Estimated Delivery: <strong>3 - 5 Business Days</strong>
           </div>
           
           <div className="flex items-center gap-3 text-[14px] text-[var(--color-outline)]">
-            <span className="material-symbols-outlined text-[18px]">receipt_long</span>
+            <MdOutlineReceiptLong className="text-[18px]" />
             A detailed receipt is in your inbox.
           </div>
         </div>
 
         <div className="flex flex-col gap-4">
           <Link href={`/track/${orderId}`} className="w-full bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[12px] uppercase py-4 tracking-widest hover:bg-[var(--color-surface-tint)] transition-colors rounded-[var(--border-radius-sm)] flex items-center justify-center gap-2">
-            <span className="material-symbols-outlined text-[16px]">location_on</span>
+            <MdOutlineLocationOn className="text-[16px]" />
             Track Order
           </Link>
           

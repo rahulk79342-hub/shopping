@@ -2,6 +2,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCartStore } from '@/store/useCartStore';
+import { MdOutlineAutoAwesome, MdOutlineShoppingBag } from 'react-icons/md';
+
 
 export default function OutfitSuggestionCard({ layout = 'normal' }) {
   const addToCart = useCartStore(state => state.addToCart);
@@ -40,7 +42,7 @@ export default function OutfitSuggestionCard({ layout = 'normal' }) {
 
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-white text-[var(--color-primary)] font-[var(--font-family-label-caps)] text-[10px] px-3 py-1.5 uppercase tracking-widest flex items-center gap-1 shadow-md">
-            <span className="material-symbols-outlined text-[14px]">auto_awesome</span>
+            <MdOutlineAutoAwesome className="text-[14px]" />
             AI Styled
           </span>
         </div>
@@ -53,7 +55,7 @@ export default function OutfitSuggestionCard({ layout = 'normal' }) {
             onClick={handleAddBundle}
             className="w-full bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[11px] uppercase tracking-widest py-3 hover:bg-[var(--color-secondary)] hover:text-black transition-colors duration-300 shadow-lg cursor-pointer flex items-center justify-center gap-2"
           >
-            <span className="material-symbols-outlined text-[16px]">shopping_bag</span>
+            <MdOutlineShoppingBag className="text-[16px]" />
             Add Bundle - Rs. 4398.00
           </button>
         </div>
