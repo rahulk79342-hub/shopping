@@ -57,10 +57,10 @@ export const categorizedImages = {
 
 // --- MOCK FETCHER FOR DEVELOPMENT ---
 // This simulates an infinite scroll fetcher until you connect your real database
-export const fetchMockProducts = async ({ pageParam = 0, filters = {}, sort = 'new' }) => {
+export const fetchMockProducts = async ({ pageParam = 0, filters = {}, sort = 'new', limit = 8 }) => {
   // Removed simulated network latency for performance
   
-  const ITEMS_PER_PAGE = 8;
+  const ITEMS_PER_PAGE = limit;
   const startIndex = pageParam * ITEMS_PER_PAGE;
   
   // Base mock data pool
