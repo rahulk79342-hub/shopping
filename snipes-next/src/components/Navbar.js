@@ -60,33 +60,27 @@ export default function Navbar() {
   const isSlim = isScrolled && scrollDirection === 'down' && !isHovered && !activeMenu && !isSearchActive && !isMobileMenuOpen && !isAccountOpen;
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-50 w-full"
+    <motion.header className="sticky top-0 left-0 right-0 z-50 w-full"
+      animate={{ y: isSlim ? "-100%" : "0%" }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <motion.div
-        animate={{
-          backgroundColor: isScrolled || activeMenu || isSearchActive ? "#ffffff" : "#ffffff",
-          borderBottom: isScrolled || activeMenu || isSearchActive ? "1px solid rgba(10, 10, 10, 0.08)" : "1px solid rgba(10, 10, 10, 0.08)"
-        }}
-        className="w-full relative bg-white"
+      <div
+        className="w-full relative bg-white border-b border-[rgba(10,10,10,0.08)]"
       >
         <div className="flex justify-between items-center w-full px-4 md:px-8 xl:px-12 h-14 md:h-16 max-w-screen-2xl mx-auto">
 
           {/* Left: Menu & Nav Links */}
           <div className={`flex items-center gap-4 z-10 flex-1 md:flex-none md:w-1/3 ${isSearchActive ? 'hidden md:flex' : ''}`}>
-            <motion.button
-              animate={{ opacity: isSlim ? 0 : 1, width: isSlim ? 0 : 'auto', pointerEvents: isSlim ? 'none' : 'auto' }}
+            <button
               onClick={() => setIsMobileMenuOpen(true)}
               className="hover:opacity-80 transition-opacity cursor-pointer flex items-center md:hidden overflow-hidden"
             >
               <span className="material-symbols-outlined text-[24px]">menu</span>
-            </motion.button>
+            </button>
 
-            <motion.div
-              animate={{ opacity: isSlim ? 0 : 1, pointerEvents: isSlim ? 'none' : 'auto' }}
-              className="hidden md:flex items-center gap-8"
-            >
+            <div className="hidden md:flex items-center gap-8">
               {['New Arrivals', 'Linen', 'Old Money'].map((item) => (
                 <div
                   key={item}
@@ -99,7 +93,7 @@ export default function Navbar() {
                   </span>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* Center: Logo */}
@@ -111,8 +105,7 @@ export default function Navbar() {
 
           {/* Right: Search, Account, Cart */}
           <div className={`flex items-center justify-end gap-4 md:gap-6 z-10 ${isSearchActive ? 'w-full md:w-1/3' : 'flex-1 md:flex-none md:w-1/3'}`}>
-            <motion.div
-              animate={{ opacity: isSlim ? 0 : 1, width: isSlim ? 0 : 'auto', pointerEvents: isSlim ? 'none' : 'auto' }}
+            <div
               className={`relative flex items-center overflow-hidden ${isSearchActive ? 'w-full' : ''}`}
             >
               {isSearchActive ? (
@@ -132,9 +125,9 @@ export default function Navbar() {
                   <span className="material-symbols-outlined text-[24px]">search</span>
                 </button>
               )}
-            </motion.div>
+            </div>
 
-            <motion.div animate={{ opacity: isSlim ? 0 : 1, width: isSlim ? 0 : 'auto', pointerEvents: isSlim ? 'none' : 'auto' }} className="relative">
+            <div className="relative">
               <button onClick={() => setIsAccountOpen(!isAccountOpen)} className="flex hover:opacity-80 transition-all cursor-pointer items-center justify-center w-6 h-6 md:w-7 md:h-7 rounded-full bg-transparent border-0">
                 {user ? (
                   <div className="w-full h-full bg-black text-white flex items-center justify-center rounded-full text-[13px] font-bold uppercase">
@@ -145,7 +138,7 @@ export default function Navbar() {
                 )}
               </button>
               <AccountPopover isOpen={isAccountOpen} onClose={() => setIsAccountOpen(false)} />
-            </motion.div>
+            </div>
 
 
             {/* Cart always visible */}
@@ -322,7 +315,7 @@ export default function Navbar() {
             </div>
           )}
         </AnimatePresence>
-      </motion.div>
-    </header>
+      </div>
+    </motion.header>
   );
 }

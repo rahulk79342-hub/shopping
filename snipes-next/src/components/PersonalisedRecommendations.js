@@ -46,13 +46,6 @@ export default function PersonalisedRecommendations() {
           </h3>
         </div>
 
-        {/* Demo Toggle Button */}
-        <button
-          onClick={toggleLoginState}
-          className="text-[11px] font-bold uppercase tracking-widest text-gray-400 hover:text-black border-b border-gray-300 hover:border-black transition-colors"
-        >
-          Toggle Auth State
-        </button>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">

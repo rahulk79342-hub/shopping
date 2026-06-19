@@ -34,7 +34,7 @@ export default function Footer() {
           <ul className="flex flex-col gap-3 text-[13px] text-gray-500 mb-6">
             <li><Link href="/account/history" className="hover:text-black hover:underline transition-all">Track Order</Link></li>
             <li><Link href="/returns" className="hover:text-black hover:underline transition-all">Returns & Exchanges</Link></li>
-            <li><Link href="/" className="hover:text-black hover:underline transition-all">Contact Us</Link></li>
+            <li><Link href="mailto:support@snipes.com" className="hover:text-black hover:underline transition-all">Contact Us</Link></li>
           </ul>
 
         </div>

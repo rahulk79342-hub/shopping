@@ -63,7 +63,12 @@ export const fetchMockProducts = async ({ pageParam = 0, filters = {}, sort = 'n
   const ITEMS_PER_PAGE = limit;
   const startIndex = pageParam * ITEMS_PER_PAGE;
   
-  // Base mock data pool
+  const productTitles = {
+    shirts: ["Classic Linen Shirt", "Oversized Silk Shirt", "Cotton Cuban Collar", "Knit Polo", "Oxford Button Down", "Heavyweight Tee", "Striped Camp Collar", "Relaxed Fit Flannel", "Textured Weave Shirt", "Minimalist T-Shirt"],
+    bottoms: ["Gurkha Trousers", "Pleated Chinos", "Slim Fit Jeans", "Relaxed Cargo Pants", "Tailored Shorts", "Drawstring Linen Pants", "Wide Leg Trousers", "Selvedge Denim", "Wool Blend Slacks", "Track Pants"],
+    accessories: ["Leather Belt", "Canvas Tote Bag", "Silver Chain", "Classic Cap", "Sunglasses", "Minimalist Watch", "Ribbed Socks", "Silk Tie", "Cardholder", "Beanie"]
+  };
+
   let mockData = Array.from({ length: 40 }).map((_, i) => {
     const numId = i + 1;
     const isPants = numId % 3 === 0;
@@ -73,11 +78,16 @@ export const fetchMockProducts = async ({ pageParam = 0, filters = {}, sort = 'n
     else if (isPants) category = 'bottoms';
     
     const imagePool = categorizedImages[category];
+    const titles = productTitles[category];
+    const basePrice = category === 'accessories' ? 1500 : (category === 'bottoms' ? 3500 : 2500);
+    const priceVar = (numId * 100) % 1500;
+    const price = basePrice + priceVar;
+    
     return {
       id: numId,
-      name: `Premium Streetwear Item ${numId}`,
-      price: 500 + ((numId * 137) % 2000),
-      originalPrice: (numId % 3 === 0) ? 2500 + ((numId * 97) % 1000) : null,
+      name: titles[i % titles.length],
+      price: price,
+      originalPrice: (numId % 3 === 0) ? price + 1000 : null,
       sale: (numId % 3 === 0),
       category,
       size: ['S', 'M', 'L', 'XL'][numId % 4],
