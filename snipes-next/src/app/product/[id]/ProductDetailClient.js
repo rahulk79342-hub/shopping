@@ -258,7 +258,13 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 {product.colors.map(color => (
                   <button
                     key={color.name}
-                    onClick={() => setActiveColor(color.name)}
+                    onClick={() => {
+                      setActiveColor(color.name);
+                      const colorIndex = product.colors.findIndex(c => c.name === color.name);
+                      // Fallback to first image if not enough media for colors
+                      const targetIdx = (colorIndex !== -1 && colorIndex < product.media.length) ? colorIndex : 0;
+                      setActiveMediaIdx(targetIdx);
+                    }}
                     className={`w-10 h-10 rounded-full cursor-pointer transition-all duration-300 flex items-center justify-center ${activeColor === color.name ? 'ring-2 ring-[var(--color-primary)] ring-offset-2' : 'ring-1 ring-[var(--color-outline-variant)]'}`}
                     style={{ backgroundColor: color.hex }}
                     aria-label={`Select color ${color.name}`}

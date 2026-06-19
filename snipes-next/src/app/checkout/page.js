@@ -380,13 +380,13 @@ export default function CheckoutPage() {
                    value={addressSearch}
                    onChange={(e) => {
                      setAddressSearch(e.target.value);
-                     setShowAddressSuggestions(e.target.value.length > 0);
-                     if (e.target.value === '') setSelectedAddress('');
+                     setSelectedAddress(e.target.value);
+                     setShowAddressSuggestions(e.target.value.length > 2);
                    }}
                    placeholder="Start typing your address..." 
                    className="w-full p-2 text-[14px] font-[var(--font-family-body-md)] focus:outline-none"
                  />
-                 {selectedAddress && (
+                 {selectedAddress && selectedAddress.length > 5 && (
                    <MdOutlineCheckCircle className="text-green-600 mr-2" />
                  )}
               </div>
@@ -428,8 +428,8 @@ export default function CheckoutPage() {
           </div>
 
           {/* Payment Section */}
-          {clientSecret && email && selectedAddress && (
-            <div className="mt-8">
+          {clientSecret && email && selectedAddress && selectedAddress.length > 5 ? (
+            <div className="mt-8 animate-fade-in">
               {/* Payment Tabs - Scrollable for BNPL options */}
               <div className="flex gap-3 mb-6 overflow-x-auto hide-scrollbar pb-2">
                 <button 
@@ -472,6 +472,18 @@ export default function CheckoutPage() {
               <Elements options={{ clientSecret, appearance: { theme: 'stripe' } }} stripe={stripePromise}>
                 <CheckoutForm clientSecret={clientSecret} totalAmount={cartTotal} onSuccess={handlePaymentSuccess} paymentGateway={paymentGateway} />
               </Elements>
+            </div>
+          ) : (
+            <div className="mt-8">
+              <button 
+                onClick={() => {
+                  if (!email) alert("Please enter your email address.");
+                  else if (!selectedAddress || selectedAddress.length <= 5) alert("Please enter a valid shipping address.");
+                }}
+                className="w-full bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[14px] uppercase tracking-widest py-4 rounded-[var(--border-radius-sm)] transition-all flex items-center justify-center gap-2 shadow-lg opacity-50 cursor-not-allowed"
+              >
+                Continue to Payment
+              </button>
             </div>
           )}
 
