@@ -8,8 +8,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function QuickAddModal() {
   const { quickAddProduct, closeQuickAdd, openCartDrawer } = useUI();
   const addToCart = useCartStore(state => state.addToCart);
-  const [activeSize, setActiveSize] = useState('M');
+  const [activeSize, setActiveSize] = useState(null);
   const [activeColor, setActiveColor] = useState('Default');
+  const [sizeError, setSizeError] = useState(false);
   
   // Fit Assistant States
   const [view, setView] = useState('details'); // 'details' | 'fit_quiz'
@@ -21,8 +22,9 @@ export default function QuickAddModal() {
 
   useEffect(() => {
     if (quickAddProduct) {
-      setActiveSize('M');
+      setActiveSize(null);
       setActiveColor('Default');
+      setSizeError(false);
       setView('details');
       setRecommendation(null);
     }
@@ -36,6 +38,11 @@ export default function QuickAddModal() {
   ];
 
   const handleAdd = () => {
+    if (!activeSize) {
+      setSizeError(true);
+      return;
+    }
+    // Limit added items but store handles that. Let's just add it.
     addToCart({ ...quickAddProduct, size: activeSize, color: activeColor, image: quickAddProduct.image || quickAddProduct.img });
     closeQuickAdd();
     openCartDrawer();
@@ -165,7 +172,9 @@ export default function QuickAddModal() {
 
                     <div className="mb-8">
                       <div className="flex justify-between items-center mb-4">
-                        <span className="font-bold text-[12px] uppercase tracking-widest text-black block">Select Size</span>
+                        <span className={`font-bold text-[12px] uppercase tracking-widest block ${sizeError ? 'text-red-500' : 'text-black'}`}>
+                          {sizeError ? 'Please select a size' : 'Select Size'}
+                        </span>
                         
                         {/* Fit Assistant Trigger */}
                         <button 
@@ -181,8 +190,8 @@ export default function QuickAddModal() {
                         {sizes.map(size => (
                           <button 
                             key={size}
-                            onClick={() => setActiveSize(size)}
-                            className={`py-3 font-bold text-[14px] border rounded-[8px] transition-colors cursor-pointer ${activeSize === size ? 'bg-black text-white border-black' : 'border-gray-200 text-black hover:border-black'}`}
+                            onClick={() => { setActiveSize(size); setSizeError(false); }}
+                            className={`py-3 font-bold text-[14px] border rounded-[8px] transition-colors cursor-pointer ${activeSize === size ? 'bg-black text-white border-black' : sizeError ? 'border-red-300 text-red-500 hover:border-red-500' : 'border-gray-200 text-black hover:border-black'}`}
                           >
                             {size}
                           </button>

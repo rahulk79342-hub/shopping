@@ -15,10 +15,11 @@ export const useCartStore = create(
           item => item.id === product.id && item.size === product.size
         );
         if (existingItem) {
+          const newQuantity = Math.min(existingItem.quantity + (product.quantity || 1), 10);
           return {
             cartItems: state.cartItems.map(item =>
               item.id === product.id && item.size === product.size
-                ? { ...item, quantity: item.quantity + (product.quantity || 1) }
+                ? { ...item, quantity: newQuantity }
                 : item
             )
           };
@@ -39,7 +40,7 @@ export const useCartStore = create(
         return {
           cartItems: state.cartItems.map(item =>
             item.id === id && item.size === size
-              ? { ...item, quantity }
+              ? { ...item, quantity: Math.min(quantity, 10) }
               : item
           )
         };
@@ -69,7 +70,7 @@ export const useCartStore = create(
             savedForLater: filteredSaved,
             cartItems: state.cartItems.map(cartItem => 
               cartItem.id === item.id && cartItem.size === item.size
-                ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
+                ? { ...cartItem, quantity: Math.min(cartItem.quantity + item.quantity, 10) }
                 : cartItem
             )
           };
