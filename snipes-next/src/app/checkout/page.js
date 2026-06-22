@@ -229,6 +229,19 @@ export default function CheckoutPage() {
   const [orderComplete, setOrderComplete] = useState(false);
   const [paymentGateway, setPaymentGateway] = useState('stripe'); // 'stripe' or 'razorpay'
 
+  // Validation
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isValidPhone = (phone) => /^\d{10}$/.test(phone.replace(/\D/g, ''));
+  const isValidPassword = (pwd) => pwd.length >= 8 && /\d/.test(pwd);
+  
+  const isFormValid = () => {
+    if (!isValidEmail(email)) return false;
+    if (!isValidPhone(phone)) return false;
+    if (checkoutMode === 'account' && !isValidPassword(password)) return false;
+    if (!selectedAddress || selectedAddress.length <= 15) return false;
+    return true;
+  };
+
   useEffect(() => setMounted(true), []);
 
   const cartTotal = getCartTotal();
@@ -336,15 +349,18 @@ export default function CheckoutPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email Address" 
-                  className="w-full border border-[var(--color-outline-variant)] p-4 rounded-[var(--border-radius-sm)] text-[14px] font-[var(--font-family-body-md)] focus:outline-none focus:border-[var(--color-primary)] mb-4"
+                  className={`w-full border p-4 rounded-[var(--border-radius-sm)] text-[14px] font-[var(--font-family-body-md)] focus:outline-none mb-2 ${email && !isValidEmail(email) ? 'border-red-500 focus:border-red-600' : 'border-[var(--color-outline-variant)] focus:border-[var(--color-primary)]'}`}
                 />
+                {email && !isValidEmail(email) && <p className="text-red-500 text-[11px] mb-4">Please enter a valid email.</p>}
+                
                 <input 
                   type="tel" 
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Phone Number (For shipping updates)" 
-                  className="w-full border border-[var(--color-outline-variant)] p-4 rounded-[var(--border-radius-sm)] text-[14px] font-[var(--font-family-body-md)] focus:outline-none focus:border-[var(--color-primary)]"
+                  placeholder="Phone Number (10 digits)" 
+                  className={`w-full border p-4 rounded-[var(--border-radius-sm)] text-[14px] font-[var(--font-family-body-md)] focus:outline-none mb-2 ${phone && !isValidPhone(phone) ? 'border-red-500 focus:border-red-600' : 'border-[var(--color-outline-variant)] focus:border-[var(--color-primary)]'}`}
                 />
+                {phone && !isValidPhone(phone) && <p className="text-red-500 text-[11px] mb-2">Please enter a valid 10-digit phone number.</p>}
               </div>
               
               <AnimatePresence>
@@ -359,9 +375,10 @@ export default function CheckoutPage() {
                       type="password" 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Create Password" 
-                      className="w-full border border-[var(--color-outline-variant)] p-4 rounded-[var(--border-radius-sm)] text-[14px] font-[var(--font-family-body-md)] focus:outline-none focus:border-[var(--color-primary)] mt-4"
+                      placeholder="Create Password (min 8 chars, 1 number)" 
+                      className={`w-full border p-4 rounded-[var(--border-radius-sm)] text-[14px] font-[var(--font-family-body-md)] focus:outline-none mt-4 ${password && !isValidPassword(password) ? 'border-red-500 focus:border-red-600' : 'border-[var(--color-outline-variant)] focus:border-[var(--color-primary)]'}`}
                     />
+                    {password && !isValidPassword(password) && <p className="text-red-500 text-[11px] mt-1">Password must be at least 8 characters and contain 1 number.</p>}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -386,10 +403,11 @@ export default function CheckoutPage() {
                    placeholder="Start typing your address..." 
                    className="w-full p-2 text-[14px] font-[var(--font-family-body-md)] focus:outline-none"
                  />
-                 {selectedAddress && selectedAddress.length > 5 && (
+                 {selectedAddress && selectedAddress.length > 15 && (
                    <MdOutlineCheckCircle className="text-green-600 mr-2" />
                  )}
               </div>
+              {selectedAddress && selectedAddress.length <= 15 && selectedAddress.length > 0 && <p className="text-red-500 text-[11px] mt-2">Please select a full address.</p>}
 
               {/* Mock Google Places Autocomplete Dropdown */}
               <AnimatePresence>
@@ -428,7 +446,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Payment Section */}
-          {clientSecret && email && selectedAddress && selectedAddress.length > 5 ? (
+          {clientSecret && isFormValid() ? (
             <div className="mt-8 animate-fade-in">
               {/* Payment Tabs - Scrollable for BNPL options */}
               <div className="flex gap-3 mb-6 overflow-x-auto hide-scrollbar pb-2">
@@ -477,8 +495,10 @@ export default function CheckoutPage() {
             <div className="mt-8">
               <button 
                 onClick={() => {
-                  if (!email) alert("Please enter your email address.");
-                  else if (!selectedAddress || selectedAddress.length <= 5) alert("Please enter a valid shipping address.");
+                  if (!isValidEmail(email)) alert("Please enter a valid email address.");
+                  else if (!isValidPhone(phone)) alert("Please enter a valid 10-digit phone number.");
+                  else if (checkoutMode === 'account' && !isValidPassword(password)) alert("Please enter a valid password.");
+                  else if (!selectedAddress || selectedAddress.length <= 15) alert("Please enter a complete shipping address.");
                 }}
                 className="w-full bg-[var(--color-primary)] text-white font-[var(--font-family-label-caps)] text-[14px] uppercase tracking-widest py-4 rounded-[var(--border-radius-sm)] transition-all flex items-center justify-center gap-2 shadow-lg opacity-50 cursor-not-allowed"
               >

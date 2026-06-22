@@ -15,7 +15,8 @@ export default function ProductDetailClient({ product, relatedProducts }) {
   const addToCart = useCartStore(state => state.addToCart);
   const { openCartDrawer, openSizeGuide } = useUI();
 
-  const [activeSize, setActiveSize] = useState('M');
+  const [activeSize, setActiveSize] = useState(null);
+  const [sizeError, setSizeError] = useState(false);
   const [activeColor, setActiveColor] = useState(product.colors[0]?.name || 'Default');
   const [activeMediaIdx, setActiveMediaIdx] = useState(0);
   const [showStickyBar, setShowStickyBar] = useState(false);
@@ -64,6 +65,11 @@ export default function ProductDetailClient({ product, relatedProducts }) {
   }, []);
 
   const handleAddToCart = () => {
+    if (!activeSize) {
+      setSizeError(true);
+      // Scroll to size selector if needed
+      return;
+    }
     addToCart({
       ...product,
       name: `${product.name} - ${activeColor}`,
@@ -279,7 +285,9 @@ export default function ProductDetailClient({ product, relatedProducts }) {
 
             <div className="mb-8">
               <div className="flex justify-between items-center mb-3">
-                <span className="font-[var(--font-family-label-caps)] text-[12px] uppercase tracking-widest text-[var(--color-outline)]">Select Size</span>
+                <span className={`font-[var(--font-family-label-caps)] text-[12px] uppercase tracking-widest ${sizeError ? 'text-red-500' : 'text-[var(--color-outline)]'}`}>
+                  {sizeError ? 'Please select a size' : 'Select Size'}
+                </span>
                 <button
                   onClick={openSizeGuide}
                   className="font-[var(--font-family-label-caps)] text-[10px] uppercase tracking-widest text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-secondary)] cursor-pointer flex items-center gap-1"
@@ -291,8 +299,8 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 {sizes.map(size => (
                   <button
                     key={size}
-                    onClick={() => setActiveSize(size)}
-                    className={`py-3 font-[var(--font-family-label-caps)] text-[14px] border transition-all cursor-pointer rounded-full ${activeSize === size ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md' : 'border-[var(--color-outline-variant)] text-[var(--color-primary)] hover:border-[var(--color-primary)] bg-[var(--color-surface)]'}`}
+                    onClick={() => { setActiveSize(size); setSizeError(false); }}
+                    className={`py-3 font-[var(--font-family-label-caps)] text-[14px] border transition-all cursor-pointer rounded-full ${activeSize === size ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md' : sizeError ? 'border-red-300 text-red-500 hover:border-red-500 bg-[var(--color-surface)]' : 'border-[var(--color-outline-variant)] text-[var(--color-primary)] hover:border-[var(--color-primary)] bg-[var(--color-surface)]'}`}
                   >
                     {size}
                   </button>

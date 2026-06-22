@@ -10,10 +10,28 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [isPending, setIsPending] = useState(false);
   const [message, setMessage] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
   const handleMagicLink = async (e) => {
     e.preventDefault();
-    if (!email) return;
+    setEmailError('');
+    setMessage('');
+    
+    if (!email) {
+      setEmailError('Email address is required.');
+      return;
+    }
+    
+    if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address (e.g., name@example.com).');
+      return;
+    }
+    
     setIsPending(true);
     
     // Server action automatically redirects on Mock
@@ -79,15 +97,23 @@ export default function LoginPage() {
 
         {/* Magic Link Form */}
         <form onSubmit={handleMagicLink} className="flex flex-col gap-4">
-          <input 
-            type="email" 
-            name="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="Email Address" 
-            className="w-full border border-[var(--color-outline-variant)] p-4 rounded-[var(--border-radius-sm)] text-[14px] font-[var(--font-family-body-md)] focus:outline-none focus:border-[var(--color-primary)]"
-            required
-          />
+          <div className="flex flex-col gap-1">
+            <input 
+              type="email" 
+              name="email"
+              value={email}
+              onChange={e => {
+                setEmail(e.target.value);
+                if (emailError) setEmailError('');
+              }}
+              placeholder="Email Address" 
+              className={`w-full border p-4 rounded-[var(--border-radius-sm)] text-[14px] font-[var(--font-family-body-md)] focus:outline-none transition-colors ${emailError ? 'border-red-500 focus:border-red-600' : 'border-[var(--color-outline-variant)] focus:border-[var(--color-primary)]'}`}
+              required
+            />
+            {emailError && (
+              <span className="text-red-500 text-[12px] font-[var(--font-family-body-md)] ml-1">{emailError}</span>
+            )}
+          </div>
           <button 
             type="submit"
             disabled={isPending}

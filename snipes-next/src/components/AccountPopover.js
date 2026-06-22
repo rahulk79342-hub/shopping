@@ -141,6 +141,17 @@ export default function AccountPopover({ isOpen, onClose }) {
               <span className="text-[15px] font-semibold text-gray-900">Help Center</span>
             </Link>
           </div>
+          
+          {user && (
+            <div className="mt-4 pt-4 border-t border-gray-100 flex justify-center">
+              <button 
+                onClick={() => { logout(); onClose(); }} 
+                className="text-[14px] text-red-500 font-semibold hover:text-red-700 transition-colors"
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
 
         </div>
       </div>
