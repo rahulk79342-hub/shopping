@@ -17,6 +17,10 @@ import CountdownDrop from '@/components/CountdownDrop';
 import RecentlyViewed from '@/components/RecentlyViewed';
 import BrandMarquee from '@/components/BrandMarquee';
 import Craftsmanship from '@/components/Craftsmanship';
+import TheVault from '@/components/TheVault';
+import EditorialSpotlight from '@/components/EditorialSpotlight';
+import TheCulture from '@/components/TheCulture';
+import EliteVIP from '@/components/EliteVIP';
 import { getBestsellers } from '@/lib/sanity';
 import { useCurrency } from '@/hooks/useCurrency';
 import Newsletter from "@/components/Newsletter";
@@ -79,8 +83,14 @@ export default function Home() {
       {/* Premium Brands Marquee */}
       <BrandMarquee />
 
+      {/* The Vault - Exclusive Drops */}
+      <TheVault />
+
       {/* Featured Categories (Desktop visual tiles / Mobile icon pills) */}
       <FeaturedCategories />
+
+      {/* Editorial Spotlight */}
+      <EditorialSpotlight />
 
       {/* Recently Viewed */}
       <RecentlyViewed />
@@ -93,6 +103,9 @@ export default function Home() {
 
       {/* Premium Craftsmanship Section */}
       <Craftsmanship />
+
+      {/* The Culture (Text Reveal) */}
+      <TheCulture />
 
       {/* Product Showcase */}
       <ProductShowcase />
@@ -118,6 +131,8 @@ export default function Home() {
       {/* Instagram Feed Integration */}
       <InstagramFeed />
 
+      {/* Elite VIP Club */}
+      <EliteVIP />
 
       {/* USP / Benefits Section */}
       <Benefits />
