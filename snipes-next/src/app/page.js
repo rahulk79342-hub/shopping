@@ -15,7 +15,8 @@ import StyleQuiz from '@/components/StyleQuiz';
 import ShoppableLookbook from '@/components/ShoppableLookbook';
 import CountdownDrop from '@/components/CountdownDrop';
 import RecentlyViewed from '@/components/RecentlyViewed';
-
+import BrandMarquee from '@/components/BrandMarquee';
+import Craftsmanship from '@/components/Craftsmanship';
 import { getBestsellers } from '@/lib/sanity';
 import { useCurrency } from '@/hooks/useCurrency';
 import Newsletter from "@/components/Newsletter";
@@ -75,6 +76,9 @@ export default function Home() {
       {/* New Professional Sliding Hero Carousel */}
       <HeroCarousel />
 
+      {/* Premium Brands Marquee */}
+      <BrandMarquee />
+
       {/* Featured Categories (Desktop visual tiles / Mobile icon pills) */}
       <FeaturedCategories />
 
@@ -86,6 +90,9 @@ export default function Home() {
 
       {/* Featured Collections (Editorial splits) */}
       <FeaturedCollections />
+
+      {/* Premium Craftsmanship Section */}
+      <Craftsmanship />
 
       {/* Product Showcase */}
       <ProductShowcase />
