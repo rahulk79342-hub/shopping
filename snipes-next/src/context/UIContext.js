@@ -9,6 +9,7 @@ export function UIProvider({ children }) {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
+  const [isAuraOpen, setIsAuraOpen] = useState(false);
 
   const toggleCartDrawer = () => setIsCartDrawerOpen(prev => !prev);
   const closeCartDrawer = () => setIsCartDrawerOpen(false);
@@ -23,12 +24,16 @@ export function UIProvider({ children }) {
   const openSizeGuide = () => setIsSizeGuideOpen(true);
   const closeSizeGuide = () => setIsSizeGuideOpen(false);
 
+  const openAura = () => setIsAuraOpen(true);
+  const closeAura = () => setIsAuraOpen(false);
+
   return (
     <UIContext.Provider value={{ 
       isCartDrawerOpen, toggleCartDrawer, closeCartDrawer, openCartDrawer,
       quickAddProduct, openQuickAdd, closeQuickAdd,
       isSearchOpen, openSearch, closeSearch,
-      isSizeGuideOpen, openSizeGuide, closeSizeGuide
+      isSizeGuideOpen, openSizeGuide, closeSizeGuide,
+      isAuraOpen, openAura, closeAura
     }}>
       {children}
     </UIContext.Provider>

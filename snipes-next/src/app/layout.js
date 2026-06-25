@@ -10,6 +10,7 @@ import QuickAddModal from "@/components/QuickAddModal";
 import SizeRecommender from "@/components/SizeRecommender";
 import Providers from "@/components/Providers";
 import CookieBanner from "@/components/CookieBanner";
+import AuraStylist from "@/components/AuraStylist";
 
 const sora = Sora({
   variable: "--font-family-headline-lg",
@@ -83,6 +84,7 @@ export default function RootLayout({ children }) {
               <QuickAddModal />
               <SizeRecommender />
               <CookieBanner />
+              <AuraStylist />
             </div>
           </UIProvider>
         </Providers>

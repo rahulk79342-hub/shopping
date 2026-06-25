@@ -18,7 +18,7 @@ const mockSearchResults = [
 export default function Navbar() {
   const cartCount = useCartStore(state => state.cartCount());
   const user = useAuthStore(state => state.user);
-  const { openCartDrawer } = useUI();
+  const { openCartDrawer, openAura } = useUI();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -105,6 +105,16 @@ export default function Navbar() {
 
           {/* Right: Search, Account, Cart */}
           <div className={`flex items-center justify-end gap-4 md:gap-6 z-10 ${isSearchActive ? 'w-full md:w-1/3' : 'flex-1 md:flex-none md:w-1/3'}`}>
+            
+            {/* AURA AI Button */}
+            <button 
+              onClick={openAura} 
+              className={`hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-purple-600 via-blue-500 to-indigo-500 text-white text-[11px] font-bold uppercase tracking-widest hover:scale-105 hover:shadow-[0_0_15px_rgba(99,102,241,0.5)] transition-all ${isSearchActive ? 'hidden' : ''}`}
+            >
+              <span className="material-symbols-outlined text-[14px]">auto_awesome</span>
+              AURA AI
+            </button>
+
             <div
               className={`relative flex items-center overflow-hidden ${isSearchActive ? 'w-full' : ''}`}
             >
@@ -265,6 +275,14 @@ export default function Navbar() {
                       <Link href="/discover" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between text-[22px] text-black hover:text-gray-600 transition-colors tracking-tight">
                         New Arrivals
                       </Link>
+                    </li>
+                    <li>
+                      <button onClick={() => { setIsMobileMenuOpen(false); openAura(); }} className="w-full flex items-center justify-between text-[22px] text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 font-bold hover:opacity-80 transition-opacity tracking-tight">
+                        <span className="flex items-center gap-2">
+                          <span className="material-symbols-outlined text-[24px] text-purple-600">auto_awesome</span>
+                          AURA AI Stylist
+                        </span>
+                      </button>
                     </li>
                     <li>
                       <Link href="/discover" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between text-[22px] text-black hover:text-gray-600 transition-colors tracking-tight">
