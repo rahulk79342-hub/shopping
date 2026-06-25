@@ -5,11 +5,14 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import CartDrawer from "@/components/CartDrawer";
-import QuickAddModal from "@/components/QuickAddModal";
-import SizeRecommender from "@/components/SizeRecommender";
+import dynamic from 'next/dynamic';
 import Providers from "@/components/Providers";
 import CookieBanner from "@/components/CookieBanner";
+
+const CartDrawer = dynamic(() => import('@/components/CartDrawer'));
+const QuickAddModal = dynamic(() => import('@/components/QuickAddModal'));
+const SizeRecommender = dynamic(() => import('@/components/SizeRecommender'));
+const AuraStylist = dynamic(() => import('@/components/AuraStylist'));
 
 const sora = Sora({
   variable: "--font-family-headline-lg",
@@ -83,6 +86,7 @@ export default function RootLayout({ children }) {
               <QuickAddModal />
               <SizeRecommender />
               <CookieBanner />
+              <AuraStylist />
             </div>
           </UIProvider>
         </Providers>

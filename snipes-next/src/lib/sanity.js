@@ -11,7 +11,7 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: false, // Set to true for production if you want edge caching
+  useCdn: true, // Enabled for production edge caching to handle high traffic
 });
 
 const builder = createImageUrlBuilder(client);
