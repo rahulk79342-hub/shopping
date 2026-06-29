@@ -4,8 +4,8 @@ import dynamic from 'next/dynamic';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 // Eager imports for above-the-fold
-import HeroCarousel from '@/components/HeroCarousel';
-import BrandMarquee from '@/components/BrandMarquee';
+import CinematicHero from '@/components/CinematicHero';
+import ShimmerMarquee from '@/components/ShimmerMarquee';
 import TheVault from '@/components/TheVault';
 import ExitIntentPopup from '@/components/ExitIntentPopup';
 
@@ -57,11 +57,11 @@ export default function HomeClient({ initialBestsellers }) {
         style={{ scaleX: scaleProgress }}
       />
 
-      {/* New Professional Sliding Hero Carousel */}
-      <HeroCarousel />
+      {/* Ultra-Premium Cinematic Hero */}
+      <CinematicHero />
 
-      {/* Premium Brands Marquee */}
-      <BrandMarquee />
+      {/* Premium Brands Shimmer Marquee */}
+      <ShimmerMarquee />
 
       {/* The Vault - Exclusive Drops */}
       <TheVault />
