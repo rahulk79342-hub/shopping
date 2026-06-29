@@ -37,8 +37,8 @@ export default function RecentlyViewed() {
         </div>
 
         <div className="flex gap-4 md:gap-6 overflow-x-auto hide-scrollbar snap-x pb-4">
-          {viewedItems.map((product) => (
-            <div key={product.id} className="min-w-[160px] md:min-w-[280px] flex-1 snap-start">
+          {viewedItems.map((product, index) => (
+            <div key={`${product.id}-${index}`} className="min-w-[160px] md:min-w-[280px] flex-1 snap-start">
               <ProductCard product={product} />
             </div>
           ))}

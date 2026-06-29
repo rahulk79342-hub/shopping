@@ -10,6 +10,10 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { useWishlistStore } from '@/store/useWishlistStore';
 import { useRecentStore } from '@/store/useRecentStore';
 import VirtualTryOnModal from '@/components/VirtualTryOnModal';
+import dynamic from 'next/dynamic';
+
+const AIReviewSummary = dynamic(() => import('@/components/AIReviewSummary'), { ssr: false });
+const VisualSearchDropzone = dynamic(() => import('@/components/VisualSearchDropzone'), { ssr: false });
 
 export default function ProductDetailClient({ product, relatedProducts }) {
   const addToCart = useCartStore(state => state.addToCart);
@@ -186,6 +190,11 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 <span className="material-symbols-outlined text-[24px]">360</span>
                 <span className="text-[10px] uppercase font-[var(--font-family-label-caps)] tracking-widest">360&deg; Spin</span>
               </div>
+            </div>
+            
+            {/* Visual Search AI Feature */}
+            <div className="px-4 md:px-0">
+              <VisualSearchDropzone />
             </div>
           </div>
 
@@ -397,7 +406,10 @@ export default function ProductDetailClient({ product, relatedProducts }) {
 
         <section className="px-[var(--spacing-margin-mobile)] md:px-0 py-12 md:py-24 border-t border-[var(--color-outline-variant)]">
           <h3 className="font-[var(--font-family-headline-lg)] text-2xl md:text-3xl text-[var(--color-primary)] mb-8">Customer Reviews</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <AIReviewSummary productName={product.name} />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             {[1, 2, 3].map(review => (
               <div key={review} className="bg-[var(--color-surface-container-low)] p-6 rounded-[var(--border-radius-lg)] border border-[var(--color-outline-variant)]">
                 <div className="flex text-[var(--color-primary)] mb-3">

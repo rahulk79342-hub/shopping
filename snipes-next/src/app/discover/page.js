@@ -7,6 +7,9 @@ import OutfitSuggestionCard from '@/components/OutfitSuggestionCard';
 import MobileFilterDrawer from '@/components/MobileFilterDrawer';
 import { fetchMockProducts } from '@/lib/supabase';
 import { useFilterStore } from '@/store/useFilterStore';
+import dynamic from 'next/dynamic';
+
+const AITrendForecaster = dynamic(() => import('@/components/AITrendForecaster'), { ssr: false });
 
 function DiscoverContent() {
   const router = useRouter();
@@ -173,6 +176,9 @@ function DiscoverContent() {
           </div>
         )}
       </div>
+      
+      {/* AI Trend Forecast Section */}
+      <AITrendForecaster />
 
       {/* Mobile Sticky Filter Bar */}
       <div className="fixed bottom-0 left-0 w-full bg-[var(--color-surface)] border-t border-[var(--color-outline-variant)] p-4 md:hidden z-40 flex justify-center shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
