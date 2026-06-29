@@ -325,3 +325,9 @@ body:hover .cursor-dot, body:hover .cursor-outline {
   }
 }
 
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
