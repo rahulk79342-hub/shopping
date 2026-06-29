@@ -18,6 +18,7 @@ const Craftsmanship = dynamic(() => import('@/components/Craftsmanship'), { ssr:
 const TheCulture = dynamic(() => import('@/components/TheCulture'), { ssr: true });
 const ProductShowcase = dynamic(() => import('@/components/ProductShowcase'), { ssr: true });
 const BestsellersCarousel = dynamic(() => import('@/components/BestsellersCarousel'), { ssr: true });
+const AIPersonalizedFeed = dynamic(() => import('@/components/AIPersonalizedFeed'), { ssr: false });
 const PersonalisedRecommendations = dynamic(() => import('@/components/PersonalisedRecommendations'), { ssr: false });
 const StyleQuiz = dynamic(() => import('@/components/StyleQuiz'), { ssr: true });
 const ShoppableLookbook = dynamic(() => import('@/components/ShoppableLookbook'), { ssr: true });
@@ -89,8 +90,11 @@ export default function HomeClient({ initialBestsellers }) {
       {/* Bestsellers Carousel (Embla + Sanity) */}
       <BestsellersCarousel products={bestsellers} />
 
-      {/* AI-Powered Recommendations */}
+      {/* AI-Powered Recommendations (Standard) */}
       <PersonalisedRecommendations />
+
+      {/* Advanced AI Bento Grid Feed */}
+      <AIPersonalizedFeed />
 
       {/* Interactive Style Quiz CTA */}
       <StyleQuiz />

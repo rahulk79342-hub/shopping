@@ -219,3 +219,109 @@
   color: white;
 }
 
+/* Premium AI Era Utilities */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+.cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-primary);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+}
+
+body:hover .cursor-dot, body:hover .cursor-outline {
+  opacity: 1;
+}
+
+/* Hide default cursor globally for premium feel, except on form inputs */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, [role="button"], input, textarea, select {
+    cursor: none;
+  }
+}
+
+.hover-expand:hover ~ .cursor-outline {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-color: transparent;
+}
+
+.glass-ultra {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+}
+
+.glass-ultra-dark {
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    to right,
+    var(--color-primary) 20%,
+    var(--color-secondary) 40%,
+    var(--color-secondary) 60%,
+    var(--color-primary) 80%
+  );
+  background-size: 200% auto;
+  color: #000;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
+}
+
+.text-shimmer-light {
+  background: linear-gradient(
+    to right,
+    #fff 20%,
+    var(--color-secondary) 40%,
+    var(--color-secondary) 60%,
+    #fff 80%
+  );
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
