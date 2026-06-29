@@ -86,7 +86,7 @@ export default function CartDrawer() {
         <Dialog.Overlay className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[80] data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out" />
         
         <Dialog.Content 
-          className="fixed top-0 right-0 w-full md:w-[450px] h-full bg-white z-[90] shadow-2xl flex flex-col focus:outline-none data-[state=open]:animate-slide-in-right data-[state=closed]:animate-slide-out-right"
+          className="fixed top-0 right-0 w-full md:w-[480px] h-full bg-white/70 backdrop-blur-3xl z-[90] shadow-2xl flex flex-col focus:outline-none data-[state=open]:animate-slide-in-right data-[state=closed]:animate-slide-out-right border-l border-white/40"
         >
           {showConfetti && confettiAnimationData && (
             <div className="absolute inset-0 z-[100] pointer-events-none flex items-center justify-center">
@@ -95,14 +95,14 @@ export default function CartDrawer() {
           )}
 
           {/* Header */}
-          <div className="flex flex-col border-b border-[var(--color-outline-variant)]">
+          <div className="flex flex-col border-b border-black/10">
             <div className="flex justify-between items-center p-6 pb-4">
-              <Dialog.Title className="font-[var(--font-family-headline-md)] text-[20px] text-[var(--color-primary)]">
+              <Dialog.Title className="font-black text-[22px] tracking-tight uppercase">
                 YOUR BAG ({cartItems.length})
               </Dialog.Title>
               <Dialog.Close asChild>
-                <button className="text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors cursor-pointer p-1">
-                  <span className="material-symbols-outlined text-[24px]">close</span>
+                <button className="text-black/50 hover:text-black transition-colors cursor-pointer p-2 bg-black/5 hover:bg-black/10 rounded-full">
+                  <span className="material-symbols-outlined text-[20px]">close</span>
                 </button>
               </Dialog.Close>
             </div>
@@ -110,22 +110,22 @@ export default function CartDrawer() {
             {/* Free Shipping Progress Bar */}
             {cartItems.length > 0 && (
               <div className="px-6 pb-4">
-                <p className="font-[var(--font-family-body-md)] text-[12px] mb-2 text-[var(--color-primary)]">
+                <p className="text-[12px] mb-2 font-medium">
                   {amountNeeded > 0 ? (
                      <>You are <strong className="font-bold">Rs. {amountNeeded}.00</strong> away from free shipping!</>
                   ) : (
                      <span className="text-green-600 font-bold flex items-center gap-1">
                        <span className="material-symbols-outlined text-[14px]">local_shipping</span> 
-                       You&apos;ve unlocked free shipping!
+                       You've unlocked free shipping!
                      </span>
                   )}
                 </p>
-                <div className="h-[4px] w-full bg-[var(--color-surface-container)] rounded-full overflow-hidden">
+                <div className="h-[4px] w-full bg-black/10 rounded-full overflow-hidden">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className={`h-full ${amountNeeded === 0 ? 'bg-green-600' : 'bg-[var(--color-primary)]'}`}
+                    className={`h-full ${amountNeeded === 0 ? 'bg-green-600' : 'bg-black'}`}
                   />
                 </div>
               </div>
@@ -133,12 +133,12 @@ export default function CartDrawer() {
           </div>
 
           {/* Cart Items List */}
-          <div className="flex-1 overflow-y-auto px-6 pt-6 pb-6 flex flex-col gap-6 custom-scrollbar bg-[var(--color-surface)]">
+          <div className="flex-1 overflow-y-auto px-6 pt-6 pb-6 flex flex-col gap-6 custom-scrollbar">
             {cartItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center">
-                <span className="material-symbols-outlined text-[64px] text-[var(--color-outline-variant)] mb-4">shopping_bag</span>
-                <p className="font-[var(--font-family-body-md)] text-[var(--color-outline)] mb-6">Your bag is currently empty.</p>
-                <button onClick={closeCartDrawer} className="bg-[var(--color-primary)] text-white px-8 py-3 font-[var(--font-family-label-caps)] text-[12px] uppercase cursor-pointer hover:bg-[var(--color-surface-tint)] shadow-sm">
+                <span className="material-symbols-outlined text-[64px] text-black/20 mb-4">shopping_bag</span>
+                <p className="text-black/60 mb-6 font-medium">Your bag is currently empty.</p>
+                <button onClick={closeCartDrawer} className="bg-black text-white px-8 py-4 font-bold text-[12px] uppercase cursor-pointer hover:bg-black/80 transition-colors rounded-full shadow-lg">
                   CONTINUE SHOPPING
                 </button>
               </div>
@@ -149,43 +149,43 @@ export default function CartDrawer() {
                     <motion.div 
                       key={`${item.id}-${item.size}`} 
                       layout
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, x: -50, transition: { duration: 0.2 } }}
-                      className="flex gap-4 group bg-white p-3 border border-transparent hover:border-[var(--color-outline-variant)] rounded-[var(--border-radius-sm)] transition-colors shadow-sm"
+                      initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+                      className="flex gap-4 group bg-white/50 backdrop-blur-md p-4 rounded-2xl border border-white/50 shadow-sm hover:shadow-md transition-all"
                     >
-                      <div className="w-24 aspect-[3/4] bg-[var(--color-surface-container)] flex-shrink-0 relative overflow-hidden rounded-[var(--border-radius-sm)]">
+                      <div className="w-24 aspect-[3/4] bg-gray-100 flex-shrink-0 relative overflow-hidden rounded-xl">
                         <Image src={item.image} alt={item.name} fill sizes="96px" className="object-cover"/>
-                        <button onClick={() => removeFromCart(item.id, item.size)} className="absolute top-1 right-1 p-1 bg-white/90 rounded-full text-[var(--color-outline)] hover:text-[var(--color-error)] opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer shadow-sm">
+                        <button onClick={() => removeFromCart(item.id, item.size)} className="absolute top-1 right-1 p-1.5 bg-white/90 rounded-full text-black/50 hover:text-red-500 hover:bg-white transition-all cursor-pointer shadow-sm opacity-0 group-hover:opacity-100">
                           <span className="material-symbols-outlined text-[14px]">delete</span>
                         </button>
                       </div>
                       <div className="flex flex-col flex-grow py-1">
-                        <h3 className="font-[var(--font-family-body-md)] font-bold text-[14px] text-[var(--color-primary)] leading-snug pr-6">{item.name}</h3>
-                        <p className="font-[var(--font-family-body-md)] text-[12px] text-[var(--color-outline)] mt-1">Size: {item.size || 'M'}</p>
+                        <h3 className="font-black text-[15px] uppercase leading-tight pr-6">{item.name}</h3>
+                        <p className="text-[12px] text-black/60 mt-1 font-medium">Size: {item.size || 'M'}</p>
                         
                         <div className="mt-auto flex justify-between items-end">
-                          <div className="flex items-center border border-[var(--color-outline-variant)] rounded-full overflow-hidden bg-[var(--color-surface-container-low)]">
+                          <div className="flex items-center border border-black/10 rounded-full overflow-hidden bg-white/50 backdrop-blur-sm">
                             <motion.button 
                               whileTap={{ scale: 0.9 }}
                               onClick={() => updateQuantity(item.id, item.size, item.quantity - 1)} 
-                              className="px-3 py-1 text-[var(--color-primary)] hover:bg-[var(--color-surface-container)] cursor-pointer"
+                              className="px-3 py-1 hover:bg-black/5 transition-colors cursor-pointer"
                             >
                               -
                             </motion.button>
-                            <span className="px-2 py-1 font-[var(--font-family-body-md)] text-[12px] min-w-[28px] text-center font-bold">{item.quantity}</span>
+                            <span className="px-2 py-1 text-[12px] min-w-[28px] text-center font-bold">{item.quantity}</span>
                             <motion.button 
                               whileTap={{ scale: 0.9 }}
                               onClick={() => updateQuantity(item.id, item.size, item.quantity + 1)} 
-                              className="px-3 py-1 text-[var(--color-primary)] hover:bg-[var(--color-surface-container)] cursor-pointer"
+                              className="px-3 py-1 hover:bg-black/5 transition-colors cursor-pointer"
                             >
                               +
                             </motion.button>
                           </div>
-                          <span className="font-[var(--font-family-price-display)] text-[16px] text-[var(--color-primary)]">Rs. {item.price * item.quantity}.00</span>
+                          <span className="font-mono font-bold text-[16px]">Rs. {item.price * item.quantity}.00</span>
                         </div>
-                        <div className="mt-2 border-t border-[var(--color-outline-variant)] pt-2 text-right">
-                          <button onClick={() => saveForLater(item)} className="font-[var(--font-family-body-md)] text-[11px] text-[var(--color-outline)] hover:text-[var(--color-primary)] transition-colors underline underline-offset-2">
+                        <div className="mt-3 text-right">
+                          <button onClick={() => saveForLater(item)} className="text-[11px] text-black/50 hover:text-black transition-colors font-bold uppercase tracking-wider underline underline-offset-4">
                             Save for later
                           </button>
                         </div>
@@ -196,22 +196,22 @@ export default function CartDrawer() {
 
                 {/* Saved for Later Section */}
                 {savedForLater.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-[var(--color-outline-variant)]">
-                    <h4 className="font-[var(--font-family-label-caps)] text-[11px] text-[var(--color-outline)] uppercase tracking-widest mb-4">Saved for Later ({savedForLater.length})</h4>
+                  <div className="mt-4 pt-6 border-t border-black/10">
+                    <h4 className="font-black text-[11px] text-black/50 uppercase tracking-widest mb-4">Saved for Later ({savedForLater.length})</h4>
                     <div className="flex flex-col gap-4">
                       {savedForLater.map(saved => (
-                        <div key={`${saved.id}-${saved.size}-saved`} className="flex gap-4 p-3 bg-[var(--color-surface-container-low)] rounded-[var(--border-radius-sm)] border border-[var(--color-outline-variant)]">
-                          <div className="w-16 aspect-[3/4] bg-[var(--color-surface-container)] flex-shrink-0 relative overflow-hidden rounded-[var(--border-radius-sm)]">
-                            <Image src={saved.image} alt={saved.name} fill sizes="64px" className="object-cover opacity-70"/>
+                         <div key={`${saved.id}-${saved.size}-saved`} className="flex gap-4 p-3 bg-white/30 backdrop-blur-sm rounded-xl border border-white/50 shadow-sm">
+                          <div className="w-16 aspect-[3/4] bg-gray-100 flex-shrink-0 relative overflow-hidden rounded-lg">
+                            <Image src={saved.image} alt={saved.name} fill sizes="64px" className="object-cover opacity-80"/>
                           </div>
                           <div className="flex flex-col flex-grow py-1">
-                            <h3 className="font-[var(--font-family-body-md)] font-bold text-[12px] text-[var(--color-primary)] leading-snug">{saved.name}</h3>
-                            <p className="font-[var(--font-family-body-md)] text-[11px] text-[var(--color-outline)]">Size: {saved.size}</p>
-                            <span className="font-[var(--font-family-price-display)] text-[12px] text-[var(--color-outline)] mt-1">Rs. {saved.price}.00</span>
+                            <h3 className="font-bold text-[12px] uppercase leading-tight">{saved.name}</h3>
+                            <p className="text-[11px] text-black/60 font-medium">Size: {saved.size}</p>
+                            <span className="font-mono font-bold text-[12px] text-black/60 mt-1">Rs. {saved.price}.00</span>
                             
                             <div className="mt-auto flex justify-between items-end">
-                              <button onClick={() => removeSaved(saved.id, saved.size)} className="font-[var(--font-family-body-md)] text-[10px] text-[var(--color-error)] underline">Remove</button>
-                              <button onClick={() => moveToCart(saved)} className="bg-white text-[var(--color-primary)] border border-[var(--color-primary)] px-3 py-1 font-[var(--font-family-label-caps)] text-[10px] uppercase rounded-[var(--border-radius-sm)] hover:bg-[var(--color-primary)] hover:text-white transition-colors">
+                              <button onClick={() => removeSaved(saved.id, saved.size)} className="text-[10px] text-red-500/80 hover:text-red-600 font-bold uppercase underline">Remove</button>
+                              <button onClick={() => moveToCart(saved)} className="bg-black/5 hover:bg-black text-black hover:text-white px-3 py-1 font-bold text-[10px] uppercase rounded-full transition-all">
                                 Move to Bag
                               </button>
                             </div>
@@ -222,23 +222,29 @@ export default function CartDrawer() {
                   </div>
                 )}
 
-                {/* Complete The Look Upsell */}
-                <div className="pt-6 border-t border-[var(--color-outline-variant)]">
-                  <h4 className="font-[var(--font-family-label-caps)] text-[11px] text-[var(--color-outline)] uppercase tracking-widest mb-4">Complete The Look</h4>
-                  <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
+                {/* AI Predictive Complete The Look Upsell */}
+                <div className="pt-6 border-t border-black/10 relative">
+                  <div className="absolute -top-[12px] left-1/2 -translate-x-1/2 bg-[#C2B280] text-white px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-1 shadow-md">
+                    <span className="material-symbols-outlined text-[12px]">auto_awesome</span> Aura AI Suggests
+                  </div>
+                  <h4 className="font-black text-[14px] uppercase tracking-tight mb-4 text-center mt-2">Complete The Look</h4>
+                  <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4 px-2">
                     {upsellProducts.map(upsell => (
-                      <div key={upsell.id} className="w-32 flex-shrink-0 group">
-                        <div className="aspect-square relative overflow-hidden mb-2 bg-[var(--color-surface-container)] rounded-[var(--border-radius-sm)]">
-                           <Image src={upsell.image} alt={upsell.name} fill sizes="128px" className="object-cover group-hover:scale-105 transition-transform" />
-                           <button 
+                      <div key={upsell.id} className="w-[140px] flex-shrink-0 group">
+                        <div className="aspect-[4/5] relative overflow-hidden mb-3 bg-gray-100 rounded-2xl shadow-sm border border-black/5">
+                           <Image src={upsell.image} alt={upsell.name} fill sizes="140px" className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                           <motion.button 
+                             whileHover={{ scale: 1.05 }}
+                             whileTap={{ scale: 0.95 }}
                              onClick={() => addToCart({...upsell, quantity: 1, size: 'OS'})}
-                             className="absolute bottom-1 right-1 w-8 h-8 bg-white text-[var(--color-primary)] rounded-full flex items-center justify-center shadow-md hover:bg-[var(--color-primary)] hover:text-white transition-colors cursor-pointer"
+                             className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[90%] bg-white/90 backdrop-blur-md text-black font-bold uppercase text-[10px] py-2 rounded-full flex items-center justify-center shadow-lg hover:bg-black hover:text-white transition-all cursor-pointer opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0"
                            >
-                             <span className="material-symbols-outlined text-[16px]">add</span>
-                           </button>
+                             Add To Bag
+                           </motion.button>
                         </div>
-                        <h5 className="font-[var(--font-family-body-md)] text-[12px] font-bold line-clamp-1">{upsell.name}</h5>
-                        <span className="font-[var(--font-family-price-display)] text-[12px] text-[var(--color-outline)]">Rs. {upsell.price}</span>
+                        <h5 className="font-bold text-[12px] uppercase leading-tight line-clamp-1">{upsell.name}</h5>
+                        <span className="font-mono text-[12px] text-black/60 font-bold">Rs. {upsell.price}</span>
                       </div>
                     ))}
                   </div>

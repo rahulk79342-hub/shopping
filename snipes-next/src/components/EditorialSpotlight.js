@@ -3,6 +3,9 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
 
+import HolographicCard from '@/components/HolographicCard';
+import MagneticButton from '@/components/MagneticButton';
+
 export default function EditorialSpotlight() {
   const containerRef = useRef(null);
   
@@ -40,16 +43,18 @@ export default function EditorialSpotlight() {
             <p className="text-black/70 text-base md:text-lg max-w-md font-light leading-relaxed mb-8">
               Discover the intersection of high-fashion and urban utility. Our latest collection bridges the gap between performance architecture and runway aesthetics.
             </p>
-            <button className="group relative inline-flex items-center justify-center px-8 py-4 bg-black text-white font-bold uppercase tracking-wider text-sm overflow-hidden">
-              <span className="relative z-10 transition-colors group-hover:text-black">Read The Editorial</span>
-              <div className="absolute inset-0 bg-white scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300 ease-out z-0"></div>
-            </button>
+            <MagneticButton strength={30}>
+              <button className="group relative inline-flex items-center justify-center px-8 py-4 bg-black text-white font-bold uppercase tracking-wider text-sm overflow-hidden">
+                <span className="relative z-10 transition-colors group-hover:text-black">Read The Editorial</span>
+                <div className="absolute inset-0 bg-white scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300 ease-out z-0"></div>
+              </button>
+            </MagneticButton>
           </motion.div>
         </div>
 
         {/* Right Side: Massive Parallax Image */}
         <div className="w-full md:w-6/12 relative order-1 md:order-2">
-          <div className="relative w-full aspect-[4/5] overflow-hidden rounded-sm">
+          <HolographicCard glareIntensity={0.2} className="relative w-full aspect-[4/5] overflow-hidden rounded-sm shadow-2xl">
             <motion.div style={{ y: imageY }} className="absolute inset-0 w-full h-[120%] -top-[10%]">
               <Image 
                 src="/images/editorial_spotlight.png"
@@ -59,7 +64,7 @@ export default function EditorialSpotlight() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </motion.div>
-          </div>
+          </HolographicCard>
           
           {/* Floating Element over Image */}
           <motion.div 

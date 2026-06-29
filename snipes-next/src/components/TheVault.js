@@ -63,58 +63,63 @@ function TiltCard({ item }) {
   };
 
   return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      className="relative w-full aspect-[3/4] rounded-2xl bg-gradient-to-br from-neutral-900 to-black border border-white/10 overflow-hidden cursor-pointer group"
-    >
-      {/* Glare Effect */}
-      <motion.div 
-        className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{
-          background: useTransform(
-            () => `radial-gradient(circle at ${x.get() * 100 + 50}% ${y.get() * 100 + 50}%, rgba(255,255,255,0.15) 0%, transparent 60%)`
-          )
-        }}
-      />
+    <div className="relative group cursor-none">
+      {/* Glowing Pulsing Border Effect */}
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-[#C2B280] via-transparent to-[#d4af37] rounded-[20px] opacity-0 group-hover:opacity-100 blur-[8px] group-hover:animate-[pulse_2s_ease-in-out_infinite] transition-opacity duration-500 z-0"></div>
       
-      {/* Sneaker Image (Pops out slightly due to translateZ) */}
-      <div 
-        className="absolute inset-0 flex items-center justify-center p-8 transition-transform duration-500 group-hover:scale-110"
-        style={{ transform: "translateZ(50px)" }}
+      <motion.div
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
+        className="relative w-full aspect-[3/4] rounded-2xl bg-gradient-to-br from-neutral-900 to-black border border-white/20 overflow-hidden group shadow-[0_20px_40px_rgba(0,0,0,0.8)] z-10"
       >
-        <div className="relative w-full h-full drop-shadow-2xl">
-          <Image 
-            src={item.image}
-            alt={item.name}
-            fill
-            className="object-contain"
-            sizes="(max-width: 768px) 100vw, 33vw"
-          />
+        {/* Glare Effect */}
+        <motion.div 
+          className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none mix-blend-overlay"
+          style={{
+            background: useTransform(
+              () => `radial-gradient(circle at ${x.get() * 100 + 50}% ${y.get() * 100 + 50}%, rgba(255,255,255,0.4) 0%, transparent 60%)`
+            )
+          }}
+        />
+        
+        {/* Sneaker Image (Pops out slightly due to translateZ) */}
+        <div 
+          className="absolute inset-0 flex items-center justify-center p-8 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110"
+          style={{ transform: "translateZ(60px)" }}
+        >
+          <div className="relative w-full h-full drop-shadow-[0_20px_20px_rgba(0,0,0,0.8)]">
+            <Image 
+              src={item.image}
+              alt={item.name}
+              fill
+              className="object-contain"
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Content overlay */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end"
-        style={{ transform: "translateZ(30px)" }}
-      >
-        <span className="text-[var(--color-primary)] text-xs font-bold tracking-widest uppercase mb-1">{item.edition}</span>
-        <h3 className="text-white text-xl font-black uppercase tracking-tight">{item.name}</h3>
-        <div className="flex justify-between items-center mt-4">
-          <span className="text-white/70 font-mono">{item.price}</span>
-          <button className="text-xs bg-white text-black px-4 py-2 font-bold uppercase hover:bg-gray-200 transition-colors">
-            View Details
-          </button>
+        {/* Content overlay */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end"
+          style={{ transform: "translateZ(30px)" }}
+        >
+          <span className="text-[#C2B280] text-[10px] font-bold tracking-[0.2em] uppercase mb-1 drop-shadow-md">{item.edition}</span>
+          <h3 className="text-white text-xl font-black uppercase tracking-tight">{item.name}</h3>
+          <div className="flex justify-between items-center mt-4">
+            <span className="text-white/90 font-mono font-bold">{item.price}</span>
+            <button className="text-xs bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 font-bold uppercase hover:bg-white hover:text-black transition-all">
+              View Details
+            </button>
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 
