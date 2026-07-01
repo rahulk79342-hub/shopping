@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useWishlistStore } from '@/store/useWishlistStore';
 
 import { motion } from 'framer-motion';
+import HolographicCard from '@/components/HolographicCard';
 
 export default function ProductCard({ product }) {
 
@@ -40,8 +41,8 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div className="group flex flex-col">
-      <div className="relative h-[250px] md:h-[400px] rounded-[12px] md:rounded-[16px] overflow-hidden mb-3 md:mb-4 bg-[#f8f8f8] block w-full">
+    <div className="group flex flex-col cursor-none">
+      <HolographicCard glareIntensity={0.3} className="relative h-[250px] md:h-[400px] rounded-[12px] md:rounded-[16px] mb-3 md:mb-4 bg-[#f8f8f8] block w-full border border-gray-100/50 shadow-sm">
         <Link href={`/product/${product.slug?.current || product.id || product._id}`} className="absolute inset-0 z-0">
           <Image 
             src={activeImage} 
@@ -57,7 +58,7 @@ export default function ProductCard({ product }) {
           {/* Wishlist Heart Icon */}
           <button 
             onClick={handleWishlist} 
-            className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-black hover:scale-110 active:scale-95 transition-all shadow-sm"
+            className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-black hover:scale-110 active:scale-95 transition-all shadow-sm pointer-events-auto"
             aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
           >
             <motion.span 
@@ -74,7 +75,7 @@ export default function ProductCard({ product }) {
           {/* Share Icon */}
           <button 
             onClick={handleShare} 
-            className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-gray-400 hover:text-black hover:scale-110 active:scale-95 transition-all shadow-sm md:opacity-0 md:-translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
+            className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-gray-400 hover:text-black hover:scale-110 active:scale-95 transition-all shadow-sm md:opacity-0 md:-translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 pointer-events-auto"
             aria-label="Share product"
           >
             <span className="material-symbols-outlined text-[16px] md:text-[18px]">share</span>
@@ -88,7 +89,7 @@ export default function ProductCard({ product }) {
           </div>
         )}
 
-      </div>
+      </HolographicCard>
 
       {/* Info & Swatches */}
       <div className="flex justify-between items-start px-1">

@@ -11,6 +11,7 @@ import { useWishlistStore } from '@/store/useWishlistStore';
 import { useRecentStore } from '@/store/useRecentStore';
 import VirtualTryOnModal from '@/components/VirtualTryOnModal';
 import dynamic from 'next/dynamic';
+import HolographicCard from '@/components/HolographicCard';
 
 const AIReviewSummary = dynamic(() => import('@/components/AIReviewSummary'), { ssr: false });
 const VisualSearchDropzone = dynamic(() => import('@/components/VisualSearchDropzone'), { ssr: false });
@@ -120,30 +121,33 @@ export default function ProductDetailClient({ product, relatedProducts }) {
 
           {/* MEDIA GALLERY */}
           <div className="w-full md:w-[55%] lg:w-[60%] flex flex-col gap-4">
-            <div className="aspect-[4/5] md:aspect-[3/4] bg-[var(--color-surface-container)] w-full relative group">
-              {product.media[activeMediaIdx].type === 'image' ? (
-                <Zoom zoomMargin={40}>
-                  <div className="absolute inset-0">
-                    <Image
-                      src={product.media[activeMediaIdx].url}
-                      alt={product.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 60vw"
-                      priority
-                      className="object-cover"
-                    />
-                  </div>
-                </Zoom>
-              ) : (
-                <video
-                  src={product.media[activeMediaIdx].url}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-              )}
+            <HolographicCard glareIntensity={0.4} className="w-full">
+              <div className="aspect-[4/5] md:aspect-[3/4] bg-[var(--color-surface-container)] w-full relative group rounded-2xl overflow-hidden shadow-2xl">
+                {product.media[activeMediaIdx].type === 'image' ? (
+                  <Zoom zoomMargin={40}>
+                    <div className="absolute inset-0">
+                      <Image
+                        src={product.media[activeMediaIdx].url}
+                        alt={product.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 60vw"
+                        priority
+                        className="object-cover"
+                      />
+                    </div>
+                  </Zoom>
+                ) : (
+                  <video
+                    src={product.media[activeMediaIdx].url}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                )}
+              </div>
+            </HolographicCard>
 
               <button
                 onClick={() => toggleWishlist(product.id)}
@@ -459,26 +463,30 @@ export default function ProductDetailClient({ product, relatedProducts }) {
 
       </main>
 
-      {/* Mobile Sticky Add-to-Cart Bar */}
+      {/* Global Glassmorphic Sticky Add-to-Cart Bar */}
       <div
-        className={`fixed bottom-0 left-0 w-full bg-[#111] border-t border-gray-800 p-3 z-[100] transform transition-transform duration-300 md:hidden shadow-[0_-10px_30px_rgba(0,0,0,0.5)] ${showStickyBar ? 'translate-y-0' : 'translate-y-full'}`}
+        className={`fixed bottom-0 md:bottom-6 left-0 md:left-1/2 md:-translate-x-1/2 w-full md:w-auto md:min-w-[600px] bg-white/80 md:bg-black/80 backdrop-blur-3xl md:rounded-full border-t md:border border-gray-200 md:border-white/20 p-3 md:px-6 md:py-3 z-[100] transform transition-transform duration-500 shadow-[0_-10px_30px_rgba(0,0,0,0.1)] md:shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex items-center justify-between gap-6 ${showStickyBar ? 'translate-y-0' : 'translate-y-[150%]'}`}
       >
-        <div className="flex items-center gap-2 w-full">
+        <div className="hidden md:flex flex-col">
+          <span className="text-white font-bold text-sm tracking-widest uppercase">{product.name}</span>
+          <span className="text-white/60 font-mono text-xs">Rs. {product.price}.00</span>
+        </div>
+        <div className="flex items-center gap-2 w-full md:w-auto">
           <button
             onClick={handleAddToCart}
             disabled={stockLeft === 0}
-            className="flex-1 bg-transparent border border-gray-600 text-white font-bold text-[13px] py-3.5 rounded-lg active:scale-95 transition-all flex items-center justify-center hover:bg-white/5"
+            className="flex-1 md:flex-none md:w-[150px] bg-black md:bg-white text-white md:text-black font-bold text-[11px] uppercase tracking-widest py-3.5 rounded-full active:scale-95 transition-all flex items-center justify-center hover:opacity-80"
           >
-            Add to cart
+            Add to bag
           </button>
           <button
             onClick={() => {
               handleAddToCart();
             }}
             disabled={stockLeft === 0}
-            className="flex-1 bg-[#ffc200] text-black font-bold text-[13px] py-3.5 rounded-lg active:scale-95 transition-all shadow-md flex items-center justify-center hover:bg-[#e6b000]"
+            className="flex-1 md:flex-none md:w-[150px] bg-[#C2B280] text-black font-bold text-[11px] uppercase tracking-widest py-3.5 rounded-full active:scale-95 transition-all shadow-[0_0_20px_rgba(194,178,128,0.4)] flex items-center justify-center hover:bg-[#d4af37]"
           >
-            Buy at ₹{product.price}
+            Checkout Fast
           </button>
         </div>
       </div>

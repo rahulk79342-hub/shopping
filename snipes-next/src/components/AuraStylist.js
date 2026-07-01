@@ -25,7 +25,7 @@ export default function AuraStylist() {
   const [prompt, setPrompt] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState(null);
-  const [vibe, setVibe] = useState('default'); // 'default', 'dark', 'light'
+  const [vibe, setVibe] = useState('dark');
 
   // Ref to prevent scrolling when open
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function AuraStylist() {
       setTimeout(() => {
         setPrompt('');
         setResult(null);
-        setVibe('default');
+        setVibe('dark');
         setIsProcessing(false);
       }, 500);
     }
@@ -53,21 +53,18 @@ export default function AuraStylist() {
 
     // Analyze prompt for Vibe
     const lowerPrompt = prompt.toLowerCase();
-    let selectedVibe = 'default';
+    let selectedVibe = 'dark';
     let outfit = [];
     let explanation = '';
 
-    if (lowerPrompt.includes('tokyo') || lowerPrompt.includes('dark') || lowerPrompt.includes('night') || lowerPrompt.includes('street')) {
-      selectedVibe = 'dark';
-      outfit = [auraProducts[0], auraProducts[1], auraProducts[2], auraProducts[3]];
-      explanation = "I've curated a high-contrast, cyberpunk-inspired look perfectly suited for neon-lit streets. The Nocturne Hoodie provides an oversized, relaxed silhouette, balanced by the utilitarian Obsidian Cargo Pants. The neon-stitch sneakers add a crucial pop of visibility against the dark palette.";
-    } else if (lowerPrompt.includes('summer') || lowerPrompt.includes('beach') || lowerPrompt.includes('resort') || lowerPrompt.includes('minimal')) {
-      selectedVibe = 'light';
+    if (lowerPrompt.includes('summer') || lowerPrompt.includes('beach') || lowerPrompt.includes('resort') || lowerPrompt.includes('minimal')) {
       outfit = [auraProducts[4], auraProducts[5], auraProducts[6], auraProducts[7]];
       explanation = "For a refined, minimalist aesthetic, I've selected breathable textures and earth tones. The Ivory Linen Shirt paired with Sandstone Trousers creates a seamless, elegant flow. The suede loafers ground the outfit, while the gold watch adds a subtle touch of stealth wealth.";
+    } else if (lowerPrompt.includes('tokyo') || lowerPrompt.includes('dark') || lowerPrompt.includes('night') || lowerPrompt.includes('street')) {
+      outfit = [auraProducts[0], auraProducts[1], auraProducts[2], auraProducts[3]];
+      explanation = "I've curated a high-contrast, cyberpunk-inspired look perfectly suited for neon-lit streets. The Nocturne Hoodie provides an oversized, relaxed silhouette, balanced by the utilitarian Obsidian Cargo Pants. The neon-stitch sneakers add a crucial pop of visibility against the dark palette.";
     } else {
       // Default / Random mix
-      selectedVibe = 'dark';
       outfit = [auraProducts[0], auraProducts[5], auraProducts[2], auraProducts[7]];
       explanation = "I've built a versatile, high-low look that bridges streetwear and tailored precision. This combination offers unexpected contrast—pairing relaxed upper layers with structured bottoms for a truly modern silhouette.";
     }
@@ -91,12 +88,9 @@ export default function AuraStylist() {
     }
   };
 
+  // Always use dark theme to match the premium aesthetic
   const getVibeStyles = () => {
-    switch (vibe) {
-      case 'dark': return { bg: 'bg-[#050505]', text: 'text-white', border: 'border-white/10', accent: 'bg-white text-black' };
-      case 'light': return { bg: 'bg-[#F2F0EB]', text: 'text-[#1A1A1A]', border: 'border-black/10', accent: 'bg-[#1A1A1A] text-white' };
-      default: return { bg: 'bg-black/80 backdrop-blur-3xl', text: 'text-white', border: 'border-white/20', accent: 'bg-white text-black' };
-    }
+    return { bg: 'bg-black/90 backdrop-blur-3xl', text: 'text-white', border: 'border-white/20', accent: 'bg-white text-black' };
   };
 
   const styles = getVibeStyles();
@@ -114,8 +108,8 @@ export default function AuraStylist() {
           {/* Header */}
           <header className={`p-6 flex justify-between items-center ${styles.text}`}>
             <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[24px] animate-pulse">auto_awesome</span>
-              <span className="font-[var(--font-family-display-lg)] text-xl tracking-tighter uppercase font-bold">Aura Engine</span>
+              <span className="material-symbols-outlined text-[24px] animate-pulse text-purple-500">auto_awesome</span>
+              <span className="font-[var(--font-family-display-lg)] text-xl tracking-tighter uppercase font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-500">Aura Engine</span>
             </div>
             <button onClick={closeAura} className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
               <span className="material-symbols-outlined text-[24px]">close</span>
@@ -132,7 +126,7 @@ export default function AuraStylist() {
                   animate={{ opacity: 1, y: 0 }}
                   className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tighter leading-tight ${styles.text}`}
                 >
-                  Describe your <span className="italic font-light">vision.</span><br/>Let AURA manifest it.
+                  Describe your <span className="italic font-light text-purple-400">vision.</span><br/>Let AURA manifest it.
                 </motion.h1>
                 
                 <form onSubmit={handleSubmit} className="relative group">
@@ -164,10 +158,10 @@ export default function AuraStylist() {
                   >
                     <div className="flex gap-1">
                       {[1,2,3].map(i => (
-                        <motion.div key={i} animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }} transition={{ repeat: Infinity, duration: 1, delay: i * 0.2 }} className="w-2 h-2 rounded-full bg-current" />
+                        <motion.div key={i} animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }} transition={{ repeat: Infinity, duration: 1, delay: i * 0.2 }} className="w-2 h-2 rounded-full bg-purple-500" />
                       ))}
                     </div>
-                    <span className="font-[var(--font-family-label-caps)] uppercase tracking-widest text-sm">Analyzing style matrix...</span>
+                    <span className="font-[var(--font-family-label-caps)] uppercase tracking-widest text-sm text-purple-300">Analyzing style matrix...</span>
                   </motion.div>
                 )}
               </div>
@@ -181,26 +175,27 @@ export default function AuraStylist() {
                   
                   {/* Left: Text & Rationale */}
                   <div className={`w-full lg:w-1/3 flex flex-col ${styles.text}`}>
-                    <h2 className="text-sm font-[var(--font-family-label-caps)] uppercase tracking-widest mb-4 opacity-60">Aura Curation</h2>
+                    <h2 className="text-sm font-[var(--font-family-label-caps)] uppercase tracking-widest mb-4 opacity-60 text-purple-400">Aura Curation</h2>
                     <h3 className="text-3xl font-bold mb-6 italic">"{prompt}"</h3>
                     
                     <motion.div 
                       initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 1 }}
-                      className={`p-6 rounded-2xl border ${styles.border} bg-white/5 backdrop-blur-sm mb-8`}
+                      className={`p-6 rounded-2xl border border-purple-500/30 bg-purple-900/10 backdrop-blur-sm mb-8 relative overflow-hidden`}
                     >
-                      <span className="material-symbols-outlined text-[20px] mb-4">psychology</span>
-                      <p className="text-lg leading-relaxed">{result.explanation}</p>
+                      <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-500 to-blue-500"></div>
+                      <span className="material-symbols-outlined text-[20px] mb-4 text-purple-400">psychology</span>
+                      <p className="text-lg leading-relaxed text-gray-200">{result.explanation}</p>
                     </motion.div>
 
                     <button 
                       onClick={handleAcquireLook}
-                      className={`w-full py-5 rounded-full font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-3 ${styles.accent} hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl`}
+                      className={`w-full py-5 rounded-full font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(147,51,234,0.3)]`}
                     >
                       <span className="material-symbols-outlined text-[20px]">shopping_bag</span>
                       Acquire Full Look — Rs. {result.outfit.reduce((acc, item) => acc + item.price, 0)}
                     </button>
                     
-                    <button onClick={() => {setResult(null); setPrompt(''); setVibe('default');}} className="mt-4 text-sm font-bold uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity">
+                    <button onClick={() => {setResult(null); setPrompt(''); setVibe('dark');}} className="mt-4 text-sm font-bold uppercase tracking-widest opacity-60 hover:opacity-100 transition-opacity">
                       ← Generate Another
                     </button>
                   </div>
@@ -210,43 +205,43 @@ export default function AuraStylist() {
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[200px]">
                       
                       {/* Hero Item (usually top or jacket) */}
-                      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2 }} className="col-span-2 row-span-2 relative rounded-3xl overflow-hidden group">
+                      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2 }} className="col-span-2 row-span-2 relative rounded-3xl overflow-hidden group border border-white/5">
                         <Image src={result.outfit[0].image} fill alt={result.outfit[0].name} className="object-cover group-hover:scale-105 transition-transform duration-700" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                         <div className="absolute bottom-6 left-6 text-white">
-                          <p className="text-[10px] font-bold uppercase tracking-widest mb-1 opacity-80">{result.outfit[0].category}</p>
-                          <p className="text-xl font-bold">{result.outfit[0].name}</p>
-                          <p className="text-sm">Rs. {result.outfit[0].price}</p>
+                          <p className="text-[10px] font-bold uppercase tracking-widest mb-1 text-purple-400">{result.outfit[0].category}</p>
+                          <p className="text-2xl font-bold">{result.outfit[0].name}</p>
+                          <p className="text-md text-gray-300">Rs. {result.outfit[0].price}</p>
                         </div>
                       </motion.div>
 
                       {/* Item 2 */}
-                      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.4 }} className="col-span-1 row-span-1 relative rounded-3xl overflow-hidden group">
+                      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.4 }} className="col-span-1 row-span-1 relative rounded-3xl overflow-hidden group border border-white/5">
                         <Image src={result.outfit[1].image} fill alt={result.outfit[1].name} className="object-cover group-hover:scale-105 transition-transform duration-700" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
                         <div className="absolute bottom-4 left-4 text-white">
-                          <p className="text-[8px] font-bold uppercase tracking-widest opacity-80">{result.outfit[1].category}</p>
+                          <p className="text-[8px] font-bold uppercase tracking-widest text-purple-400">{result.outfit[1].category}</p>
                           <p className="text-sm font-bold truncate">{result.outfit[1].name}</p>
                         </div>
                       </motion.div>
 
                       {/* Item 3 */}
-                      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.5 }} className="col-span-1 row-span-1 relative rounded-3xl overflow-hidden group">
+                      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.5 }} className="col-span-1 row-span-1 relative rounded-3xl overflow-hidden group border border-white/5">
                         <Image src={result.outfit[2].image} fill alt={result.outfit[2].name} className="object-cover group-hover:scale-105 transition-transform duration-700" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
                         <div className="absolute bottom-4 left-4 text-white">
-                          <p className="text-[8px] font-bold uppercase tracking-widest opacity-80">{result.outfit[2].category}</p>
+                          <p className="text-[8px] font-bold uppercase tracking-widest text-purple-400">{result.outfit[2].category}</p>
                           <p className="text-sm font-bold truncate">{result.outfit[2].name}</p>
                         </div>
                       </motion.div>
 
                       {/* Item 4 */}
-                      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.6 }} className="col-span-2 md:col-span-3 row-span-1 relative rounded-3xl overflow-hidden group">
+                      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.6 }} className="col-span-2 md:col-span-3 row-span-1 relative rounded-3xl overflow-hidden group border border-white/5">
                         <Image src={result.outfit[3].image} fill alt={result.outfit[3].name} className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
                         <div className="absolute bottom-4 left-6 text-white flex justify-between items-end w-[calc(100%-3rem)]">
                           <div>
-                            <p className="text-[10px] font-bold uppercase tracking-widest opacity-80">{result.outfit[3].category}</p>
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-purple-400">{result.outfit[3].category}</p>
                             <p className="text-lg font-bold">{result.outfit[3].name}</p>
                           </div>
                           <span className="material-symbols-outlined bg-white text-black p-2 rounded-full cursor-pointer hover:scale-110 transition-transform">add</span>
