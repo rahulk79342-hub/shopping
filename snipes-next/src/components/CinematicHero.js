@@ -20,16 +20,19 @@ const textChild = {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
+    textShadow: ["2px 0 0 rgba(255,0,0,0), -2px 0 0 rgba(0,255,255,0)", "4px 0 0 rgba(255,0,0,0.8), -4px 0 0 rgba(0,255,255,0.8)", "0px 0 0 rgba(255,0,0,0), 0px 0 0 rgba(0,255,255,0)"],
     transition: {
       type: "spring",
       damping: 12,
       stiffness: 100,
+      textShadow: { duration: 0.6, times: [0, 0.5, 1], ease: "easeInOut" }
     },
   },
   hidden: {
     opacity: 0,
     y: 40,
     filter: "blur(20px)",
+    textShadow: "0px 0 0 rgba(255,0,0,0), 0px 0 0 rgba(0,255,255,0)"
   },
 };
 
@@ -50,14 +53,15 @@ export default function CinematicHero() {
   const mouseXPixel = useMotionValue(0);
   const mouseYPixel = useMotionValue(0);
 
-  const springConfig = { damping: 25, stiffness: 150 };
+  const springConfig = { damping: 20, stiffness: 120 };
   const smoothMouseX = useSpring(mouseX, springConfig);
   const smoothMouseY = useSpring(mouseY, springConfig);
 
-  const rotateX = useTransform(smoothMouseY, [-0.5, 0.5], ["5deg", "-5deg"]);
-  const rotateY = useTransform(smoothMouseX, [-0.5, 0.5], ["-5deg", "5deg"]);
-  const translateX = useTransform(smoothMouseX, [-0.5, 0.5], ["-3%", "3%"]);
-  const translateY = useTransform(smoothMouseY, [-0.5, 0.5], ["-3%", "3%"]);
+  // Increased ranges for deeper 3D effect
+  const rotateX = useTransform(smoothMouseY, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(smoothMouseX, [-0.5, 0.5], ["-10deg", "10deg"]);
+  const translateX = useTransform(smoothMouseX, [-0.5, 0.5], ["-5%", "5%"]);
+  const translateY = useTransform(smoothMouseY, [-0.5, 0.5], ["-5%", "5%"]);
   
   // Dynamic spotlight mask
   const spotlightBackground = useMotionTemplate`radial-gradient(400px circle at ${mouseXPixel}px ${mouseYPixel}px, rgba(255, 255, 255, 1), transparent 80%)`;
@@ -119,7 +123,7 @@ export default function CinematicHero() {
           style={{ transform: "translateZ(-100px)" }}
         />
         <motion.div 
-          className="absolute bottom-[10%] right-[20%] w-[400px] h-[400px] rounded-full bg-[#C2B280]/5 backdrop-blur-3xl border border-[#C2B280]/10"
+          className="absolute bottom-[10%] right-[20%] w-[400px] h-[400px] rounded-full bg-purple-500/10 backdrop-blur-3xl border border-purple-500/20"
           animate={{ y: [0, 60, 0], x: [0, -40, 0], rotate: [0, -90, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           style={{ transform: "translateZ(-150px)" }}
@@ -162,7 +166,7 @@ export default function CinematicHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
           >
-            <span className="text-[#C2B280] font-bold tracking-[0.4em] uppercase text-xs md:text-sm mb-6 block drop-shadow-[0_0_15px_rgba(194,178,128,0.6)]">
+            <span className="text-purple-400 font-bold tracking-[0.4em] uppercase text-xs md:text-sm mb-6 block drop-shadow-[0_0_15px_rgba(168,85,247,0.6)]">
               The Aura Collection
             </span>
           </motion.div>
@@ -212,10 +216,10 @@ export default function CinematicHero() {
             style={{ transform: "translateZ(40px)" }}
           >
             <MagneticButton strength={40}>
-              <Link href="/discover" className="relative group overflow-hidden px-12 py-5 bg-white/5 backdrop-blur-2xl border border-white/20 rounded-full flex items-center justify-center gap-3 hover:bg-white hover:text-black transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_0_50px_rgba(255,255,255,0.05)] hover:shadow-[0_0_50px_rgba(255,255,255,0.3)]">
-                <span className="font-black uppercase tracking-[0.2em] text-sm text-white group-hover:text-black z-10 relative">Explore Collection</span>
+              <Link href="/discover" className="relative group overflow-hidden px-12 py-5 bg-black/40 backdrop-blur-3xl border border-purple-500/30 rounded-full flex items-center justify-center gap-3 hover:bg-black/80 hover:border-purple-400 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_0_30px_rgba(147,51,234,0.2)] hover:shadow-[0_0_60px_rgba(147,51,234,0.6)]">
+                <span className="font-black uppercase tracking-[0.2em] text-sm text-white group-hover:text-purple-300 transition-colors z-10 relative">Explore Collection</span>
                 {/* Button Light Sweep effect */}
-                <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite_linear] bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-12 z-0" />
+                <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite_linear] bg-gradient-to-r from-transparent via-purple-500/20 to-transparent skew-x-12 z-0" />
               </Link>
             </MagneticButton>
           </motion.div>
@@ -243,9 +247,9 @@ export default function CinematicHero() {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
               
               <div className="absolute bottom-8 left-8 right-8">
-                <div className="bg-white/5 p-6 rounded-[24px] flex justify-between items-center backdrop-blur-3xl border border-white/20 shadow-2xl">
+                <div className="bg-black/60 p-6 rounded-[24px] flex justify-between items-center backdrop-blur-3xl border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
                   <div>
-                    <p className="text-[#C2B280] text-[10px] font-black uppercase tracking-[0.3em] mb-1.5 shadow-black drop-shadow-md">Aura Exclusive</p>
+                    <p className="text-purple-400 text-[10px] font-black uppercase tracking-[0.3em] mb-1.5 shadow-black drop-shadow-md">Aura Exclusive</p>
                     <p className="text-white text-base font-bold tracking-widest uppercase">Utility Vest 01</p>
                   </div>
                   <span className="text-white font-mono font-bold text-xl drop-shadow-md">$240</span>
