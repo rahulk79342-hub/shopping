@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 // Eager imports for above-the-fold
 import CinematicHero from '@/components/CinematicHero';
 import ShimmerMarquee from '@/components/ShimmerMarquee';
+import HolographicSneakerLab from '@/components/HolographicSneakerLab';
 import TheVault from '@/components/TheVault';
 import ExitIntentPopup from '@/components/ExitIntentPopup';
 
@@ -62,6 +63,9 @@ export default function HomeClient({ initialBestsellers }) {
 
       {/* Premium Brands Shimmer Marquee */}
       <ShimmerMarquee />
+
+      {/* Advanced Premium Section: Holographic Sneaker Lab */}
+      <HolographicSneakerLab />
 
       {/* The Vault - Exclusive Drops */}
       <TheVault />
