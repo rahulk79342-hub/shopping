@@ -58,12 +58,11 @@ export default function ShoppableLiveStream() {
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
-      if (index < mockChat.length) {
-        setChatMessages(prev => [...prev, mockChat[index]].slice(-4)); // Keep last 4
-        index++;
-      } else {
-        index = 0; // Loop chat
-      }
+      setChatMessages(prev => {
+        const nextMsg = mockChat[index % mockChat.length];
+        return [...prev, nextMsg].slice(-4);
+      });
+      index++;
     }, 2500);
     return () => clearInterval(interval);
   }, []);
@@ -177,7 +176,7 @@ export default function ShoppableLiveStream() {
           <div className="absolute bottom-4 left-4 right-4 md:w-1/3 flex justify-between items-end z-20 pointer-events-none">
             <div className="flex flex-col gap-2 w-full max-w-sm">
               <AnimatePresence>
-                {chatMessages.map((msg, i) => (
+                {chatMessages.filter(Boolean).map((msg, i) => (
                   <motion.div 
                     key={i + msg.user}
                     initial={{ opacity: 0, y: 10 }}
