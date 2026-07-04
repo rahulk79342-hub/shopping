@@ -29,6 +29,23 @@ const InstagramFeed = dynamic(() => import('@/components/InstagramFeed'), { ssr:
 const EliteVIP = dynamic(() => import('@/components/EliteVIP'), { ssr: true });
 const Benefits = dynamic(() => import('@/components/Benefits'), { ssr: true });
 const Newsletter = dynamic(() => import('@/components/Newsletter'), { ssr: true });
+const PressMentions = dynamic(() => import('@/components/PressMentions'), { ssr: true });
+const OutfitBuilder = dynamic(() => import('@/components/OutfitBuilder'), { ssr: true });
+const AITrendForecaster = dynamic(() => import('@/components/AITrendForecaster'), { ssr: true });
+const ShoppableLiveStream = dynamic(() => import('@/components/ShoppableLiveStream'), { ssr: true });
+
+const mockOutfitData = {
+  tops: [
+    { id: 1, name: 'Boxy Heavyweight Tee', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=400&auto=format&fit=crop' },
+    { id: 2, name: 'Tech Zip Hoodie', image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=400&auto=format&fit=crop' },
+    { id: 3, name: 'Vintage Wash Crewneck', image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=400&auto=format&fit=crop' }
+  ],
+  bottoms: [
+    { id: 1, name: 'Cargo Parachute Pants', image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=400&auto=format&fit=crop' },
+    { id: 2, name: 'Baggy Denim Jeans', image: 'https://images.unsplash.com/photo-1542272604-780c823d51ce?q=80&w=400&auto=format&fit=crop' },
+    { id: 3, name: 'Nylon Track Pants', image: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?q=80&w=400&auto=format&fit=crop' }
+  ]
+};
 
 export default function HomeClient({ initialBestsellers }) {
   const { scrollY, scrollYProgress } = useScroll();
@@ -64,6 +81,9 @@ export default function HomeClient({ initialBestsellers }) {
       {/* Premium Brands Shimmer Marquee */}
       <ShimmerMarquee />
 
+      {/* Social Proof Mentions */}
+      <PressMentions />
+
       {/* Advanced Premium Section: Holographic Sneaker Lab */}
       <HolographicSneakerLab />
 
@@ -91,6 +111,9 @@ export default function HomeClient({ initialBestsellers }) {
       {/* Product Showcase */}
       <ProductShowcase />
 
+      {/* Shoppable Live Stream Commerce */}
+      <ShoppableLiveStream />
+
       {/* Bestsellers Carousel (Embla + Sanity) */}
       <BestsellersCarousel products={bestsellers} />
 
@@ -106,8 +129,14 @@ export default function HomeClient({ initialBestsellers }) {
       {/* Shoppable Lookbook Editorial */}
       <ShoppableLookbook />
 
+      {/* Interactive Lookbook (Mix & Match) */}
+      <OutfitBuilder data={mockOutfitData} />
+
       {/* Live Drop / Countdown */}
       <CountdownDrop />
+
+      {/* AI Trend Forecaster */}
+      <AITrendForecaster />
 
       {/* Testimonials */}
       <Testimonials />
