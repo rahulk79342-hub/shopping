@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
 // Eager imports for above-the-fold
 import CinematicHero from '@/components/CinematicHero';
@@ -10,29 +10,17 @@ import HolographicSneakerLab from '@/components/HolographicSneakerLab';
 import TheVault from '@/components/TheVault';
 import ExitIntentPopup from '@/components/ExitIntentPopup';
 
-// Lazy imports for below-the-fold components to reduce initial JS payload
-const FeaturedCategories = dynamic(() => import('@/components/FeaturedCategories'), { ssr: true });
-const EditorialSpotlight = dynamic(() => import('@/components/EditorialSpotlight'), { ssr: true });
-const RecentlyViewed = dynamic(() => import('@/components/RecentlyViewed'), { ssr: false });
-const FeaturedCollections = dynamic(() => import('@/components/FeaturedCollections'), { ssr: true });
-const Craftsmanship = dynamic(() => import('@/components/Craftsmanship'), { ssr: true });
-const TheCulture = dynamic(() => import('@/components/TheCulture'), { ssr: true });
-const ProductShowcase = dynamic(() => import('@/components/ProductShowcase'), { ssr: true });
-const BestsellersCarousel = dynamic(() => import('@/components/BestsellersCarousel'), { ssr: true });
-const AIPersonalizedFeed = dynamic(() => import('@/components/AIPersonalizedFeed'), { ssr: false });
-const PersonalisedRecommendations = dynamic(() => import('@/components/PersonalisedRecommendations'), { ssr: false });
-const StyleQuiz = dynamic(() => import('@/components/StyleQuiz'), { ssr: true });
-const ShoppableLookbook = dynamic(() => import('@/components/ShoppableLookbook'), { ssr: true });
-const CountdownDrop = dynamic(() => import('@/components/CountdownDrop'), { ssr: true });
-const Testimonials = dynamic(() => import('@/components/Testimonials'), { ssr: true });
-const InstagramFeed = dynamic(() => import('@/components/InstagramFeed'), { ssr: true });
-const EliteVIP = dynamic(() => import('@/components/EliteVIP'), { ssr: true });
-const Benefits = dynamic(() => import('@/components/Benefits'), { ssr: true });
-const Newsletter = dynamic(() => import('@/components/Newsletter'), { ssr: true });
+// Lazy imports for below-the-fold premium components
 const PressMentions = dynamic(() => import('@/components/PressMentions'), { ssr: true });
-const OutfitBuilder = dynamic(() => import('@/components/OutfitBuilder'), { ssr: true });
-const AITrendForecaster = dynamic(() => import('@/components/AITrendForecaster'), { ssr: true });
+const ARVirtualTryOnShowcase = dynamic(() => import('@/components/ARVirtualTryOnShowcase'), { ssr: true });
 const ShoppableLiveStream = dynamic(() => import('@/components/ShoppableLiveStream'), { ssr: true });
+const OutfitBuilder = dynamic(() => import('@/components/OutfitBuilder'), { ssr: true });
+const ShoppableLookbook = dynamic(() => import('@/components/ShoppableLookbook'), { ssr: true });
+const AIPersonalizedFeed = dynamic(() => import('@/components/AIPersonalizedFeed'), { ssr: false });
+const AITrendForecaster = dynamic(() => import('@/components/AITrendForecaster'), { ssr: true });
+const CountdownDrop = dynamic(() => import('@/components/CountdownDrop'), { ssr: true });
+const EliteVIP = dynamic(() => import('@/components/EliteVIP'), { ssr: true });
+const Newsletter = dynamic(() => import('@/components/Newsletter'), { ssr: true });
 
 const mockOutfitData = {
   tops: [
@@ -48,8 +36,7 @@ const mockOutfitData = {
 };
 
 export default function HomeClient({ initialBestsellers }) {
-  const { scrollY, scrollYProgress } = useScroll();
-  const [bestsellers, setBestsellers] = useState(initialBestsellers || []);
+  const { scrollYProgress } = useScroll();
   const [isReturningUser, setIsReturningUser] = useState(false);
 
   useEffect(() => {
@@ -59,7 +46,6 @@ export default function HomeClient({ initialBestsellers }) {
     } else {
       localStorage.setItem('hasVisited_snipes', 'true');
     }
-    // Note: data is now fetched on the server in page.js, so we just use the initial props.
   }, []);
 
   const scaleProgress = useSpring(scrollYProgress, {
@@ -67,92 +53,53 @@ export default function HomeClient({ initialBestsellers }) {
   });
 
   return (
-    <main className="w-full bg-[var(--color-background)] overflow-x-hidden">
+    <main className="w-full bg-[#020202] text-white overflow-x-hidden">
       <ExitIntentPopup />
 
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[var(--color-secondary)] to-transparent z-[100] origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent z-[100] origin-left"
         style={{ scaleX: scaleProgress }}
       />
 
-      {/* Ultra-Premium Cinematic Hero */}
+      {/* 1. Ultra-Premium Cinematic Hero */}
       <CinematicHero />
 
-      {/* Premium Brands Shimmer Marquee */}
+      {/* 2. Premium Brands & Social Proof */}
       <ShimmerMarquee />
-
-      {/* Social Proof Mentions */}
       <PressMentions />
 
-      {/* Advanced Premium Section: Holographic Sneaker Lab */}
+      {/* 3. Advanced Premium Section: Holographic Sneaker Lab */}
       <HolographicSneakerLab />
 
-      {/* The Vault - Exclusive Drops */}
-      <TheVault />
+      {/* 4. NEW: AR Virtual Try-On Showcase */}
+      <ARVirtualTryOnShowcase />
 
-      {/* Featured Categories (Desktop visual tiles / Mobile icon pills) */}
-      <FeaturedCategories />
-
-      {/* Editorial Spotlight */}
-      <EditorialSpotlight />
-
-      {/* Recently Viewed */}
-      <RecentlyViewed />
-
-      {/* Featured Collections (Editorial splits) */}
-      <FeaturedCollections />
-
-      {/* Premium Craftsmanship Section */}
-      <Craftsmanship />
-
-      {/* The Culture (Text Reveal) */}
-      <TheCulture />
-
-      {/* Product Showcase */}
-      <ProductShowcase />
-
-      {/* Shoppable Live Stream Commerce */}
+      {/* 5. Shoppable Live Stream Commerce */}
       <ShoppableLiveStream />
 
-      {/* Bestsellers Carousel (Embla + Sanity) */}
-      <BestsellersCarousel products={bestsellers} />
+      {/* 6. The Vault - Exclusive Drops */}
+      <TheVault />
 
-      {/* AI-Powered Recommendations (Standard) */}
-      <PersonalisedRecommendations />
-
-      {/* Advanced AI Bento Grid Feed */}
-      <AIPersonalizedFeed />
-
-      {/* Interactive Style Quiz CTA */}
-      <StyleQuiz />
-
-      {/* Shoppable Lookbook Editorial */}
-      <ShoppableLookbook />
-
-      {/* Interactive Lookbook (Mix & Match) */}
+      {/* 7. Interactive Lookbook (Mix & Match) */}
       <OutfitBuilder data={mockOutfitData} />
 
-      {/* Live Drop / Countdown */}
-      <CountdownDrop />
+      {/* 8. Shoppable Lookbook Editorial */}
+      <ShoppableLookbook />
 
-      {/* AI Trend Forecaster */}
+      {/* 9. Advanced AI Bento Grid Feed */}
+      <AIPersonalizedFeed />
+
+      {/* 10. AI Trend Forecaster */}
       <AITrendForecaster />
 
-      {/* Testimonials */}
-      <Testimonials />
+      {/* 11. Live Drop / Countdown */}
+      <CountdownDrop />
 
-      {/* Instagram Feed Integration */}
-      <InstagramFeed />
-
-      {/* Elite VIP Club */}
+      {/* 12. Elite VIP Club */}
       <EliteVIP />
 
-      {/* USP / Benefits Section */}
-      <Benefits />
-
-      {/* Newsletter Signup */}
+      {/* 13. Newsletter Signup */}
       <Newsletter />
-
     </main>
   );
 }
