@@ -135,12 +135,13 @@ export default function CinematicHero() {
         style={{ y: yBg, opacity }}
         className="absolute inset-0 w-full h-[120%] -top-[10%] z-0 pointer-events-none"
       >
-        <Image 
-          src="https://images.unsplash.com/photo-1550614000-4b95d4ed798a?q=80&w=2000&auto=format&fit=crop"
-          alt="Premium Cinematic Hero"
-          fill
-          priority
-          className="object-cover opacity-30 grayscale"
+        <video 
+          src="https://assets.mixkit.co/videos/preview/mixkit-fashion-model-posing-in-neon-lights-5129-large.mp4"
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-luminosity"
         />
         {/* Subtle noise/grain overlay for premium texture */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.08%22/%3E%3C/svg%3E')] opacity-50 mix-blend-overlay"></div>
@@ -171,41 +172,19 @@ export default function CinematicHero() {
             </span>
           </motion.div>
 
-          {/* Staggered Blur Reveal Text with Dynamic Spotlight */}
+          {/* Staggered Blur Reveal Text */}
           <div className="relative mb-10">
-            {/* Base Text (Dark/Metallic base) */}
             <motion.h1 
               variants={textContainer}
               initial="hidden"
               animate="visible"
-              className="text-5xl md:text-7xl lg:text-[110px] font-extrabold uppercase tracking-tighter leading-[0.85] text-[#333]"
+              className="text-6xl md:text-8xl lg:text-[130px] font-extrabold uppercase tracking-tighter leading-[0.85] text-white"
               style={{ fontFamily: "var(--font-family-headline-lg)" }}
             >
-              <motion.div variants={textChild}>Define</motion.div>
-              <motion.div variants={textChild}>Your</motion.div>
-              <motion.div variants={textChild}>Legacy.</motion.div>
+              <motion.div variants={textChild}>Redefine</motion.div>
+              <motion.div variants={textChild} className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">The Rules</motion.div>
+              <motion.div variants={textChild}>Of Style.</motion.div>
             </motion.h1>
-
-            {/* Spotlight Overlay Layer (Reveals Bright Chrome Text) */}
-            {mounted && (
-              <motion.h1 
-                variants={textContainer}
-                initial="hidden"
-                animate="visible"
-                className="absolute top-0 left-0 text-5xl md:text-7xl lg:text-[110px] font-extrabold uppercase tracking-tighter leading-[0.85] text-transparent bg-clip-text"
-                style={{ 
-                  fontFamily: "var(--font-family-headline-lg)",
-                  backgroundImage: "linear-gradient(to bottom right, #ffffff, #e0e0e0, #ffffff)",
-                  WebkitMaskImage: spotlightBackground,
-                  maskImage: spotlightBackground,
-                  filter: "drop-shadow(0 0 20px rgba(255,255,255,0.4))"
-                }}
-              >
-                <motion.div variants={textChild}>Define</motion.div>
-                <motion.div variants={textChild}>Your</motion.div>
-                <motion.div variants={textChild}>Legacy.</motion.div>
-              </motion.h1>
-            )}
           </div>
           
           <motion.div
