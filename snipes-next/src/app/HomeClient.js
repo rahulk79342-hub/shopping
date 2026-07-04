@@ -12,8 +12,11 @@ import ExitIntentPopup from '@/components/ExitIntentPopup';
 
 // Lazy imports for below-the-fold premium components
 const PressMentions = dynamic(() => import('@/components/PressMentions'), { ssr: true });
+const AuraStylingPod = dynamic(() => import('@/components/AuraStylingPod'), { ssr: true });
 const ARVirtualTryOnShowcase = dynamic(() => import('@/components/ARVirtualTryOnShowcase'), { ssr: true });
 const ShoppableLiveStream = dynamic(() => import('@/components/ShoppableLiveStream'), { ssr: true });
+const SneakerConfigurator = dynamic(() => import('@/components/SneakerConfigurator'), { ssr: true });
+const MaterialTechScanner = dynamic(() => import('@/components/MaterialTechScanner'), { ssr: true });
 const OutfitBuilder = dynamic(() => import('@/components/OutfitBuilder'), { ssr: true });
 const ShoppableLookbook = dynamic(() => import('@/components/ShoppableLookbook'), { ssr: true });
 const AIPersonalizedFeed = dynamic(() => import('@/components/AIPersonalizedFeed'), { ssr: false });
@@ -68,10 +71,16 @@ export default function HomeClient({ initialBestsellers }) {
       <ShimmerMarquee />
       <PressMentions />
 
-      {/* 3. Advanced Premium Section: Holographic Sneaker Lab */}
+      {/* 3. Aura Generative Styling Pod */}
+      <AuraStylingPod />
+
+      {/* 4. Advanced Premium Section: Holographic Sneaker Lab */}
       <HolographicSneakerLab />
 
-      {/* 4. NEW: AR Virtual Try-On Showcase */}
+      {/* 5. 3D Sneaker Configurator HUD */}
+      <SneakerConfigurator />
+
+      {/* 6. AR Virtual Try-On Showcase */}
       <ARVirtualTryOnShowcase />
 
       {/* 5. Shoppable Live Stream Commerce */}
@@ -80,10 +89,13 @@ export default function HomeClient({ initialBestsellers }) {
       {/* 6. The Vault - Exclusive Drops */}
       <TheVault />
 
-      {/* 7. Interactive Lookbook (Mix & Match) */}
+      {/* Interactive Lookbook (Mix & Match) */}
       <OutfitBuilder data={mockOutfitData} />
 
-      {/* 8. Shoppable Lookbook Editorial */}
+      {/* Interactive X-Ray Fabric Scanner */}
+      <MaterialTechScanner />
+
+      {/* Shoppable Lookbook Editorial */}
       <ShoppableLookbook />
 
       {/* 9. Advanced AI Bento Grid Feed */}
