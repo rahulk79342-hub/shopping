@@ -42,7 +42,7 @@ export default function MaterialTechScanner() {
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
-        className="relative w-full max-w-[1000px] aspect-[4/3] md:aspect-[16/9] mx-auto rounded-[40px] overflow-hidden cursor-none border border-white/10 shadow-[0_0_80px_rgba(0,255,0,0.05)] bg-[#0a0a0a]"
+        className="relative w-full max-w-[1000px] aspect-[4/3] md:aspect-[16/9] mx-auto rounded-[40px] overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(0,255,0,0.05)] bg-[#0a0a0a]"
       >
         {/* Base Image (Outer Shell) */}
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550614000-4b95d4ed798a?q=80&w=1200')] bg-cover bg-center grayscale opacity-60" />

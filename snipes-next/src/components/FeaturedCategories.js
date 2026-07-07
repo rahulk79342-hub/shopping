@@ -53,7 +53,7 @@ export default function FeaturedCategories() {
       <div className="max-w-screen-2xl mx-auto">
         <div 
           ref={containerRef}
-          className="flex overflow-x-auto gap-4 md:gap-8 pb-8 pt-4 snap-x hide-scrollbar px-4 md:px-8 xl:px-12 items-start cursor-none"
+          className="flex overflow-x-auto gap-4 md:gap-8 pb-8 pt-4 snap-x hide-scrollbar px-4 md:px-8 xl:px-12 items-start"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >

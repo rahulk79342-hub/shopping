@@ -107,7 +107,7 @@ export default function CinematicHero() {
           mouseYPixel.set(containerRef.current.offsetHeight / 2);
         }
       }}
-      className="relative w-full h-[90vh] md:h-screen overflow-hidden bg-[#020202] flex items-center justify-center cursor-none perspective-1000"
+      className="relative w-full h-[90vh] md:h-screen overflow-hidden bg-[#020202] flex items-center justify-center perspective-1000"
     >
       {/* Dynamic Lens Flare Sweep */}
       <div className="absolute inset-0 pointer-events-none z-30 overflow-hidden mix-blend-screen opacity-50">

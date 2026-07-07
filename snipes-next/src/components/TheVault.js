@@ -63,7 +63,7 @@ function TiltCard({ item }) {
   };
 
   return (
-    <div className="relative group cursor-none">
+    <div className="relative group">
       {/* Glowing Pulsing Border Effect */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-[#C2B280] via-transparent to-[#d4af37] rounded-[20px] opacity-0 group-hover:opacity-100 blur-[8px] group-hover:animate-[pulse_2s_ease-in-out_infinite] transition-opacity duration-500 z-0"></div>
       

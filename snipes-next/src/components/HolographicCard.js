@@ -64,7 +64,7 @@ export default function HolographicCard({ children, className = "", glareIntensi
         rotateY: isDesktop ? rotateY : 0,
         transformStyle: "preserve-3d",
       }}
-      className={`relative rounded-3xl overflow-hidden cursor-none ${className}`}
+      className={`relative rounded-3xl overflow-hidden ${className}`}
     >
       {/* Underlying content */}
       <div style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }} className="w-full h-full relative z-0">

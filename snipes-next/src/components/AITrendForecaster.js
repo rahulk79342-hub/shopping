@@ -94,7 +94,7 @@ export default function AITrendForecaster() {
         </div>
 
         {/* Visualizer Panel */}
-        <div className="lg:w-2/3 relative rounded-3xl overflow-hidden bg-gray-100 min-h-[400px] group cursor-none hover-expand">
+        <div className="lg:w-2/3 relative rounded-3xl overflow-hidden bg-gray-100 min-h-[400px] group">
           <div className="absolute inset-0 z-10 bg-black/10 transition-colors duration-500 group-hover:bg-transparent" />
           
           <motion.div

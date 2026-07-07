@@ -14,7 +14,6 @@ const QuickAddModal = dynamic(() => import('@/components/QuickAddModal'));
 const SizeRecommender = dynamic(() => import('@/components/SizeRecommender'));
 const AuraStylist = dynamic(() => import('@/components/AuraStylist'));
 const AuraCopilot = dynamic(() => import('@/components/AuraCopilot'));
-const CustomCursor = dynamic(() => import('@/components/CustomCursor'));
 
 const sora = Sora({
   variable: "--font-family-headline-lg",
@@ -83,7 +82,6 @@ export default function RootLayout({ children }) {
               <Navbar />
               {children}
               <Footer />
-              <CustomCursor />
               <AuraCopilot />
               <WhatsAppButton />
               <CartDrawer />
