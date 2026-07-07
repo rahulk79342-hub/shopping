@@ -172,8 +172,7 @@ export default function ProductDetailClient({ product, relatedProducts }) {
                 <span className="material-symbols-outlined text-[#003dff] group-hover:scale-110 transition-transform">view_in_ar</span>
                 <span className="font-[var(--font-family-label-caps)] text-[10px] uppercase tracking-widest text-[var(--color-primary)] font-bold">Virtual Try-On</span>
               </button> */}
-            </div>
-
+            
             <div className="flex gap-3 overflow-x-auto hide-scrollbar px-4 md:px-0 py-2 items-center">
               {product.media.map((media, idx) => (
                 <button
