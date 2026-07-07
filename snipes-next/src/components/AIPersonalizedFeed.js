@@ -87,7 +87,7 @@ export default function AIPersonalizedFeed() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: index * 0.15, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className={`${item.colSpan} ${item.rowSpan} group relative rounded-2xl overflow-hidden bg-gray-100 cursor-none hover-expand block`}
+            className={`${item.colSpan} ${item.rowSpan} group relative rounded-2xl overflow-hidden bg-gray-100 block`}
           >
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors z-10 duration-500" />
             

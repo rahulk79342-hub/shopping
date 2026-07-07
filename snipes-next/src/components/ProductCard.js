@@ -41,7 +41,7 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div className="group flex flex-col cursor-none">
+    <div className="group flex flex-col">
       <HolographicCard glareIntensity={0.3} className="relative h-[250px] md:h-[400px] rounded-[12px] md:rounded-[16px] mb-3 md:mb-4 bg-[#f8f8f8] block w-full border border-gray-100/50 shadow-sm">
         <Link href={`/product/${product.slug?.current || product.id || product._id}`} className="absolute inset-0 z-0">
           <Image 
